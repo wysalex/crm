@@ -1,4 +1,4 @@
-# vue_demo
+# vue_demo CRM
 
 > A Vue.js project
 
