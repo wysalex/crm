@@ -3,10 +3,10 @@
     <input type="checkbox" class="interface-status" id="menuStatus" name="menu-status">
 
     <header id="header">
-      <div class="band">
+      <router-link to="/" tag="div" class="band">
         <span class="icon-home"></span>
         <span>XXX有限公司</span>
-      </div>
+      </router-link>
       <label class="menu-button" for="menuStatus">
         <span class="hamburger"></span>
         <span class="hamburger"></span>
@@ -14,10 +14,10 @@
       </label>
       <div class="func" id="func">
         <!--<span class="main" id="funcMain">客戶資料</span>-->
-        <span class="main"></span>
+        <span class="main">{{ func.main }}</span>
         <span class="to"></span>
         <!--<span class="sub" id="funcSub">查詢</span>-->
-        <span class="sub"></span>
+        <span class="sub">{{ func.sub }}</span>
       </div>
       <div class="keep"></div>
     </header>
@@ -29,31 +29,27 @@
     <div id="menu">
       <div class="container">
         <ul>
-          <li class="group customer">
-            <!-- <div><span class="icon icon-users"></span><span :data-main="func.main">客戶資料</span></div> -->
-            <div><span class="icon icon-users"></span><span data-main="func.main">客戶資料</span></div>
+          <li class="group customer" :class="{ active: isActive.customer }">
+            <div @click="isActive.customer = !isActive.customer"><span class="icon icon-users"></span><span data-main="客戶資料">客戶資料</span></div>
             <ul>
               <li class="sub">
-                <!-- <router-link to="/customer" @click.native="changeTitle" class="icon-search" data-main="客戶資料" data-sub="查詢">查詢</router-link> -->
-                <!--<a class="icon-search">查詢</a>-->
+                <router-link to="/customer" @click.native="changeTitle" class="icon-search" data-main="客戶資料" data-sub="查詢">查詢</router-link>
+                <!-- <router-link to="customer" @click.native="changeTitle" class="icon-search" data-main="客戶資料" data-sub="查詢">查詢</router-link> -->
               </li>
               <li class="sub">
+                <router-link to="/customer/new" @click.native="changeTitle" class="icon-plus" data-main="客戶資料" data-sub="新建">新建</router-link>
                 <!-- <router-link to="/customer/new" @click.native="changeTitle" class="icon-plus" data-main="客戶資料" data-sub="新建">新建</router-link> -->
-                <!--<router-link to="/customer/new" class="icon-plus">新建</router-link>-->
-                <!--<a class="icon-plus" href="#">新建</a>-->
               </li>
             </ul>
           </li>
-          <li class="group supplier">
-            <div><span class="icon icon-account_balance"></span><span>廠商資料</span></div>
+          <li class="group supplier" :class="{ active: isActive.supplier }">
+            <div @click="isActive.supplier = !isActive.supplier"><span class="icon icon-account_balance"></span><span data-main="廠商資料">廠商資料</span></div>
             <ul>
               <li class="sub">
-                <!-- <router-link to="/supplier" class="icon-search">查詢</router-link> -->
-                <!--<a class="icon-search">查詢</a>-->
+                <router-link to="/supplier" @click.native="changeTitle" class="icon-search" data-main="廠商資料" data-sub="查詢">查詢</router-link>
               </li>
               <li class="sub">
-                <!-- <router-link to="/supplier/new" class="icon-plus">新建</router-link> -->
-                <!--<a class="icon-plus">新建</a>-->
+                <router-link to="/supplier/new"  @click.native="changeTitle"class="icon-plus" data-main="廠商資料" data-sub="新建">新建</router-link>
               </li>
             </ul>
           </li>
@@ -66,22 +62,35 @@
 <script>
 export default {
   name: 'app',
-  data: {
-    main: 'main',
-    func: {
-      main: 'main',
-      sub: 'sub'
+  data () {
+    return {
+      isActive: {
+        customer: false,
+        supplier: false
+      },
+      func: {
+        main: 'main',
+        sub: 'sub'
+      }
+    }
+  },
+  methods: {
+    changeTitle ($event) {
+      let now = $event.target.dataset
+      this._data.func.main = now.main
+      this._data.func.sub = now.sub
+      console.log('changeTitle()')
     }
   }
 }
 </script>
 
 <style lang="scss">
-// @import "node_modules/compass-mixins/lib/compass/_reset";
+@import "node_modules/compass-mixins/lib/compass/_reset";
 // @import "compass/reset";
 @import "node_modules/compass-mixins/lib/_compass";
 @import "src/assets/scss/lib/_custom";
-// @import "src/assets/scss/icon.scss";
+@import "src/assets/scss/icon.scss";
 
 * {
   &, &:after, &:before {
@@ -121,12 +130,13 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  // margin-top: 60px;
 }
 
 $headerHeight: 60px;
 $bandWidth: 250px;
 $funcWidth: 160px;
+$color: rgba(0, 188, 212, 1.000);
 
 .interface-status {
   position: fixed;
@@ -157,7 +167,7 @@ $funcWidth: 160px;
     height: 100%;
     font-size: 24px;
     color: white;
-    background-color: rgba(0, 188, 212, 1.000);
+    background-color: $color;
 
     display: flex;
     flex-direction: row;
@@ -232,20 +242,21 @@ $funcWidth: 160px;
     .main {}
     .to {
       position: relative;
-      padding: 0 8px;
-      &:before {
-        position: absolute;
-        top: 8px;
-        left: 3px;
-        content: '';
-        display: inline-block;
-        width: 6px;
-        height: 6px;
-        border: 2px solid rgba(50, 50, 50, 0.8);
-        border-left: none;
-        border-bottom: none;
-        @include rotate(45deg);
-      }
+      padding: 0 2px;
+      // padding: 0 8px;
+      // &:before {
+      //   position: absolute;
+      //   top: 8px;
+      //   left: 3px;
+      //   content: '';
+      //   display: inline-block;
+      //   width: 6px;
+      //   height: 6px;
+      //   border: 2px solid rgba(50, 50, 50, 0.8);
+      //   border-left: none;
+      //   border-bottom: none;
+      //   @include rotate(45deg);
+      // }
     }
     .sub {}
   }
@@ -257,13 +268,13 @@ $funcWidth: 160px;
 }
 
 #main {
+  width: 100%;
+  height: 100%;
   padding-top: $headerHeight;
   padding-left: $bandWidth;
-  background-color: rgba(0, 0, 255, .200);
+  // background-color: rgba(0, 0, 255, .200);
   @include transition(padding .3s);
 }
-
-$color: rgba(0, 188, 212, 1.000);
 
 #menu {
   position: fixed;
