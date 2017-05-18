@@ -68,9 +68,11 @@
   }
 
   #{$leftName}, #{$rightName} {
-    float: left;
     position: relative;
     display: inline-block;
+  }
+  #{$leftName} {
+    float: left;
   }
   #{$rightName} {
     float: right;
@@ -113,4 +115,17 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+@mixin size($w, $h: $w) {
+  width: $w;
+  height: $h;
+}
+
+@mixin h-align() {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
 }
