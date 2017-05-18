@@ -22,7 +22,9 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src')
+      '@': resolve('src'),
+      'compass': resolve('node_modules/compass-mixins/lib'),
+      'scss': resolve('src/assets/scss')
     }
   },
   module: {
