@@ -13,17 +13,14 @@
         <span class="hamburger"></span>
       </label>
       <div class="func" id="func">
-        <!--<span class="main" id="funcMain">客戶資料</span>-->
         <span class="main">{{ func.main }}</span>
         <span class="to"></span>
-        <!--<span class="sub" id="funcSub">查詢</span>-->
         <span class="sub">{{ func.sub }}</span>
       </div>
       <div class="keep"></div>
     </header>
 
     <div id="main">
-      main
       <router-view></router-view>
     </div>
     <div id="menu">
@@ -34,11 +31,9 @@
             <ul>
               <li class="sub">
                 <router-link to="/customer" @click.native="changeTitle" class="icon-search" data-main="客戶資料" data-sub="查詢">查詢</router-link>
-                <!-- <router-link to="customer" @click.native="changeTitle" class="icon-search" data-main="客戶資料" data-sub="查詢">查詢</router-link> -->
               </li>
               <li class="sub">
                 <router-link to="/customer/new" @click.native="changeTitle" class="icon-plus" data-main="客戶資料" data-sub="新建">新建</router-link>
-                <!-- <router-link to="/customer/new" @click.native="changeTitle" class="icon-plus" data-main="客戶資料" data-sub="新建">新建</router-link> -->
               </li>
             </ul>
           </li>
@@ -86,11 +81,10 @@ export default {
 </script>
 
 <style lang="scss">
-@import "node_modules/compass-mixins/lib/compass/_reset";
-// @import "compass/reset";
-@import "node_modules/compass-mixins/lib/_compass";
-@import "src/assets/scss/lib/_custom";
-@import "src/assets/scss/icon.scss";
+@import "~compass/compass/_reset";
+@import "~compass/_compass";
+@import "~scss/lib/_custom";
+@import "~scss/icon.scss";
 
 * {
   &, &:after, &:before {
@@ -102,7 +96,7 @@ export default {
 }
 
 html {
-  min-height: 100%;
+  height: 100%;
 
   body {
     position: relative;
@@ -110,7 +104,7 @@ html {
     text-align: center;
     margin: 0;
     width: 100%;
-    min-height: 100%;
+    height: 100%;
     font-size: medium;
     // font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif,"微軟正黑體", "Microsoft JhengHei";
     background-color: rgba(235, 235, 235, 1.00);
@@ -125,18 +119,20 @@ html {
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  // font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  // -webkit-font-smoothing: antialiased;
+  // -moz-osx-font-smoothing: grayscale;
+  // text-align: center;
   color: #2c3e50;
   // margin-top: 60px;
+  height: 100%;
 }
 
 $headerHeight: 60px;
 $bandWidth: 250px;
 $funcWidth: 160px;
 $color: rgba(0, 188, 212, 1.000);
+// $color: white;
 
 .interface-status {
   position: fixed;
@@ -230,7 +226,7 @@ $color: rgba(0, 188, 212, 1.000);
     display: inline-block;
     width: $funcWidth;
     height: $headerHeight;
-    background-color: rgba(255, 0, 0, .2000);
+    // background-color: rgba(255, 0, 0, .2000);
 
     > * {
       height: $headerHeight;
@@ -469,6 +465,31 @@ $color: rgba(0, 188, 212, 1.000);
         }
       }
     }
+  }
+}
+
+.h-form {
+  width: 100%;
+  height: 48px;
+
+  @include h-align();
+
+  @include transition(background-color .3s);
+  > * {
+    display: inline-block;
+    float: left;
+    padding: 4px 8px;
+  }
+  > label {
+    width: 20%;
+    text-align: right;
+  }
+  > div {
+    width: 80%;
+    text-align: left;
+  }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
   }
 }
 </style>
