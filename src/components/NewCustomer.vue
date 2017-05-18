@@ -56,6 +56,7 @@ export default {
   width: 100%;
   max-width: 600px;
   // height: 400px;
+
   padding: 16px 20px 0 20px;
 
   $herderHeight: 48px;
