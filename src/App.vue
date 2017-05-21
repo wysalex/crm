@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <input type="checkbox" class="interface-status" id="menuStatus" name="menu-status">
+    <label for="menuStatus" id="mCover"></label>
 
     <header id="header">
       <router-link to="/" tag="div" class="band">
@@ -13,9 +14,9 @@
         <span class="hamburger"></span>
       </label>
       <div class="func" id="func">
-        <span class="main">{{ func.main }}</span>
-        <span class="to"></span>
-        <span class="sub">{{ func.sub }}</span>
+        <!-- <span class="main">{{ func.main }}</span> -->
+        <!-- <span class="to"></span> -->
+        <!-- <span class="sub">{{ func.sub }}</span> -->
       </div>
       <div class="keep"></div>
     </header>
@@ -23,6 +24,7 @@
     <div id="main">
       <router-view></router-view>
     </div>
+
     <div id="menu">
       <div class="container">
         <ul>
@@ -51,12 +53,18 @@
         </ul>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
 export default {
   name: 'app',
+  mounted () {
+    // const app = this.global.app
+    // const auth = app.auth()
+    // console.log(auth.currentUser)
+  },
   data () {
     return {
       isActive: {
@@ -74,7 +82,7 @@ export default {
       let now = $event.target.dataset
       this._data.func.main = now.main
       this._data.func.sub = now.sub
-      console.log('changeTitle()')
+      // console.log('changeTitle()')
     }
   }
 }
@@ -123,7 +131,7 @@ html {
   // -webkit-font-smoothing: antialiased;
   // -moz-osx-font-smoothing: grayscale;
   // text-align: center;
-  color: #2c3e50;
+  // color: #2c3e50;
   // margin-top: 60px;
   height: 100%;
 }
@@ -157,13 +165,14 @@ $color: rgba(0, 188, 212, 1.000);
     float: left;
     // border: 1px solid rgba(179, 79, 85, 1.000);
   }
+
   .band {
     display: inline-block;
-    width: $bandWidth;
     height: 100%;
     font-size: 24px;
     color: white;
     background-color: $color;
+    cursor: pointer;
 
     display: flex;
     flex-direction: row;
@@ -176,16 +185,33 @@ $color: rgba(0, 188, 212, 1.000);
 
     @include transition(width .3s);
 
-    :first-child {
-      line-height: $headerHeight;
-      margin-right: 5px;
-      @include transition(font-size .3s);
+    @include range-width(0, 375px - 1px) {
+      width: 0;
     }
-    :last-child {
-      letter-spacing: 1px;
-      font-weight: bold;
-      @include opacity(1);
-      @include transition(opacity .3s);
+    @include range-width(375px, 700px - 1px) {
+      width: $headerHeight;
+      *:first-child {
+        margin-right: 0;
+        font-size: 30px;
+      }
+      *:last-child {
+        display: none;
+      }
+    }
+    @include range-width(700px) {
+      width: $bandWidth;
+
+      :first-child {
+        line-height: $headerHeight;
+        margin-right: 5px;
+        @include transition(font-size .3s);
+      }
+      :last-child {
+        letter-spacing: 1px;
+        font-weight: bold;
+        @include opacity(1);
+        @include transition(opacity .3s);
+      }
     }
   }
   .menu-button {
@@ -204,16 +230,38 @@ $color: rgba(0, 188, 212, 1.000);
       @include border-radius(5px);
       @include transition(top .3s, transform .3s, opacity .3s);
 
-      &:nth-child(1) {
-        top: 10px;
-        @include rotate(45deg);
+      @include range-width(0, 700px - 1px) {
+        &:nth-child(1) {
+          width: 100%;
+          top: 2px;
+          left: 0px;
+          @include rotate(0);
+        }
+        &:nth-child(2) {
+          width: 100%;
+          top: 8px;
+          left: 0px;
+          @include opacity(1);
+        }
+        &:nth-child(3) {
+          width: 100%;
+          top: 14px;
+          left: 0px;
+          @include rotate(0);
+        }
       }
-      &:nth-child(2) {
-        @include opacity(0);
-      }
-      &:nth-child(3) {
-        top: 6px;
-        @include rotate(-45deg);
+      @include range-width(700px) {
+        &:nth-child(1) {
+          top: 10px;
+          @include rotate(45deg);
+        }
+        &:nth-child(2) {
+          @include opacity(0);
+        }
+        &:nth-child(3) {
+          top: 6px;
+          @include rotate(-45deg);
+        }
       }
       // @for $i from 1 through 3 {
       //   &:nth-child($i) {
@@ -267,9 +315,18 @@ $color: rgba(0, 188, 212, 1.000);
   width: 100%;
   height: 100%;
   padding-top: $headerHeight;
-  padding-left: $bandWidth;
   // background-color: rgba(0, 0, 255, .200);
   @include transition(padding .3s);
+
+  @include range-width(0, 375px - 1px) {
+    padding-left: 0;
+  }
+  @include range-width(375px, 700px - 1px) {
+    padding-left: $headerHeight;
+  }
+  @include range-width(700px) {
+    padding-left: $bandWidth;
+  }
 }
 
 #menu {
@@ -339,7 +396,7 @@ $color: rgba(0, 188, 212, 1.000);
         border-top: 1px solid rgba(255, 255, 255, .500);
         border-bottom: 1px solid rgba(255, 255, 255, .500);
 
-        .sub {
+        > .sub {
           > a {
             display: inline-block;
             width: 100%;
@@ -382,82 +439,218 @@ $color: rgba(0, 188, 212, 1.000);
       }
     }
   }
+
+  @include range-width(0, 375px - 1px) {
+    width: 0;
+  }
+  @include range-width(375px, 700px - 1px) {
+    width: $headerHeight;
+    > .container {
+      .group {
+        > div {
+          .icon {
+            font-size: 28px;
+            &:before {
+              padding: 0 20px 0 4px;
+            }
+            &:after {
+              display: none;
+            }
+          }
+          .icon-account_balance {
+            &:before {
+              font-size: 30px;
+            }
+          }
+        }
+        > ul {
+          > .sub {
+            > a {
+              font-size: 20px;
+              padding-left: 20px;
+              &:before {
+                padding-right: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include range-width(700px) {
+  }
+}
+
+#mCover {
+  position: fixed;
+  top: -999px;
+  left: -999px;
+  @include range-width(700px) {
+  }
 }
 
 #menuStatus {
   &:checked {
-    ~ #header {
-      .band {
-        width: $headerHeight;
-        *:first-child {
-          margin-right: 0;
-          font-size: 30px;
-        }
-        *:last-child {
-          display: none;
-          @include opacity(0);
-        }
+    @include range-width(0, 700px - 1px) {
+      + #mCover {
+        @include size(100%);
+        top: 0;
+        left: 0;
+        padding-top: $headerHeight;
+        padding-left: $bandWidth;
+        z-index: 20;
+        background-color: rgba(44, 45, 38, .200);
       }
-      .menu-button {
-        .hamburger {
-          &:nth-child(1) {
-            @include rotate(0);
-            top: 2px;
+      ~ #header {
+        .band {
+          width: $bandWidth;
+          :first-child {
+            line-height: $headerHeight;
+            margin-right: 5px;
+            @include transition(font-size .3s);
           }
-          &:nth-child(2) {
+          :last-child {
+            display: inline-block;
+            letter-spacing: 1px;
+            font-weight: bold;
             @include opacity(1);
-            top: 8px;
-          }
-          &:nth-child(3) {
-            @include rotate(0);
-            top: 14px;
+            @include transition(opacity .3s);
           }
         }
-        &:hover {
+        .menu-button {
           .hamburger {
             &:nth-child(1) {
-              top: 5px;
+              width: 65%;
+              top: 6px;
+              left: -6px;
+              @include rotate(-35deg);
             }
             &:nth-child(2) {
               top: 8px;
+              @include opacity(1);
             }
             &:nth-child(3) {
-              top: 11px;
+              width: 65%;
+              top: 10px;
+              left: -6px;
+              @include rotate(35deg);
+            }
+          }
+        }
+        .func, .keep {
+          display: none;
+        }
+      }
+      ~ #menu {
+        width: $bandWidth;
+        > .container {
+          .group {
+            > div {
+              .icon {
+                font-size: 100%;
+                &:before {
+                  padding: 0 8px 0 0;
+                }
+                &:after {
+                  display: inline-block;
+                }
+              }
+              .icon-account_balance {
+                &:before {
+                  font-size: 23px;
+                }
+              }
+            }
+            > ul {
+              > .sub {
+                > a {
+                  font-size: 20px;
+                  padding-left: 30px;
+                  &:before {
+                    padding-right: 8px;
+                  }
+                }
+              }
             }
           }
         }
       }
     }
-    ~ #main {
-      padding-left: $headerHeight;
-    }
-    ~ #menu {
-      width: $headerHeight;
-      > .container {
-        .group {
-          > div {
-            .icon {
-              font-size: 28px;
-              &:before {
-                padding: 0 20px 0 4px;
-              }
-              &:after {
-                display: none;
-              }
+    @include range-width(700px) {
+      ~ #header {
+        .band {
+          width: $headerHeight;
+          *:first-child {
+            margin-right: 0;
+            font-size: 30px;
+          }
+          *:last-child {
+            display: none;
+            @include opacity(0);
+          }
+        }
+        .menu-button {
+          .hamburger {
+            &:nth-child(1) {
+              @include rotate(0);
+              top: 2px;
             }
-            .icon-account_balance {
-              &:before {
-                font-size: 30px;
+            &:nth-child(2) {
+              @include opacity(1);
+              top: 8px;
+            }
+            &:nth-child(3) {
+              @include rotate(0);
+              top: 14px;
+            }
+          }
+          &:hover {
+            .hamburger {
+              &:nth-child(1) {
+                top: 5px;
+              }
+              &:nth-child(2) {
+                top: 8px;
+              }
+              &:nth-child(3) {
+                top: 11px;
               }
             }
           }
-          > ul {
-            > li {
-              a {
-                font-size: 20px;
-                padding-left: 20px;
+        }
+      }
+      ~ #main {
+        padding-left: $headerHeight;
+      }
+      ~ #menu {
+        width: $headerHeight;
+        > .container {
+          .group {
+            > div {
+              .icon {
+                font-size: 28px;
                 &:before {
-                  padding-right: 20px;
+                  padding: 0 20px 0 4px;
+                }
+                &:after {
+                  display: none;
+                }
+              }
+              .icon-account_balance {
+                &:before {
+                  font-size: 30px;
+                }
+              }
+            }
+            > ul {
+              > .sub {
+                > a {
+                  font-size: 20px;
+                  padding-left: 20px;
+                  &:before {
+                    padding-right: 20px;
+                  }
                 }
               }
             }
@@ -469,27 +662,27 @@ $color: rgba(0, 188, 212, 1.000);
 }
 
 .h-form {
-  width: 100%;
-  height: 48px;
+  @include size(100%, 60px);
+  // height: 48px;
 
-  @include h-align();
+  // @include h-align();
 
-  @include transition(background-color .3s);
-  > * {
-    display: inline-block;
-    float: left;
-    padding: 4px 8px;
-  }
-  > label {
-    width: 20%;
-    text-align: right;
-  }
-  > div {
-    width: 80%;
-    text-align: left;
-  }
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
+  // @include transition(background-color .3s);
+  // > * {
+  //   display: inline-block;
+  //   float: left;
+  //   padding: 4px 8px;
+  // }
+  // > label {
+  //   width: 20%;
+  //   text-align: right;
+  // }
+  // > div {
+  //   width: 80%;
+  //   text-align: left;
+  // }
+  // &:hover {
+  //   background-color: rgba(0, 0, 0, 0.1);
+  // }
 }
 </style>
