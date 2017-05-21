@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import VueMdl from 'vue-mdl'
+
 import Hello from '@/components/Hello'
 import Hey from '@/components/Hey'
 import Customer from '@/components/Customer'
@@ -9,7 +9,6 @@ import Supplier from '@/components/Supplier'
 import NewSupplier from '@/components/NewSupplier'
 
 Vue.use(Router)
-Vue.use(VueMdl)
 
 export default new Router({
   mode: 'history',
