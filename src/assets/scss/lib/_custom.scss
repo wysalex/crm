@@ -126,6 +126,24 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: center;
+  // justify-content: center;
   align-items: center;
+}
+
+@mixin align($type: 'all') {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  // justify-content: center;
+  // align-items: center;
+  @if ($type == 'all') {
+    justify-content: center;
+    align-items: center;
+  } @else if ($type == 'h') {
+    justify-content: center;
+    align-items: flex-start;
+  } @else if ($type == 'v') {
+    justify-content: flex-start;
+    align-items: center;
+  }
 }
