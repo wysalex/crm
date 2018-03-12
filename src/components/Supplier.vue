@@ -143,7 +143,8 @@ export default {
     @include align('h');
 
     > .mdl-list {
-      width: 200px;
+      width: 100%;
+      max-width: 360px;
     }
   }
 
