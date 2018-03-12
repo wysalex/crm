@@ -1,9 +1,12 @@
 <template lang="html">
 
   <section class="supplier">
+
+    <mdl-textfield floating-label="搜尋" v-model="keyword"></mdl-textfield>
+
     <div class="show-list">
       <ul class="mdl-list">
-        <li class="mdl-list__item mdl-list__item--two-line" v-for="supplier in suppliers">
+        <li class="mdl-list__item mdl-list__item--two-line" v-for="supplier in filterSuppliers">
           <span class="mdl-list__item-primary-content">
             <i class="material-icons mdl-list__item-icon">business</i>
             <span>{{ supplier.name }}</span>
@@ -36,7 +39,8 @@ export default {
   },
   data () {
     return {
-      suppliers: {}
+      suppliers: {},
+      keyword: ''
     }
   },
   methods: {
@@ -51,6 +55,26 @@ export default {
     }
   },
   computed: {
+    filterSuppliers () {
+      var keyword = this.keyword.trim()
+      if (this.keyword.trim() !== '') {
+        return Object.keys(this.suppliers)
+          .reduce((r, suppliersIdx) => {
+            if (this.suppliers[suppliersIdx].name.toLowerCase().indexOf(keyword) > -1) {
+              r[suppliersIdx] = this.suppliers[suppliersIdx]
+            }
+            return r
+          }, {})
+          // .filter(suppliersIdx => {
+          //   return this.suppliers[suppliersIdx].name.toLowerCase().indexOf(keyword) > -1
+          // })
+          // .map(suppliersIdx => {
+          //   return this.suppliers[suppliersIdx]
+          // })
+      } else {
+        return this.suppliers
+      }
+    }
   }
 }
 </script>
