@@ -6,15 +6,36 @@
 
     <div class="show-list">
       <ul class="mdl-list">
-        <li class="mdl-list__item mdl-list__item--two-line" v-for="supplier in filterSuppliers">
+        <li class="mdl-list__item mdl-list__item--two-line" v-for="(supplier, supplierIdx) in filterSuppliers">
           <span class="mdl-list__item-primary-content">
             <i class="material-icons mdl-list__item-icon">business</i>
             <span>{{ supplier.name }}</span>
             <span class="mdl-list__item-sub-title">{{ supplier.tel }}</span>
           </span>
+          <span class="mdl-list__item-secondary-content">
+            <!-- <span class="mdl-list__item-secondary-info">Actor</span> -->
+            <a class="mdl-list__item-secondary-action" @click="comfirmDelSupplier(supplierIdx)"><i class="material-icons">delete</i></a>
+          </span>
         </li>
       </ul>
     </div>
+
+    <mdl-dialog ref="comfirmDelete" title="確認刪除?">
+      <ul class="mdl-list">
+        <li class="mdl-list__item mdl-list__item--two-line">
+          <span class="mdl-list__item-primary-content">
+            <i class="material-icons mdl-list__item-icon">business</i>
+            <span>{{ deleteSupplierInfo.name }}</span>
+            <span class="mdl-list__item-sub-title">{{ deleteSupplierInfo.tel }}</span>
+          </span>
+        </li>
+      </ul>
+      <template slot="actions">
+        <mdl-button primary @click.native="delSupplier(deleteSupplierInfo.idx)">確認</mdl-button>
+        <mdl-button @click.native="$refs.comfirmDelete.close">取消</mdl-button>
+      </template>
+    </mdl-dialog>
+
   </section>
 
 </template>
@@ -40,7 +61,12 @@ export default {
   data () {
     return {
       suppliers: {},
-      keyword: ''
+      keyword: '',
+      deleteSupplierInfo: {
+        idx: '',
+        name: '',
+        tel: ''
+      }
     }
   },
   methods: {
@@ -52,6 +78,31 @@ export default {
         name: 'add name'
       }
       this.$forceUpdate()
+    },
+    comfirmDelSupplier (supplierIdx) {
+      this.deleteSupplierInfo.idx = supplierIdx
+      this.deleteSupplierInfo.name = this.suppliers[supplierIdx].name
+      this.deleteSupplierInfo.tel = this.suppliers[supplierIdx].tel
+      this.$refs.comfirmDelete.open()
+    },
+    delSupplier (supplierIdx) {
+      const db = this.global.db
+      const supplierRef = db.ref('/supplier')
+
+      supplierRef.child(supplierIdx).remove()
+        .then(snapshot => {
+          console.log('delete success')
+          this.deleteSupplierInfo.idx = ''
+          this.deleteSupplierInfo.name = ''
+          this.deleteSupplierInfo.tel = ''
+          this.$refs.comfirmDelete.close()
+        })
+        .catch(error => {
+          if (error) {
+            console.log('delete failed')
+          }
+          this.$refs.comfirmDelete.close()
+        })
     }
   },
   computed: {
