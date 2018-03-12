@@ -46,7 +46,7 @@
                 <router-link to="/supplier" @click.native="changeTitle" class="icon-search" data-main="廠商資料" data-sub="查詢">查詢</router-link>
               </li>
               <li class="sub">
-                <router-link to="/supplier/new"  @click.native="changeTitle"class="icon-plus" data-main="廠商資料" data-sub="新建">新建</router-link>
+                <router-link to="/supplier/new"  @click.native="changeTitle" class="icon-plus" data-main="廠商資料" data-sub="新建">新建</router-link>
               </li>
             </ul>
           </li>

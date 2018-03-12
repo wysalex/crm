@@ -19,16 +19,18 @@
 <script lang="js">
 export default {
   name: 'supplier',
-  beforeMount () {
+  mounted () {
     const db = this.global.db
     var self = this
     var suppliers = this.suppliers
     let supplierRef = db.ref('/supplier')
 
-    supplierRef.orderByChild('name').once('value', function (snapshot) {
-      snapshot.forEach(function (child) {
-        suppliers[child.key] = child.val()
-      })
+    supplierRef.on('child_added', function (snapshot) {
+      suppliers[snapshot.key] = snapshot.val()
+      self.$forceUpdate()
+    })
+    supplierRef.on('child_removed', function (snapshot) {
+      delete suppliers[snapshot.key]
       self.$forceUpdate()
     })
   },
@@ -49,7 +51,6 @@ export default {
     }
   },
   computed: {
-
   }
 }
 </script>
