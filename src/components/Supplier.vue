@@ -32,7 +32,7 @@
       </ul>
       <template slot="actions">
         <mdl-button primary @click.native="delSupplier(deleteSupplierInfo.idx)">確認</mdl-button>
-        <mdl-button @click.native="$refs.comfirmDelete.close">取消</mdl-button>
+        <mdl-button @click.native="closeDelDialog">取消</mdl-button>
       </template>
     </mdl-dialog>
 
@@ -44,23 +44,21 @@
 export default {
   name: 'supplier',
   mounted () {
-    const db = this.global.db
-    var self = this
-    var suppliers = this.suppliers
-    let supplierRef = db.ref('/supplier')
+    // const db = this.global.db
+    // let supplierRef = db.ref('/supplier')
 
-    supplierRef.on('child_added', function (snapshot) {
-      suppliers[snapshot.key] = snapshot.val()
-      self.$forceUpdate()
-    })
-    supplierRef.on('child_removed', function (snapshot) {
-      delete suppliers[snapshot.key]
-      self.$forceUpdate()
-    })
+    // supplierRef.on('child_added', snapshot => {
+    //   this.suppliers[snapshot.key] = snapshot.val()
+    //   this.$forceUpdate()
+    // })
+    // supplierRef.on('child_removed', snapshot => {
+    //   delete this.suppliers[snapshot.key]
+    //   this.$forceUpdate()
+    // })
   },
   data () {
     return {
-      suppliers: {},
+      // suppliers: {},
       keyword: '',
       deleteSupplierInfo: {
         idx: '',
@@ -69,21 +67,23 @@ export default {
       }
     }
   },
+  firebase () {
+    return {
+      suppliers: this.global.db.ref('/supplier')
+    }
+  },
   methods: {
-    check () {
-      console.log(this.suppliers)
-    },
-    add () {
-      this.suppliers.a = {
-        name: 'add name'
-      }
-      this.$forceUpdate()
-    },
     comfirmDelSupplier (supplierIdx) {
-      this.deleteSupplierInfo.idx = supplierIdx
+      this.deleteSupplierInfo.idx = this.suppliers[supplierIdx]['.key']
       this.deleteSupplierInfo.name = this.suppliers[supplierIdx].name
       this.deleteSupplierInfo.tel = this.suppliers[supplierIdx].tel
       this.$refs.comfirmDelete.open()
+    },
+    closeDelDialog () {
+      this.deleteSupplierInfo.idx = ''
+      this.deleteSupplierInfo.name = ''
+      this.deleteSupplierInfo.tel = ''
+      this.$refs.comfirmDelete.close()
     },
     delSupplier (supplierIdx) {
       const db = this.global.db

@@ -43,7 +43,7 @@ const globals = {
 }
 
 Vue.mixin({
-  created: function () {
+  beforeCreate: function () {
     this.global = globals
   }
 })
