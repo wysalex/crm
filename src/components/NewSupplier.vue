@@ -24,7 +24,6 @@
         <mdl-button class="mdl-js-ripple-effect" @click.native="create">建立</mdl-button>
       </footer>
     </div>
-    <mdl-snackbar display-on="supplierCreated"></mdl-snackbar>
   </div>
 
 </template>
@@ -55,22 +54,23 @@ export default {
       const db = this.global.db
       const router = this.global.router
 
-      var self = this
-
-      let form = this.form
       let newSupplier = db.ref('/supplier').push()
-      newSupplier.set(form)
-        .then(function () {
+      newSupplier.set(this.form)
+        .then(() => {
           console.log('Synchronization succeeded')
-          newSupplier.toString()
-          self.$root.$emit('supplierCreated', {
-            message: 'Create succeeded',
-            timeout: 2000
+          router.push({
+            path: '/supplier',
+            query: {
+              newItem: true
+            }
           })
-          router.push('/supplier')
         })
-        .catch(function (error) {
+        .catch(error => {
           if (error) {
+            this.$root.$emit('supplierCreated', {
+              message: '建立失敗',
+              timeout: 2000
+            })
             console.log('Synchronization failed')
           }
         })

@@ -36,6 +36,8 @@
       </template>
     </mdl-dialog>
 
+    <mdl-snackbar display-on="supplierCreated"></mdl-snackbar>
+
   </section>
 
 </template>
@@ -55,6 +57,12 @@ export default {
     //   delete this.suppliers[snapshot.key]
     //   this.$forceUpdate()
     // })
+    if (this.$route.query.newItem) {
+      this.$root.$emit('supplierCreated', {
+        message: '建立成功',
+        timeout: 2000
+      })
+    }
   },
   data () {
     return {
@@ -92,9 +100,9 @@ export default {
       supplierRef.child(supplierIdx).remove()
         .then(snapshot => {
           console.log('delete success')
-          this.deleteSupplierInfo.idx = ''
-          this.deleteSupplierInfo.name = ''
-          this.deleteSupplierInfo.tel = ''
+          Object.keys(this.deleteSupplierInfo).map(objectKey => {
+            this.deleteSupplierInfo[objectKey] = ''
+          })
           this.$refs.comfirmDelete.close()
         })
         .catch(error => {
@@ -107,8 +115,8 @@ export default {
   },
   computed: {
     filterSuppliers () {
-      var keyword = this.keyword.trim()
-      if (this.keyword.trim() !== '') {
+      var keyword = this.keyword.trim().toLowerCase()
+      if (keyword !== '') {
         return Object.keys(this.suppliers)
           .reduce((r, suppliersIdx) => {
             if (this.suppliers[suppliersIdx].name.toLowerCase().indexOf(keyword) > -1) {
@@ -134,9 +142,7 @@ export default {
   @import "~compass/_compass";
   @import "~scss/lib/_custom";
 
-  .supplier {
-
-  }
+  $rowWidth: 360px;
 
   .show-list {
     width: 100%;
@@ -144,7 +150,7 @@ export default {
 
     > .mdl-list {
       width: 100%;
-      max-width: 360px;
+      max-width: $rowWidth
     }
   }
 
