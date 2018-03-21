@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Hello from '@/components/Hello'
+import MainPage from '@/components/MainPage'
 import Hey from '@/components/Hey'
 import Customer from '@/components/Customer'
 import NewCustomer from '@/components/NewCustomer'
 import Supplier from '@/components/Supplier'
 import NewSupplier from '@/components/NewSupplier'
+
+import PageNotFound from '@/components/PageNotFound'
 
 Vue.use(Router)
 
@@ -15,8 +17,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: Hello
+      name: 'MainPage',
+      component: MainPage
     }, {
       path: '/hey',
       name: 'Hey',
@@ -37,6 +39,9 @@ export default new Router({
       path: '/supplier/new',
       name: 'NewSupplier',
       component: NewSupplier
+    }, {
+      path: '*',
+      component: PageNotFound
     }
   ]
 })
