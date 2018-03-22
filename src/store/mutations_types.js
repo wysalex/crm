@@ -1,0 +1,1 @@
+export const HAS_NEW_SUPPLIER = 'HAS_NEW_SUPPLIER'

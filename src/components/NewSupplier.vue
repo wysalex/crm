@@ -58,12 +58,10 @@ export default {
       newSupplier.set(this.form)
         .then(() => {
           console.log('Synchronization succeeded')
-          router.push({
-            path: '/supplier',
-            query: {
-              newItem: true
-            }
+          this.$store.dispatch('toggleNewSupplier', {
+            needShowTip: true
           })
+          router.push('/supplier')
         })
         .catch(error => {
           if (error) {

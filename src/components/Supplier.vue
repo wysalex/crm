@@ -57,10 +57,13 @@ export default {
     //   delete this.suppliers[snapshot.key]
     //   this.$forceUpdate()
     // })
-    if (this.$route.query.newItem) {
+    if (this.$store.state.hasNewSupplier) {
       this.$root.$emit('supplierCreated', {
         message: '建立成功',
         timeout: 2000
+      })
+      this.$store.dispatch('toggleNewSupplier', {
+        needShowTip: false
       })
     }
   },
