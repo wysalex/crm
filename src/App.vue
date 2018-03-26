@@ -1,58 +1,64 @@
 <template>
   <div id="app">
-    <input type="checkbox" class="interface-status" id="menuStatus" name="menu-status">
-    <label for="menuStatus" id="mCover"></label>
 
-    <header id="header">
-      <router-link to="/" tag="div" class="band">
-        <span class="icon-home"></span>
-        <span>XXX有限公司</span>
-      </router-link>
-      <label class="menu-button" for="menuStatus">
-        <span class="hamburger"></span>
-        <span class="hamburger"></span>
-        <span class="hamburger"></span>
-      </label>
-      <div class="func" id="func">
-        <!-- <span class="main">{{ func.main }}</span> -->
-        <!-- <span class="to"></span> -->
-        <!-- <span class="sub">{{ func.sub }}</span> -->
+    <!-- vuetify -->
+    <v-app id="vuetifyApp">
+
+      <input type="checkbox" class="interface-status" id="menuStatus" name="menu-status" checked="checked">
+      <label for="menuStatus" id="mCover"></label>
+
+      <header id="header">
+        <router-link to="/" tag="div" class="band">
+          <span class="icon-home"></span>
+          <span>XXX Co.</span>
+        </router-link>
+        <label class="menu-button" for="menuStatus">
+          <span class="hamburger"></span>
+          <span class="hamburger"></span>
+          <span class="hamburger"></span>
+        </label>
+        <div class="func" id="func">
+          <!-- <span class="main">{{ func.main }}</span> -->
+          <!-- <span class="to"></span> -->
+          <!-- <span class="sub">{{ func.sub }}</span> -->
+        </div>
+        <div class="keep"></div>
+      </header>
+
+      <div id="main">
+        <router-view></router-view>
       </div>
-      <div class="keep"></div>
-    </header>
 
-    <div id="main">
-      <router-view></router-view>
-    </div>
-
-    <div id="menu">
-      <div class="container">
-        <ul>
-          <li class="group customer" :class="{ active: isActive.customer }">
-            <div @click="isActive.customer = !isActive.customer"><span class="icon icon-users"></span><span data-main="客戶資料">客戶資料</span></div>
-            <ul>
-              <li class="sub">
-                <router-link to="/customer" @click.native="changeTitle" class="icon-search" data-main="客戶資料" data-sub="查詢">查詢</router-link>
-              </li>
-              <li class="sub">
-                <router-link to="/customer/new" @click.native="changeTitle" class="icon-plus" data-main="客戶資料" data-sub="新建">新建</router-link>
-              </li>
-            </ul>
-          </li>
-          <li class="group supplier" :class="{ active: isActive.supplier }">
-            <div @click="isActive.supplier = !isActive.supplier"><span class="icon icon-account_balance"></span><span data-main="廠商資料">廠商資料</span></div>
-            <ul>
-              <li class="sub">
-                <router-link to="/supplier" @click.native="changeTitle" class="icon-search" data-main="廠商資料" data-sub="查詢">查詢</router-link>
-              </li>
-              <li class="sub">
-                <router-link to="/supplier/new"  @click.native="changeTitle" class="icon-plus" data-main="廠商資料" data-sub="新建">新建</router-link>
-              </li>
-            </ul>
-          </li>
-        </ul>
+      <div id="menu">
+        <div class="container">
+          <ul>
+            <li class="group customer" :class="{ active: isActive.customer }">
+              <div @click="isActive.customer = !isActive.customer"><span class="icon icon-users"></span><span data-main="客戶資料">客戶資料</span></div>
+              <ul>
+                <li class="sub">
+                  <router-link to="/customer" @click.native="changeTitle" class="icon-search" data-main="客戶資料" data-sub="查詢">查詢</router-link>
+                </li>
+                <li class="sub">
+                  <router-link to="/customer/new" @click.native="changeTitle" class="icon-plus" data-main="客戶資料" data-sub="新建">新建</router-link>
+                </li>
+              </ul>
+            </li>
+            <li class="group supplier" :class="{ active: isActive.supplier }">
+              <div @click="isActive.supplier = !isActive.supplier"><span class="icon icon-account_balance"></span><span data-main="廠商資料">廠商資料</span></div>
+              <ul>
+                <li class="sub">
+                  <router-link to="/supplier" @click.native="changeTitle" class="icon-search" data-main="廠商資料" data-sub="查詢">查詢</router-link>
+                </li>
+                <li class="sub">
+                  <router-link to="/supplier/new"  @click.native="changeTitle" class="icon-plus" data-main="廠商資料" data-sub="新建">新建</router-link>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+
+    </v-app>
 
   </div>
 </template>
@@ -134,6 +140,10 @@ html {
   // color: #2c3e50;
   // margin-top: 60px;
   height: 100%;
+}
+
+#vuetifyApp {
+  background-color: rgba(235, 235, 235, 1.00);
 }
 
 $headerHeight: 60px;

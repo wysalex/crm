@@ -8,11 +8,14 @@ import router from './router'
 import VueMdl from 'vue-mdl'
 import firebase from 'firebase'
 import VueFire from 'vuefire'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
 
 Vue.config.productionTip = false
 
 Vue.use(VueFire)
 Vue.use(VueMdl)
+Vue.use(Vuetify)
 
 // Initialize Firebase
 const firebaseConfig = {
