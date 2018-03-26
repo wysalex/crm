@@ -1,0 +1,93 @@
+[
+    {
+        "zip_code": 320,
+        "city_zh": "桃園市",
+        "district_zh": "中壢區",
+        "city_en": "Taoyuan City",
+        "district_en": "Zhongli Dist."
+    },
+    {
+        "zip_code": 324,
+        "city_zh": "桃園市",
+        "district_zh": "平鎮區",
+        "city_en": "Taoyuan City",
+        "district_en": "Pingzhen Dist."
+    },
+    {
+        "zip_code": 325,
+        "city_zh": "桃園市",
+        "district_zh": "龍潭區",
+        "city_en": "Taoyuan City",
+        "district_en": "Longtan Dist."
+    },
+    {
+        "zip_code": 326,
+        "city_zh": "桃園市",
+        "district_zh": "楊梅區",
+        "city_en": "Taoyuan City",
+        "district_en": "Yangmei Dist."
+    },
+    {
+        "zip_code": 327,
+        "city_zh": "桃園市",
+        "district_zh": "新屋區",
+        "city_en": "Taoyuan City",
+        "district_en": "Xinwu Dist."
+    },
+    {
+        "zip_code": 328,
+        "city_zh": "桃園市",
+        "district_zh": "觀音區",
+        "city_en": "Taoyuan City",
+        "district_en": "Guanyin Dist."
+    },
+    {
+        "zip_code": 330,
+        "city_zh": "桃園市",
+        "district_zh": "桃園區",
+        "city_en": "Taoyuan City",
+        "district_en": "Taoyuan Dist."
+    },
+    {
+        "zip_code": 333,
+        "city_zh": "桃園市",
+        "district_zh": "龜山區",
+        "city_en": "Taoyuan City",
+        "district_en": "Guishan Dist."
+    },
+    {
+        "zip_code": 334,
+        "city_zh": "桃園市",
+        "district_zh": "八德區",
+        "city_en": "Taoyuan City",
+        "district_en": "Bade Dist."
+    },
+    {
+        "zip_code": 335,
+        "city_zh": "桃園市",
+        "district_zh": "大溪區",
+        "city_en": "Taoyuan City",
+        "district_en": "Daxi Dist."
+    },
+    {
+        "zip_code": 336,
+        "city_zh": "桃園市",
+        "district_zh": "復興區",
+        "city_en": "Taoyuan City",
+        "district_en": "Fuxing Dist."
+    },
+    {
+        "zip_code": 337,
+        "city_zh": "桃園市",
+        "district_zh": "大園區",
+        "city_en": "Taoyuan City",
+        "district_en": "Dayuan Dist."
+    },
+    {
+        "zip_code": 338,
+        "city_zh": "桃園市",
+        "district_zh": "蘆竹區",
+        "city_en": "Taoyuan City",
+        "district_en": "Luzhu Dist."
+    }
+]

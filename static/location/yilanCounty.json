@@ -1,0 +1,86 @@
+[
+    {
+        "zip_code": 260,
+        "city_zh": "宜蘭縣",
+        "district_zh": "宜蘭市",
+        "city_en": "Yilan County",
+        "district_en": "Yilan City"
+    },
+    {
+        "zip_code": 261,
+        "city_zh": "宜蘭縣",
+        "district_zh": "頭城鎮",
+        "city_en": "Yilan County",
+        "district_en": "Toucheng Township"
+    },
+    {
+        "zip_code": 262,
+        "city_zh": "宜蘭縣",
+        "district_zh": "礁溪鄉",
+        "city_en": "Yilan County",
+        "district_en": "Jiaoxi Township"
+    },
+    {
+        "zip_code": 263,
+        "city_zh": "宜蘭縣",
+        "district_zh": "壯圍鄉",
+        "city_en": "Yilan County",
+        "district_en": "Zhuangwei Township"
+    },
+    {
+        "zip_code": 264,
+        "city_zh": "宜蘭縣",
+        "district_zh": "員山鄉",
+        "city_en": "Yilan County",
+        "district_en": "Yuanshan Township"
+    },
+    {
+        "zip_code": 265,
+        "city_zh": "宜蘭縣",
+        "district_zh": "羅東鎮",
+        "city_en": "Yilan County",
+        "district_en": "Luodong Township"
+    },
+    {
+        "zip_code": 266,
+        "city_zh": "宜蘭縣",
+        "district_zh": "三星鄉",
+        "city_en": "Yilan County",
+        "district_en": "Sanxing Township"
+    },
+    {
+        "zip_code": 267,
+        "city_zh": "宜蘭縣",
+        "district_zh": "大同鄉",
+        "city_en": "Yilan County",
+        "district_en": "Datong Township"
+    },
+    {
+        "zip_code": 268,
+        "city_zh": "宜蘭縣",
+        "district_zh": "五結鄉",
+        "city_en": "Yilan County",
+        "district_en": "Wujie Township"
+    },
+    {
+        "zip_code": 269,
+        "city_zh": "宜蘭縣",
+        "district_zh": "冬山鄉",
+        "city_en": "Yilan County",
+        "district_en": "Dongshan Township"
+    },
+    {
+        "zip_code": 270,
+        "city_zh": "宜蘭縣",
+        "district_zh": "蘇澳鎮",
+        "city_en": "Yilan County",
+        "district_en": "Su’ao Township"
+    },
+    {
+        "zip_code": 272,
+        "city_zh": "宜蘭縣",
+        "district_zh": "南澳鄉",
+        "city_en": "Yilan County",
+        "district_en": "Nan’ao Township"
+    }
+]

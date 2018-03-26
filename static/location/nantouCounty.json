@@ -1,0 +1,93 @@
+[
+    {
+        "zip_code": 540,
+        "city_zh": "南投縣",
+        "district_zh": "南投市",
+        "city_en": "Nantou County",
+        "district_en": "Nantou City"
+    },
+    {
+        "zip_code": 541,
+        "city_zh": "南投縣",
+        "district_zh": "中寮鄉",
+        "city_en": "Nantou County",
+        "district_en": "Zhongliao Township"
+    },
+    {
+        "zip_code": 542,
+        "city_zh": "南投縣",
+        "district_zh": "草屯鎮",
+        "city_en": "Nantou County",
+        "district_en": "Caotun Township"
+    },
+    {
+        "zip_code": 544,
+        "city_zh": "南投縣",
+        "district_zh": "國姓鄉",
+        "city_en": "Nantou County",
+        "district_en": "Guoxing Township"
+    },
+    {
+        "zip_code": 545,
+        "city_zh": "南投縣",
+        "district_zh": "埔里鎮",
+        "city_en": "Nantou County",
+        "district_en": "Puli Township"
+    },
+    {
+        "zip_code": 546,
+        "city_zh": "南投縣",
+        "district_zh": "仁愛鄉",
+        "city_en": "Nantou County",
+        "district_en": "Ren’ai Township"
+    },
+    {
+        "zip_code": 551,
+        "city_zh": "南投縣",
+        "district_zh": "名間鄉",
+        "city_en": "Nantou County",
+        "district_en": "Mingjian Township"
+    },
+    {
+        "zip_code": 552,
+        "city_zh": "南投縣",
+        "district_zh": "集集鎮",
+        "city_en": "Nantou County",
+        "district_en": "Jiji Township"
+    },
+    {
+        "zip_code": 553,
+        "city_zh": "南投縣",
+        "district_zh": "水里鄉",
+        "city_en": "Nantou County",
+        "district_en": "Shuili Township"
+    },
+    {
+        "zip_code": 555,
+        "city_zh": "南投縣",
+        "district_zh": "魚池鄉",
+        "city_en": "Nantou County",
+        "district_en": "Yuchi Township"
+    },
+    {
+        "zip_code": 556,
+        "city_zh": "南投縣",
+        "district_zh": "信義鄉",
+        "city_en": "Nantou County",
+        "district_en": "Xinyi Township"
+    },
+    {
+        "zip_code": 557,
+        "city_zh": "南投縣",
+        "district_zh": "竹山鎮",
+        "city_en": "Nantou County",
+        "district_en": "Zhushan Township"
+    },
+    {
+        "zip_code": 558,
+        "city_zh": "南投縣",
+        "district_zh": "鹿谷鄉",
+        "city_en": "Nantou County",
+        "district_en": "Lugu Township"
+    }
+]

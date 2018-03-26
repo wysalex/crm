@@ -1,0 +1,44 @@
+[
+    {
+        "zip_code": 890,
+        "city_zh": "金門縣",
+        "district_zh": "金沙鎮",
+        "city_en": "Kinmen County",
+        "district_en": "Jinsha Township"
+    },
+    {
+        "zip_code": 891,
+        "city_zh": "金門縣",
+        "district_zh": "金湖鎮",
+        "city_en": "Kinmen County",
+        "district_en": "Jinhu Township"
+    },
+    {
+        "zip_code": 892,
+        "city_zh": "金門縣",
+        "district_zh": "金寧鄉",
+        "city_en": "Kinmen County",
+        "district_en": "Jinning Township"
+    },
+    {
+        "zip_code": 893,
+        "city_zh": "金門縣",
+        "district_zh": "金城鎮",
+        "city_en": "Kinmen County",
+        "district_en": "Jincheng Township"
+    },
+    {
+        "zip_code": 894,
+        "city_zh": "金門縣",
+        "district_zh": "烈嶼鄉",
+        "city_en": "Kinmen County",
+        "district_en": "Lieyu Township"
+    },
+    {
+        "zip_code": 896,
+        "city_zh": "金門縣",
+        "district_zh": "烏坵鄉",
+        "city_en": "Kinmen County",
+        "district_en": "Wuqiu Township"
+    }
+]

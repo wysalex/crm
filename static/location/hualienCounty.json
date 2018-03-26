@@ -1,0 +1,93 @@
+[
+    {
+        "zip_code": 970,
+        "city_zh": "花蓮縣",
+        "district_zh": "花蓮市",
+        "city_en": "Hualien County",
+        "district_en": "Hualien City"
+    },
+    {
+        "zip_code": 971,
+        "city_zh": "花蓮縣",
+        "district_zh": "新城鄉",
+        "city_en": "Hualien County",
+        "district_en": "Xincheng Township"
+    },
+    {
+        "zip_code": 972,
+        "city_zh": "花蓮縣",
+        "district_zh": "秀林鄉",
+        "city_en": "Hualien County",
+        "district_en": "Xiulin Township"
+    },
+    {
+        "zip_code": 973,
+        "city_zh": "花蓮縣",
+        "district_zh": "吉安鄉",
+        "city_en": "Hualien County",
+        "district_en": "Ji’an Township"
+    },
+    {
+        "zip_code": 974,
+        "city_zh": "花蓮縣",
+        "district_zh": "壽豐鄉",
+        "city_en": "Hualien County",
+        "district_en": "Shoufeng Township"
+    },
+    {
+        "zip_code": 975,
+        "city_zh": "花蓮縣",
+        "district_zh": "鳳林鎮",
+        "city_en": "Hualien County",
+        "district_en": "Fenglin Township"
+    },
+    {
+        "zip_code": 976,
+        "city_zh": "花蓮縣",
+        "district_zh": "光復鄉",
+        "city_en": "Hualien County",
+        "district_en": "Guangfu Township"
+    },
+    {
+        "zip_code": 977,
+        "city_zh": "花蓮縣",
+        "district_zh": "豐濱鄉",
+        "city_en": "Hualien County",
+        "district_en": "Fengbin Township"
+    },
+    {
+        "zip_code": 978,
+        "city_zh": "花蓮縣",
+        "district_zh": "瑞穗鄉",
+        "city_en": "Hualien County",
+        "district_en": "Ruisui Township"
+    },
+    {
+        "zip_code": 979,
+        "city_zh": "花蓮縣",
+        "district_zh": "萬榮鄉",
+        "city_en": "Hualien County",
+        "district_en": "Wanrong Township"
+    },
+    {
+        "zip_code": 981,
+        "city_zh": "花蓮縣",
+        "district_zh": "玉里鎮",
+        "city_en": "Hualien County",
+        "district_en": "Yuli Township"
+    },
+    {
+        "zip_code": 982,
+        "city_zh": "花蓮縣",
+        "district_zh": "卓溪鄉",
+        "city_en": "Hualien County",
+        "district_en": "Zhuoxi Township"
+    },
+    {
+        "zip_code": 983,
+        "city_zh": "花蓮縣",
+        "district_zh": "富里鄉",
+        "city_en": "Hualien County",
+        "district_en": "Fuli Township"
+    }
+]

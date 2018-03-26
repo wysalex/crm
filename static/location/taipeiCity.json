@@ -1,0 +1,86 @@
+[
+    {
+        "zip_code": 100,
+        "city_zh": "臺北市",
+        "district_zh": "中正區",
+        "city_en": "Taipei City",
+        "district_en": "Zhongzheng Dist."
+    },
+    {
+        "zip_code": 103,
+        "city_zh": "臺北市",
+        "district_zh": "大同區",
+        "city_en": "Taipei City",
+        "district_en": "Datong Dist."
+    },
+    {
+        "zip_code": 104,
+        "city_zh": "臺北市",
+        "district_zh": "中山區",
+        "city_en": "Taipei City",
+        "district_en": "Zhongshan Dist."
+    },
+    {
+        "zip_code": 105,
+        "city_zh": "臺北市",
+        "district_zh": "松山區",
+        "city_en": "Taipei City",
+        "district_en": "Songshan Dist."
+    },
+    {
+        "zip_code": 106,
+        "city_zh": "臺北市",
+        "district_zh": "大安區",
+        "city_en": "Taipei City",
+        "district_en": "Da’an Dist."
+    },
+    {
+        "zip_code": 108,
+        "city_zh": "臺北市",
+        "district_zh": "萬華區",
+        "city_en": "Taipei City",
+        "district_en": "Wanhua Dist."
+    },
+    {
+        "zip_code": 110,
+        "city_zh": "臺北市",
+        "district_zh": "信義區",
+        "city_en": "Taipei City",
+        "district_en": "Xinyi Dist."
+    },
+    {
+        "zip_code": 111,
+        "city_zh": "臺北市",
+        "district_zh": "士林區",
+        "city_en": "Taipei City",
+        "district_en": "Shilin Dist."
+    },
+    {
+        "zip_code": 112,
+        "city_zh": "臺北市",
+        "district_zh": "北投區",
+        "city_en": "Taipei City",
+        "district_en": "Beitou Dist."
+    },
+    {
+        "zip_code": 114,
+        "city_zh": "臺北市",
+        "district_zh": "內湖區",
+        "city_en": "Taipei City",
+        "district_en": "Neihu Dist."
+    },
+    {
+        "zip_code": 115,
+        "city_zh": "臺北市",
+        "district_zh": "南港區",
+        "city_en": "Taipei City",
+        "district_en": "Nangang Dist."
+    },
+    {
+        "zip_code": 116,
+        "city_zh": "臺北市",
+        "district_zh": "文山區",
+        "city_en": "Taipei City",
+        "district_en": "Wenshan Dist."
+    }
+]

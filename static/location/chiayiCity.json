@@ -1,0 +1,16 @@
+[
+    {
+        "zip_code": 600,
+        "city_zh": "嘉義市",
+        "district_zh": "東區",
+        "city_en": "Chiayi City",
+        "district_en": "East Dist."
+    },
+    {
+        "zip_code": 600,
+        "city_zh": "嘉義市",
+        "district_zh": "西區",
+        "city_en": "Chiayi City",
+        "district_en": "West Dist."
+    }
+]

@@ -1,0 +1,114 @@
+[
+    {
+        "zip_code": 950,
+        "city_zh": "臺東縣",
+        "district_zh": "臺東市",
+        "city_en": "Taitung County",
+        "district_en": "Taitung City"
+    },
+    {
+        "zip_code": 951,
+        "city_zh": "臺東縣",
+        "district_zh": "綠島鄉",
+        "city_en": "Taitung County",
+        "district_en": "Ludao Township"
+    },
+    {
+        "zip_code": 952,
+        "city_zh": "臺東縣",
+        "district_zh": "蘭嶼鄉",
+        "city_en": "Taitung County",
+        "district_en": "Lanyu Township"
+    },
+    {
+        "zip_code": 953,
+        "city_zh": "臺東縣",
+        "district_zh": "延平鄉",
+        "city_en": "Taitung County",
+        "district_en": "Yanping Township"
+    },
+    {
+        "zip_code": 954,
+        "city_zh": "臺東縣",
+        "district_zh": "卑南鄉",
+        "city_en": "Taitung County",
+        "district_en": "Beinan Township"
+    },
+    {
+        "zip_code": 955,
+        "city_zh": "臺東縣",
+        "district_zh": "鹿野鄉",
+        "city_en": "Taitung County",
+        "district_en": "Luye Township"
+    },
+    {
+        "zip_code": 956,
+        "city_zh": "臺東縣",
+        "district_zh": "關山鎮",
+        "city_en": "Taitung County",
+        "district_en": "Guanshan Township"
+    },
+    {
+        "zip_code": 957,
+        "city_zh": "臺東縣",
+        "district_zh": "海端鄉",
+        "city_en": "Taitung County",
+        "district_en": "Haiduan Township"
+    },
+    {
+        "zip_code": 958,
+        "city_zh": "臺東縣",
+        "district_zh": "池上鄉",
+        "city_en": "Taitung County",
+        "district_en": "Chishang Township"
+    },
+    {
+        "zip_code": 959,
+        "city_zh": "臺東縣",
+        "district_zh": "東河鄉",
+        "city_en": "Taitung County",
+        "district_en": "Donghe Township"
+    },
+    {
+        "zip_code": 961,
+        "city_zh": "臺東縣",
+        "district_zh": "成功鎮",
+        "city_en": "Taitung County",
+        "district_en": "Chenggong Township"
+    },
+    {
+        "zip_code": 962,
+        "city_zh": "臺東縣",
+        "district_zh": "長濱鄉",
+        "city_en": "Taitung County",
+        "district_en": "Changbin Township"
+    },
+    {
+        "zip_code": 963,
+        "city_zh": "臺東縣",
+        "district_zh": "太麻里鄉",
+        "city_en": "Taitung County",
+        "district_en": "Taimali Township"
+    },
+    {
+        "zip_code": 964,
+        "city_zh": "臺東縣",
+        "district_zh": "金峰鄉",
+        "city_en": "Taitung County",
+        "district_en": "Jinfeng Township"
+    },
+    {
+        "zip_code": 965,
+        "city_zh": "臺東縣",
+        "district_zh": "大武鄉",
+        "city_en": "Taitung County",
+        "district_en": "Dawu Township"
+    },
+    {
+        "zip_code": 966,
+        "city_zh": "臺東縣",
+        "district_zh": "達仁鄉",
+        "city_en": "Taitung County",
+        "district_en": "Daren Township"
+    }
+]

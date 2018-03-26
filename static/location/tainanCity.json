@@ -1,0 +1,261 @@
+[
+    {
+        "zip_code": 700,
+        "city_zh": "臺南市",
+        "district_zh": "中西區",
+        "city_en": "Tainan City",
+        "district_en": "West Central Dist."
+    },
+    {
+        "zip_code": 701,
+        "city_zh": "臺南市",
+        "district_zh": "東區",
+        "city_en": "Tainan City",
+        "district_en": "East Dist."
+    },
+    {
+        "zip_code": 702,
+        "city_zh": "臺南市",
+        "district_zh": "南區",
+        "city_en": "Tainan City",
+        "district_en": "South Dist."
+    },
+    {
+        "zip_code": 704,
+        "city_zh": "臺南市",
+        "district_zh": "北區",
+        "city_en": "Tainan City",
+        "district_en": "North Dist."
+    },
+    {
+        "zip_code": 708,
+        "city_zh": "臺南市",
+        "district_zh": "安平區",
+        "city_en": "Tainan City",
+        "district_en": "Anping Dist."
+    },
+    {
+        "zip_code": 709,
+        "city_zh": "臺南市",
+        "district_zh": "安南區",
+        "city_en": "Tainan City",
+        "district_en": "Annan Dist."
+    },
+    {
+        "zip_code": 710,
+        "city_zh": "臺南市",
+        "district_zh": "永康區",
+        "city_en": "Tainan City",
+        "district_en": "Yongkang Dist."
+    },
+    {
+        "zip_code": 711,
+        "city_zh": "臺南市",
+        "district_zh": "歸仁區",
+        "city_en": "Tainan City",
+        "district_en": "Guiren Dist."
+    },
+    {
+        "zip_code": 712,
+        "city_zh": "臺南市",
+        "district_zh": "新化區",
+        "city_en": "Tainan City",
+        "district_en": "Xinhua Dist."
+    },
+    {
+        "zip_code": 713,
+        "city_zh": "臺南市",
+        "district_zh": "左鎮區",
+        "city_en": "Tainan City",
+        "district_en": "Zuozhen Dist."
+    },
+    {
+        "zip_code": 714,
+        "city_zh": "臺南市",
+        "district_zh": "玉井區",
+        "city_en": "Tainan City",
+        "district_en": "Yujing Dist."
+    },
+    {
+        "zip_code": 715,
+        "city_zh": "臺南市",
+        "district_zh": "楠西區",
+        "city_en": "Tainan City",
+        "district_en": "Nanxi Dist."
+    },
+    {
+        "zip_code": 716,
+        "city_zh": "臺南市",
+        "district_zh": "南化區",
+        "city_en": "Tainan City",
+        "district_en": "Nanhua Dist."
+    },
+    {
+        "zip_code": 717,
+        "city_zh": "臺南市",
+        "district_zh": "仁德區",
+        "city_en": "Tainan City",
+        "district_en": "Rende Dist."
+    },
+    {
+        "zip_code": 718,
+        "city_zh": "臺南市",
+        "district_zh": "關廟區",
+        "city_en": "Tainan City",
+        "district_en": "Guanmiao Dist."
+    },
+    {
+        "zip_code": 719,
+        "city_zh": "臺南市",
+        "district_zh": "龍崎區",
+        "city_en": "Tainan City",
+        "district_en": "Longqi Dist."
+    },
+    {
+        "zip_code": 720,
+        "city_zh": "臺南市",
+        "district_zh": "官田區",
+        "city_en": "Tainan City",
+        "district_en": "Guantian Dist."
+    },
+    {
+        "zip_code": 721,
+        "city_zh": "臺南市",
+        "district_zh": "麻豆區",
+        "city_en": "Tainan City",
+        "district_en": "Madou Dist."
+    },
+    {
+        "zip_code": 722,
+        "city_zh": "臺南市",
+        "district_zh": "佳里區",
+        "city_en": "Tainan City",
+        "district_en": "Jiali Dist."
+    },
+    {
+        "zip_code": 723,
+        "city_zh": "臺南市",
+        "district_zh": "西港區",
+        "city_en": "Tainan City",
+        "district_en": "Xigang Dist."
+    },
+    {
+        "zip_code": 724,
+        "city_zh": "臺南市",
+        "district_zh": "七股區",
+        "city_en": "Tainan City",
+        "district_en": "Qigu Dist."
+    },
+    {
+        "zip_code": 725,
+        "city_zh": "臺南市",
+        "district_zh": "將軍區",
+        "city_en": "Tainan City",
+        "district_en": "Jiangjun Dist."
+    },
+    {
+        "zip_code": 726,
+        "city_zh": "臺南市",
+        "district_zh": "學甲區",
+        "city_en": "Tainan City",
+        "district_en": "Xuejia Dist."
+    },
+    {
+        "zip_code": 727,
+        "city_zh": "臺南市",
+        "district_zh": "北門區",
+        "city_en": "Tainan City",
+        "district_en": "Beimen Dist."
+    },
+    {
+        "zip_code": 730,
+        "city_zh": "臺南市",
+        "district_zh": "新營區",
+        "city_en": "Tainan City",
+        "district_en": "Xinying Dist."
+    },
+    {
+        "zip_code": 731,
+        "city_zh": "臺南市",
+        "district_zh": "後壁區",
+        "city_en": "Tainan City",
+        "district_en": "Houbi Dist."
+    },
+    {
+        "zip_code": 732,
+        "city_zh": "臺南市",
+        "district_zh": "白河區",
+        "city_en": "Tainan City",
+        "district_en": "Baihe Dist."
+    },
+    {
+        "zip_code": 733,
+        "city_zh": "臺南市",
+        "district_zh": "東山區",
+        "city_en": "Tainan City",
+        "district_en": "Dongshan Dist."
+    },
+    {
+        "zip_code": 734,
+        "city_zh": "臺南市",
+        "district_zh": "六甲區",
+        "city_en": "Tainan City",
+        "district_en": "Liujia Dist."
+    },
+    {
+        "zip_code": 735,
+        "city_zh": "臺南市",
+        "district_zh": "下營區",
+        "city_en": "Tainan City",
+        "district_en": "Xiaying Dist."
+    },
+    {
+        "zip_code": 736,
+        "city_zh": "臺南市",
+        "district_zh": "柳營區",
+        "city_en": "Tainan City",
+        "district_en": "Liuying Dist."
+    },
+    {
+        "zip_code": 737,
+        "city_zh": "臺南市",
+        "district_zh": "鹽水區",
+        "city_en": "Tainan City",
+        "district_en": "Yanshui Dist."
+    },
+    {
+        "zip_code": 741,
+        "city_zh": "臺南市",
+        "district_zh": "善化區",
+        "city_en": "Tainan City",
+        "district_en": "Shanhua Dist."
+    },
+    {
+        "zip_code": 742,
+        "city_zh": "臺南市",
+        "district_zh": "大內區",
+        "city_en": "Tainan City",
+        "district_en": "Danei Dist."
+    },
+    {
+        "zip_code": 743,
+        "city_zh": "臺南市",
+        "district_zh": "山上區",
+        "city_en": "Tainan City",
+        "district_en": "Shanshang Dist."
+    },
+    {
+        "zip_code": 744,
+        "city_zh": "臺南市",
+        "district_zh": "新市區",
+        "city_en": "Tainan City",
+        "district_en": "Xinshi Dist."
+    },
+    {
+        "zip_code": 745,
+        "city_zh": "臺南市",
+        "district_zh": "安定區",
+        "city_en": "Tainan City",
+        "district_en": "Anding Dist."
+    }
+]

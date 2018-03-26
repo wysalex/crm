@@ -1,0 +1,30 @@
+[
+    {
+        "zip_code": 209,
+        "city_zh": "連江縣",
+        "district_zh": "南竿鄉",
+        "city_en": "Lienchiang County",
+        "district_en": "Nangan Township"
+    },
+    {
+        "zip_code": 210,
+        "city_zh": "連江縣",
+        "district_zh": "北竿鄉",
+        "city_en": "Lienchiang County",
+        "district_en": "Beigan Township"
+    },
+    {
+        "zip_code": 211,
+        "city_zh": "連江縣",
+        "district_zh": "莒光鄉",
+        "city_en": "Lienchiang County",
+        "district_en": "Juguang Township"
+    },
+    {
+        "zip_code": 212,
+        "city_zh": "連江縣",
+        "district_zh": "東引鄉",
+        "city_en": "Lienchiang County",
+        "district_en": "Dongyin Township"
+    }
+]

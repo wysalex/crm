@@ -1,0 +1,44 @@
+[
+    {
+        "zip_code": 880,
+        "city_zh": "澎湖縣",
+        "district_zh": "馬公市",
+        "city_en": "Penghu County",
+        "district_en": "Magong City"
+    },
+    {
+        "zip_code": 881,
+        "city_zh": "澎湖縣",
+        "district_zh": "西嶼鄉",
+        "city_en": "Penghu County",
+        "district_en": "Xiyu Township"
+    },
+    {
+        "zip_code": 882,
+        "city_zh": "澎湖縣",
+        "district_zh": "望安鄉",
+        "city_en": "Penghu County",
+        "district_en": "Wang’an Township"
+    },
+    {
+        "zip_code": 883,
+        "city_zh": "澎湖縣",
+        "district_zh": "七美鄉",
+        "city_en": "Penghu County",
+        "district_en": "Qimei Township"
+    },
+    {
+        "zip_code": 884,
+        "city_zh": "澎湖縣",
+        "district_zh": "白沙鄉",
+        "city_en": "Penghu County",
+        "district_en": "Baisha Township"
+    },
+    {
+        "zip_code": 885,
+        "city_zh": "澎湖縣",
+        "district_zh": "湖西鄉",
+        "city_en": "Penghu County",
+        "district_en": "Huxi Township"
+    }
+]

@@ -1,0 +1,51 @@
+[
+    {
+        "zip_code": 200,
+        "city_zh": "基隆市",
+        "district_zh": "仁愛區",
+        "city_en": "Keelung City",
+        "district_en": "Ren’ai Dist."
+    },
+    {
+        "zip_code": 201,
+        "city_zh": "基隆市",
+        "district_zh": "信義區",
+        "city_en": "Keelung City",
+        "district_en": "Xinyi Dist."
+    },
+    {
+        "zip_code": 202,
+        "city_zh": "基隆市",
+        "district_zh": "中正區",
+        "city_en": "Keelung City",
+        "district_en": "Zhongzheng Dist."
+    },
+    {
+        "zip_code": 203,
+        "city_zh": "基隆市",
+        "district_zh": "中山區",
+        "city_en": "Keelung City",
+        "district_en": "Zhongshan Dist."
+    },
+    {
+        "zip_code": 204,
+        "city_zh": "基隆市",
+        "district_zh": "安樂區",
+        "city_en": "Keelung City",
+        "district_en": "Anle Dist."
+    },
+    {
+        "zip_code": 205,
+        "city_zh": "基隆市",
+        "district_zh": "暖暖區",
+        "city_en": "Keelung City",
+        "district_en": "Nuannuan Dist."
+    },
+    {
+        "zip_code": 206,
+        "city_zh": "基隆市",
+        "district_zh": "七堵區",
+        "city_en": "Keelung City",
+        "district_en": "Qidu Dist."
+    }
+]

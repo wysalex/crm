@@ -1,0 +1,23 @@
+[
+    {
+        "zip_code": 300,
+        "city_zh": "新竹市",
+        "district_zh": "東區",
+        "city_en": "Hsinchu City",
+        "district_en": "East Dist."
+    },
+    {
+        "zip_code": 300,
+        "city_zh": "新竹市",
+        "district_zh": "北區",
+        "city_en": "Hsinchu City",
+        "district_en": "North Dist."
+    },
+    {
+        "zip_code": 300,
+        "city_zh": "新竹市",
+        "district_zh": "香山區",
+        "city_en": "Hsinchu City",
+        "district_en": "Xiangshan Dist."
+    }
+]

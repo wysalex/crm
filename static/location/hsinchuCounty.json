@@ -1,0 +1,93 @@
+[
+    {
+        "zip_code": 302,
+        "city_zh": "新竹縣",
+        "district_zh": "竹北市",
+        "city_en": "Hsinchu County",
+        "district_en": "Zhubei City"
+    },
+    {
+        "zip_code": 303,
+        "city_zh": "新竹縣",
+        "district_zh": "湖口鄉",
+        "city_en": "Hsinchu County",
+        "district_en": "Hukou Township"
+    },
+    {
+        "zip_code": 304,
+        "city_zh": "新竹縣",
+        "district_zh": "新豐鄉",
+        "city_en": "Hsinchu County",
+        "district_en": "Xinfeng Township"
+    },
+    {
+        "zip_code": 305,
+        "city_zh": "新竹縣",
+        "district_zh": "新埔鎮",
+        "city_en": "Hsinchu County",
+        "district_en": "Xinpu Township"
+    },
+    {
+        "zip_code": 306,
+        "city_zh": "新竹縣",
+        "district_zh": "關西鎮",
+        "city_en": "Hsinchu County",
+        "district_en": "Guanxi Township"
+    },
+    {
+        "zip_code": 307,
+        "city_zh": "新竹縣",
+        "district_zh": "芎林鄉",
+        "city_en": "Hsinchu County",
+        "district_en": "Qionglin Township"
+    },
+    {
+        "zip_code": 308,
+        "city_zh": "新竹縣",
+        "district_zh": "寶山鄉",
+        "city_en": "Hsinchu County",
+        "district_en": "Baoshan Township"
+    },
+    {
+        "zip_code": 310,
+        "city_zh": "新竹縣",
+        "district_zh": "竹東鎮",
+        "city_en": "Hsinchu County",
+        "district_en": "Zhudong Township"
+    },
+    {
+        "zip_code": 311,
+        "city_zh": "新竹縣",
+        "district_zh": "五峰鄉",
+        "city_en": "Hsinchu County",
+        "district_en": "Wufeng Township"
+    },
+    {
+        "zip_code": 312,
+        "city_zh": "新竹縣",
+        "district_zh": "橫山鄉",
+        "city_en": "Hsinchu County",
+        "district_en": "Hengshan Township"
+    },
+    {
+        "zip_code": 313,
+        "city_zh": "新竹縣",
+        "district_zh": "尖石鄉",
+        "city_en": "Hsinchu County",
+        "district_en": "Jianshi Township"
+    },
+    {
+        "zip_code": 314,
+        "city_zh": "新竹縣",
+        "district_zh": "北埔鄉",
+        "city_en": "Hsinchu County",
+        "district_en": "Beipu Township"
+    },
+    {
+        "zip_code": 315,
+        "city_zh": "新竹縣",
+        "district_zh": "峨眉鄉",
+        "city_en": "Hsinchu County",
+        "district_en": "Emei Township"
+    }
+]

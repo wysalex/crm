@@ -1,0 +1,268 @@
+[
+    {
+        "zip_code": 800,
+        "city_zh": "高雄市",
+        "district_zh": "新興區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Xinxing Dist."
+    },
+    {
+        "zip_code": 801,
+        "city_zh": "高雄市",
+        "district_zh": "前金區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Qianjin Dist."
+    },
+    {
+        "zip_code": 802,
+        "city_zh": "高雄市",
+        "district_zh": "苓雅區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Lingya Dist."
+    },
+    {
+        "zip_code": 803,
+        "city_zh": "高雄市",
+        "district_zh": "鹽埕區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Yancheng Dist."
+    },
+    {
+        "zip_code": 804,
+        "city_zh": "高雄市",
+        "district_zh": "鼓山區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Gushan Dist."
+    },
+    {
+        "zip_code": 805,
+        "city_zh": "高雄市",
+        "district_zh": "旗津區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Qijin Dist."
+    },
+    {
+        "zip_code": 806,
+        "city_zh": "高雄市",
+        "district_zh": "前鎮區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Qianzhen Dist."
+    },
+    {
+        "zip_code": 807,
+        "city_zh": "高雄市",
+        "district_zh": "三民區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Sanmin Dist."
+    },
+    {
+        "zip_code": 811,
+        "city_zh": "高雄市",
+        "district_zh": "楠梓區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Nanzi Dist."
+    },
+    {
+        "zip_code": 812,
+        "city_zh": "高雄市",
+        "district_zh": "小港區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Xiaogang Dist."
+    },
+    {
+        "zip_code": 813,
+        "city_zh": "高雄市",
+        "district_zh": "左營區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Zuoying Dist."
+    },
+    {
+        "zip_code": 814,
+        "city_zh": "高雄市",
+        "district_zh": "仁武區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Renwu Dist."
+    },
+    {
+        "zip_code": 815,
+        "city_zh": "高雄市",
+        "district_zh": "大社區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Dashe Dist."
+    },
+    {
+        "zip_code": 820,
+        "city_zh": "高雄市",
+        "district_zh": "岡山區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Gangshan Dist."
+    },
+    {
+        "zip_code": 821,
+        "city_zh": "高雄市",
+        "district_zh": "路竹區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Luzhu Dist."
+    },
+    {
+        "zip_code": 822,
+        "city_zh": "高雄市",
+        "district_zh": "阿蓮區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Alian Dist."
+    },
+    {
+        "zip_code": 823,
+        "city_zh": "高雄市",
+        "district_zh": "田寮區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Tianliao Dist."
+    },
+    {
+        "zip_code": 824,
+        "city_zh": "高雄市",
+        "district_zh": "燕巢區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Yanchao Dist."
+    },
+    {
+        "zip_code": 825,
+        "city_zh": "高雄市",
+        "district_zh": "橋頭區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Qiaotou Dist."
+    },
+    {
+        "zip_code": 826,
+        "city_zh": "高雄市",
+        "district_zh": "梓官區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Ziguan Dist."
+    },
+    {
+        "zip_code": 827,
+        "city_zh": "高雄市",
+        "district_zh": "彌陀區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Mituo Dist."
+    },
+    {
+        "zip_code": 828,
+        "city_zh": "高雄市",
+        "district_zh": "永安區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Yong’an Dist."
+    },
+    {
+        "zip_code": 829,
+        "city_zh": "高雄市",
+        "district_zh": "湖內區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Hunei Dist."
+    },
+    {
+        "zip_code": 830,
+        "city_zh": "高雄市",
+        "district_zh": "鳳山區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Fengshan Dist."
+    },
+    {
+        "zip_code": 831,
+        "city_zh": "高雄市",
+        "district_zh": "大寮區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Daliao Dist."
+    },
+    {
+        "zip_code": 832,
+        "city_zh": "高雄市",
+        "district_zh": "林園區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Linyuan Dist."
+    },
+    {
+        "zip_code": 833,
+        "city_zh": "高雄市",
+        "district_zh": "鳥松區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Niaosong Dist."
+    },
+    {
+        "zip_code": 840,
+        "city_zh": "高雄市",
+        "district_zh": "大樹區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Dashu Dist."
+    },
+    {
+        "zip_code": 842,
+        "city_zh": "高雄市",
+        "district_zh": "旗山區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Qishan Dist."
+    },
+    {
+        "zip_code": 843,
+        "city_zh": "高雄市",
+        "district_zh": "美濃區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Meinong Dist."
+    },
+    {
+        "zip_code": 844,
+        "city_zh": "高雄市",
+        "district_zh": "六龜區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Liugui Dist."
+    },
+    {
+        "zip_code": 845,
+        "city_zh": "高雄市",
+        "district_zh": "內門區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Neimen Dist."
+    },
+    {
+        "zip_code": 846,
+        "city_zh": "高雄市",
+        "district_zh": "杉林區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Shanlin Dist."
+    },
+    {
+        "zip_code": 847,
+        "city_zh": "高雄市",
+        "district_zh": "甲仙區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Jiaxian Dist."
+    },
+    {
+        "zip_code": 848,
+        "city_zh": "高雄市",
+        "district_zh": "桃源區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Taoyuan Dist."
+    },
+    {
+        "zip_code": 849,
+        "city_zh": "高雄市",
+        "district_zh": "那瑪夏區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Namaxia Dist."
+    },
+    {
+        "zip_code": 851,
+        "city_zh": "高雄市",
+        "district_zh": "茂林區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Maolin Dist."
+    },
+    {
+        "zip_code": 852,
+        "city_zh": "高雄市",
+        "district_zh": "茄萣區",
+        "city_en": "Kaohsiung City",
+        "district_en": "Qieding Dist."
+    }
+]
