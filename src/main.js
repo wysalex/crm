@@ -4,6 +4,7 @@
 import Vue from 'vue'
 import store from './store'
 import App from './App'
+import SignIn from './components/SignIn'
 import router from './router'
 import VueMdl from 'vue-mdl'
 import firebase from 'firebase'
@@ -52,11 +53,27 @@ Vue.mixin({
   }
 })
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  mode: 'history',
-  router,
-  store,
-  template: '<App/>',
-  components: { App }
+
+firebase.auth().onAuthStateChanged(function (user) {
+  if (user) {
+    console.log('User is signed in.')
+    new Vue({
+      el: '#app',
+      mode: 'history',
+      router,
+      store,
+      template: '<App/>',
+      components: { App }
+    })
+  } else {
+    console.log('No user is signed in.')
+    new Vue({
+      el: '#app',
+      mode: 'history',
+      router,
+      store,
+      template: '<SignIn/>',
+      components: { SignIn }
+    })
+  }
 })
