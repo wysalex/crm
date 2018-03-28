@@ -33,7 +33,13 @@
         <div class="container">
           <ul>
             <li class="group customer" :class="{ active: isActive.customer }">
-              <div @click="isActive.customer = !isActive.customer"><span class="icon icon-users"></span><span data-main="客戶資料">客戶資料</span></div>
+              <div @click="isActive.customer = !isActive.customer">
+                <span class="material-icons mdl-list__item-icon icon">people</span>
+                <span class="title" data-main="客戶資料">客戶資料</span>
+                <span class="arrowBlock">
+                  <span class="arrow"></span>
+                </span>
+              </div>
               <ul>
                 <li class="sub">
                   <router-link to="/customer" @click.native="changeTitle" class="icon-search" data-main="客戶資料" data-sub="查詢">查詢</router-link>
@@ -44,7 +50,13 @@
               </ul>
             </li>
             <li class="group supplier" :class="{ active: isActive.supplier }">
-              <div @click="isActive.supplier = !isActive.supplier"><span class="icon icon-account_balance"></span><span data-main="廠商資料">廠商資料</span></div>
+              <div @click="isActive.supplier = !isActive.supplier">
+                <span class="material-icons mdl-list__item-icon icon">business</span>
+                <span class="title" data-main="廠商資料">廠商資料</span>
+                <span class="arrowBlock">
+                  <span class="arrow"></span>
+                </span>
+              </div>
               <ul>
                 <li class="sub">
                   <router-link to="/supplier" @click.native="changeTitle" class="icon-search" data-main="廠商資料" data-sub="查詢">查詢</router-link>
@@ -371,23 +383,22 @@ $color: rgba(0, 188, 212, 1.000);
         @include transition(background-color .3s);
         > * {
           line-height: 40px;
+          display: inline-block;
         }
         .icon {
-          &:before {
-            padding-right: 8px;
-            @include transition(font-size .3s);
-          }
-          &:after {
-            content: '\e907';
-            position: absolute;
-            top: 0;
-            right: 10px;
-            @include transition(transform .3s);
-          }
+          position: relative;
+          top: -8px;
+          left: 2px;
+          width: 50px;
+          font-size: 28px;
+          @include transition(all .3s);
         }
-        .icon-account_balance {
-          &:before {
-            font-size: 23px;
+        .title {
+          width: 150px;
+        }
+        .arrow {
+          &::before, &::after {
+            border-color: rgba(100, 100, 100, 1);
           }
         }
 
@@ -435,9 +446,12 @@ $color: rgba(0, 188, 212, 1.000);
 
 
       &.active {
-        .icon {
+        .arrow {
+          &:before {
+            animation-name: leftUp;
+          }
           &:after {
-            @include rotate(180deg);
+            animation-name: rightUp;
           }
         }
         > ul {
@@ -459,7 +473,7 @@ $color: rgba(0, 188, 212, 1.000);
       .group {
         > div {
           .icon {
-            font-size: 28px;
+            font-size: 36px;
             &:before {
               padding: 0 20px 0 4px;
             }
@@ -543,7 +557,7 @@ $color: rgba(0, 188, 212, 1.000);
             &:nth-child(3) {
               width: 65%;
               top: 10px;
-              left: -6px;
+              left: 0;
               @include rotate(35deg);
             }
           }
@@ -639,7 +653,7 @@ $color: rgba(0, 188, 212, 1.000);
           .group {
             > div {
               .icon {
-                font-size: 28px;
+                font-size: 36px;
                 &:before {
                   padding: 0 20px 0 4px;
                 }
@@ -668,6 +682,109 @@ $color: rgba(0, 188, 212, 1.000);
         }
       }
     }
+  }
+}
+
+.arrowBlock {
+  position: relative;
+  top: 4px;
+  @include size(20px);
+}
+
+.arrow {
+  position: absolute;
+  @include size(20px);
+  &:before,
+  &:after {
+    position: absolute;
+    display: inline-block;
+    float: left;
+    width: 12px;
+    animation-duration: .1s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+  }
+  &:before {
+    content: ' ';
+    border-top: 2px solid rgba(0, 0, 0, 1);
+    animation-name: leftDown;
+  }
+  &:after {
+    content: ' ';
+    border-top: 2px solid rgba(0, 0, 0, 1);
+    animation-name: rightDown;
+  }
+}
+
+@keyframes leftDown {
+  0% {
+    top: 9px;
+    left: 1px;
+    transform: rotate(60deg);
+  }
+  50% {
+    top: 8px;
+    left: -2px;
+    transform: rotate(0deg);
+  }
+  100% {
+    top: 9px;
+    left: 1px;
+    transform: rotate(-60deg);
+  }
+}
+
+@keyframes rightDown {
+  0% {
+    top: 9px;
+    right: 1px;
+    transform: rotate(-60deg);
+  }
+  50% {
+    top: 8px;
+    right: -2px;
+    transform: rotate(0deg);
+  }
+  100% {
+    top: 9px;
+    right: 1px;
+    transform: rotate(60deg);
+  }
+}
+
+@keyframes leftUp {
+  0% {
+    top: 9px;
+    left: 1px;
+    transform: rotate(-60deg);
+  }
+  50% {
+    top: 8px;
+    left: -2px;
+    transform: rotate(0deg);
+  }
+  100% {
+    top: 9px;
+    left: 1px;
+    transform: rotate(60deg);
+  }
+}
+
+@keyframes rightUp {
+  0% {
+    top: 9px;
+    right: 1px;
+    transform: rotate(60deg);
+  }
+  50% {
+    top: 8px;
+    right: -2px;
+    transform: rotate(0deg);
+  }
+  100% {
+    top: 9px;
+    right: 1px;
+    transform: rotate(-60deg);
   }
 }
 
