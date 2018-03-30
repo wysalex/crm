@@ -9,7 +9,7 @@
 
       <header id="header">
         <router-link to="/" tag="div" class="band">
-          <span class="icon-home"></span>
+          <i class="material-icons">home</i>
           <span>XXX Co.</span>
         </router-link>
         <label class="menu-button" for="menuStatus">
@@ -42,10 +42,16 @@
               </div>
               <ul>
                 <li class="sub">
-                  <router-link to="/customer" @click.native="changeTitle" class="icon-search" data-main="客戶資料" data-sub="查詢">查詢</router-link>
+                  <router-link to="/customer" @click.native="changeTitle" class="router" data-main="客戶資料" data-sub="查詢">
+                    <i class="material-icons">search</i>
+                    <span class="router-title">查詢</span>
+                  </router-link>
                 </li>
                 <li class="sub">
-                  <router-link to="/customer/new" @click.native="changeTitle" class="icon-plus" data-main="客戶資料" data-sub="新建">新建</router-link>
+                  <router-link to="/customer/new" @click.native="changeTitle" class="router" data-main="客戶資料" data-sub="新建">
+                    <i class="material-icons">add</i>
+                    <span class="router-title">新建</span>
+                  </router-link>
                 </li>
               </ul>
             </li>
@@ -59,10 +65,16 @@
               </div>
               <ul>
                 <li class="sub">
-                  <router-link to="/supplier" @click.native="changeTitle" class="icon-search" data-main="廠商資料" data-sub="查詢">查詢</router-link>
+                  <router-link to="/supplier" @click.native="changeTitle" class="router" data-main="廠商資料" data-sub="查詢">
+                    <i class="material-icons">search</i>
+                    <span class="router-title">查詢</span>
+                  </router-link>
                 </li>
                 <li class="sub">
-                  <router-link to="/supplier/new"  @click.native="changeTitle" class="icon-plus" data-main="廠商資料" data-sub="新建">新建</router-link>
+                  <router-link to="/supplier/new"  @click.native="changeTitle" class="router" data-main="廠商資料" data-sub="新建">
+                    <i class="material-icons">add</i>
+                    <span class="router-title">新建</span>
+                  </router-link>
                 </li>
               </ul>
             </li>
@@ -110,7 +122,6 @@ export default {
 @import "~compass/compass/_reset";
 @import "~compass/_compass";
 @import "~scss/lib/_custom";
-@import "~scss/icon.scss";
 
 * {
   &, &:after, &:before {
@@ -156,6 +167,10 @@ html {
 
 #vuetifyApp {
   background-color: rgba(235, 235, 235, 1.00);
+}
+
+.material-icons {
+  @include user-select(none);
 }
 
 $headerHeight: 60px;
@@ -428,6 +443,15 @@ $color: rgba(0, 188, 212, 1.000);
             padding: 0 10px 0 30px;
             cursor: pointer;
             @include transition(background-color .3s, font-size .3s, padding .3s);
+
+            > i {
+              font-size: 32px;
+            }
+
+            .router-title {
+              vertical-align: top;
+            }
+
             &:before {
               @include transition(font-size .3s, padding .3s);
               padding-right: 8px;
@@ -490,8 +514,13 @@ $color: rgba(0, 188, 212, 1.000);
         > ul {
           > .sub {
             > a {
-              font-size: 20px;
-              padding-left: 20px;
+              padding-left: 14px;
+              > i {
+                font-size: 32px;
+              }
+              .router-title {
+                display: none;
+              }
               &:before {
                 padding-right: 20px;
               }
@@ -557,7 +586,7 @@ $color: rgba(0, 188, 212, 1.000);
             &:nth-child(3) {
               width: 65%;
               top: 10px;
-              left: 0;
+              left: -6px;
               @include rotate(35deg);
             }
           }
@@ -670,8 +699,13 @@ $color: rgba(0, 188, 212, 1.000);
             > ul {
               > .sub {
                 > a {
-                  font-size: 20px;
-                  padding-left: 20px;
+                  padding-left: 14px;
+                  > i {
+                    font-size: 32px;
+                  }
+                  .router-title {
+                    display: none;
+                  }
                   &:before {
                     padding-right: 20px;
                   }
