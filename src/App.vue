@@ -78,6 +78,29 @@
                 </li>
               </ul>
             </li>
+            <li class="group service" :class="{ active: isActive.service }">
+              <div @click="isActive.service = !isActive.service">
+                <span class="material-icons mdl-list__item-icon icon">build</span>
+                <span class="title" data-main="維修/新購">維修/新購</span>
+                <span class="arrowBlock">
+                  <span class="arrow"></span>
+                </span>
+              </div>
+              <ul>
+                <li class="sub">
+                  <router-link to="/service" @click.native="changeTitle" class="router" data-main="維修/新購" data-sub="查詢">
+                    <i class="material-icons">search</i>
+                    <span class="router-title">查詢</span>
+                  </router-link>
+                </li>
+                <li class="sub">
+                  <router-link to="/service/new"  @click.native="changeTitle" class="router" data-main="維修/新購" data-sub="新建">
+                    <i class="material-icons">add</i>
+                    <span class="router-title">新建</span>
+                  </router-link>
+                </li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
@@ -99,7 +122,8 @@ export default {
     return {
       isActive: {
         customer: false,
-        supplier: false
+        supplier: false,
+        service: false
       },
       func: {
         main: 'main',

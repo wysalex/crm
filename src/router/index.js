@@ -7,6 +7,7 @@ import Customer from '@/components/Customer'
 import NewCustomer from '@/components/NewCustomer'
 import Supplier from '@/components/Supplier'
 import NewSupplier from '@/components/NewSupplier'
+import Service from '@/components/Service'
 
 import PageNotFound from '@/components/PageNotFound'
 
@@ -39,6 +40,10 @@ export default new Router({
       path: '/supplier/new',
       name: 'NewSupplier',
       component: NewSupplier
+    }, {
+      path: '/service',
+      name: 'Service',
+      component: Service
     }, {
       path: '*',
       component: PageNotFound
