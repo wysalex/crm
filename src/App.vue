@@ -8,7 +8,7 @@
       <label for="menuStatus" id="mCover"></label>
 
       <header id="header">
-        <router-link to="/" tag="div" class="band">
+        <router-link to="/" tag="div" class="band" @click.native="changeTitle">
           <i class="material-icons">home</i>
           <span>XXX Co.</span>
         </router-link>
@@ -35,7 +35,7 @@
             <li class="group customer" :class="{ active: isActive.customer }">
               <div @click="isActive.customer = !isActive.customer">
                 <span class="material-icons mdl-list__item-icon icon">people</span>
-                <span class="title" data-main="客戶資料">客戶資料</span>
+                <span class="router-title" data-main="客戶資料">客戶資料</span>
                 <span class="arrowBlock">
                   <span class="arrow"></span>
                 </span>
@@ -58,7 +58,7 @@
             <li class="group supplier" :class="{ active: isActive.supplier }">
               <div @click="isActive.supplier = !isActive.supplier">
                 <span class="material-icons mdl-list__item-icon icon">business</span>
-                <span class="title" data-main="廠商資料">廠商資料</span>
+                <span class="router-title" data-main="廠商資料">廠商資料</span>
                 <span class="arrowBlock">
                   <span class="arrow"></span>
                 </span>
@@ -81,7 +81,7 @@
             <li class="group service" :class="{ active: isActive.service }">
               <div @click="isActive.service = !isActive.service">
                 <span class="material-icons mdl-list__item-icon icon">build</span>
-                <span class="title" data-main="維修/新購">維修/新購</span>
+                <span class="router-title" data-main="維修/新購">維修/新購</span>
                 <span class="arrowBlock">
                   <span class="arrow"></span>
                 </span>
@@ -136,6 +136,9 @@ export default {
       let now = $event.target.dataset
       this._data.func.main = now.main
       this._data.func.sub = now.sub
+      if (window.innerWidth < 700) {
+        document.querySelector('#menuStatus').checked = false
+      }
       // console.log('changeTitle()')
     }
   }
@@ -146,6 +149,7 @@ export default {
 @import "~compass/compass/_reset";
 @import "~compass/_compass";
 @import "~scss/lib/_custom";
+// @import "~scss/icon.scss";
 
 * {
   &, &:after, &:before {
@@ -421,19 +425,20 @@ $color: rgba(0, 188, 212, 1.000);
         cursor: pointer;
         @include transition(background-color .3s);
         > * {
-          line-height: 40px;
           display: inline-block;
         }
         .icon {
           position: relative;
-          top: -8px;
-          left: 2px;
-          width: 50px;
-          font-size: 28px;
+          @include size(36px);
+          font-size: 36px;
+          margin-left: 2px;
+          margin-right: 4px;
           @include transition(all .3s);
         }
-        .title {
+        .router-title {
           width: 150px;
+          line-height: 40px;
+          margin: 0 4px;
         }
         .arrow {
           &::before, &::after {
@@ -544,6 +549,7 @@ $color: rgba(0, 188, 212, 1.000);
               }
               .router-title {
                 display: none;
+                margin-left: 12px;
               }
               &:before {
                 padding-right: 20px;
@@ -625,7 +631,6 @@ $color: rgba(0, 188, 212, 1.000);
           .group {
             > div {
               .icon {
-                font-size: 100%;
                 &:before {
                   padding: 0 8px 0 0;
                 }
@@ -646,6 +651,9 @@ $color: rgba(0, 188, 212, 1.000);
                   padding-left: 30px;
                   &:before {
                     padding-right: 8px;
+                  }
+                  .router-title {
+                    display: inline-block;
                   }
                 }
               }
