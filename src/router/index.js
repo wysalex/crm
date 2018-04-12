@@ -49,6 +49,14 @@ export default new Router({
       name: 'Service',
       component: Service
     }, {
+      path: '/service/new',
+      name: 'NewService',
+      component: NewService
+    }, {
+      path: '/service/:id',
+      name: 'EditService',
+      component: NewService
+    }, {
       path: '*',
       component: PageNotFound
     }

@@ -26,10 +26,10 @@ export default {
           icon: 'business',
           path: '/supplier'
         }, {
-          name: 'feature1',
-          title: 'feature 1',
+          name: 'service',
+          title: '維修/新購',
           icon: 'build',
-          path: '/feature1'
+          path: '/service'
         }, {
           name: 'feature2',
           title: 'feature 2',

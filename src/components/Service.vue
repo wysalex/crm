@@ -2,6 +2,14 @@
 
   <section class="service">
 
+    <v-tooltip bottom>
+      <!-- <v-btn @click="newService" slot="activator"> -->
+      <v-btn to="/service/new" slot="activator">
+        <i class="material-icons">add</i>
+      </v-btn>
+      <span>新增</span>
+    </v-tooltip>
+
     <div v-if="showList">
       <v-card>
         <v-card-title>
@@ -13,10 +21,10 @@
           <template slot="items" slot-scope="props">
             <td>{{ props.item.date }}</td>
             <td>{{ props.item.customer }}</td>
-            <td>{{ props.item.service_type }}</td>
-            <td>{{ props.item.service_contents }}</td>
             <td>{{ props.item.brand }}</td>
             <td>{{ props.item.model }}</td>
+            <td>{{ props.item.service_contents }}</td>
+            <td>{{ serviceType[props.item.service_type] }}</td>
             <td class="text-xs-right">{{ props.item.price }}</td>
           </template>
           <v-alert slot="no-results" :value="true" color="error" icon="warning">
@@ -54,6 +62,12 @@
       </v-layout>
     </div>
 
+    <v-snackbar
+      :timeout="parseInt(2000)"
+      color="success"
+      v-model="successSnackbar"
+    >建立成功</v-snackbar>
+
   </section>
 
 </template>
@@ -65,7 +79,9 @@ export default {
   data () {
     return {
       showList: true,
+      successSnackbar: false,
       customers: {},
+      suppliers: {},
       services: {},
       aServices: [],
       serviceHeaders: [
@@ -77,15 +93,29 @@ export default {
         { text: 'model', value: 'model' },
         { text: 'price', value: 'price' }
       ],
-      serviceFilter: ''
+      serviceFilter: '',
+      serviceType: {
+        new: '新購',
+        retail: '維修'
+      }
     }
   },
   mounted () {
+    if (this.$store.state.hasNewService) {
+      this.successSnackbar = true
+      this.$store.dispatch('toggleNewService', {
+        needShowTip: false
+      })
+    }
+    const supplierRef = this.global.db.ref('/supplier')
     const customerRef = this.global.db.ref('/customer')
     const serviceRef = this.global.db.ref('/service')
 
     customerRef.on('value', snapshot => {
       this.customers = snapshot.val()
+    })
+    supplierRef.on('value', snapshot => {
+      this.suppliers = snapshot.val()
     })
     serviceRef.on('value', snapshot => {
       this.services = snapshot.val()
@@ -103,6 +133,7 @@ export default {
           let tempService = this.services[serviceIdx]
           tempService['.key'] = serviceIdx
           tempService['customer'] = this.customers[tempService['customer']].name
+          tempService['brand'] = this.suppliers[tempService['brand']].name
           newArr.push(tempService)
           return newArr
         }, [])

@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 const state = {
   hasNewSupplier: false,
-  hasNewCustomer: false
+  hasNewCustomer: false,
+  hasNewService: false
 }
 
 const actions = {
@@ -15,6 +16,9 @@ const actions = {
   },
   toggleNewCustomer ({ commit }, { needShowTip }) {
     commit(types.HAS_NEW_CUSTOMER, needShowTip)
+  },
+  toggleNewService ({ commit }, { needShowTip }) {
+    commit(types.HAS_NEW_SERVICE, needShowTip)
   }
 }
 
@@ -24,6 +28,9 @@ const mutations = {
   },
   [types.HAS_NEW_CUSTOMER] (state, needShowTip) {
     state.hasNewCustomer = needShowTip
+  },
+  [types.HAS_NEW_SERVICE] (state, needShowTip) {
+    state.hasNewService = needShowTip
   }
 }
 
