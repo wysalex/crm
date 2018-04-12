@@ -3,11 +3,12 @@ import Router from 'vue-router'
 
 import MainPage from '@/components/MainPage'
 import Hey from '@/components/Hey'
-import Customer from '@/components/Customer'
-import NewCustomer from '@/components/NewCustomer'
-import Supplier from '@/components/Supplier'
-import NewSupplier from '@/components/NewSupplier'
-import Service from '@/components/Service'
+const Customer = resolve => require(['@/components/Customer'], resolve)
+const NewCustomer = resolve => require(['@/components/NewCustomer'], resolve)
+const Supplier = resolve => require(['@/components/Supplier'], resolve)
+const NewSupplier = resolve => require(['@/components/NewSupplier'], resolve)
+const Service = resolve => require(['@/components/Service'], resolve)
+const NewService = resolve => require(['@/components/NewService'], resolve)
 
 import PageNotFound from '@/components/PageNotFound'
 
