@@ -250,10 +250,10 @@ $color: rgba(0, 188, 212, 1.000);
 
     @include transition(width .3s);
 
-    @include range-width(0, 375px - 1px) {
+    @include range-width(0, 400px - 1px) {
       width: 0;
     }
-    @include range-width(375px, 700px - 1px) {
+    @include range-width(400px, 700px - 1px) {
       width: $headerHeight;
       *:first-child {
         margin-right: 0;
@@ -383,10 +383,10 @@ $color: rgba(0, 188, 212, 1.000);
   // background-color: rgba(0, 0, 255, .200);
   @include transition(padding .3s);
 
-  @include range-width(0, 375px - 1px) {
+  @include range-width(0, 400px - 1px) {
     padding-left: 0;
   }
-  @include range-width(375px, 700px - 1px) {
+  @include range-width(400px, 700px - 1px) {
     padding-left: $headerHeight;
   }
   @include range-width(700px) {
@@ -517,10 +517,10 @@ $color: rgba(0, 188, 212, 1.000);
     }
   }
 
-  @include range-width(0, 375px - 1px) {
+  @include range-width(0, 400px - 1px) {
     width: 0;
   }
-  @include range-width(375px, 700px - 1px) {
+  @include range-width(400px, 700px - 1px) {
     width: $headerHeight;
     > .container {
       .group {
