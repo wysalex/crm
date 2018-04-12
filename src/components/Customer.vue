@@ -6,7 +6,7 @@
 
     <div class="show-list">
       <ul class="mdl-list">
-        <li class="mdl-list__item mdl-list__item--two-line" v-for="(customer, customerIdx) in filterCustomers">
+        <li class="mdl-list__item mdl-list__item--two-line customer-row" v-for="(customer, customerIdx) in filterCustomers">
           <span class="mdl-list__item-primary-content">
             <i class="material-icons mdl-list__item-icon">people</i>
             <span>{{ customer.name }}</span>
@@ -85,7 +85,12 @@ export default {
   @import "~scss/lib/_custom";
 
   .customer {
-
+    @include size(100%);
+    padding: 16px 20px;
+    .search-input {
+      display: inline-block;
+      width: 300px;
+    }
   }
 
   .show-list {
@@ -95,6 +100,14 @@ export default {
     > .mdl-list {
       width: 100%;
       max-width: 360px;
+    }
+  }
+
+  .customer-row {
+    @include border-radius(4px);
+    @include transition(background-color .3s);
+    &:hover {
+      background-color: darken(rgba(235, 235, 235, 1.00), 10%);
     }
   }
 </style>
