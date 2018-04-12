@@ -32,8 +32,10 @@
       <div id="menu">
         <div class="container">
           <ul>
+
+            <!-- 客戶資料 -->
             <li class="group customer" :class="{ active: isActive.customer }">
-              <div @click="isActive.customer = !isActive.customer">
+              <div class="side-menu" @click="toggleSideMenu('customer')">
                 <span class="material-icons mdl-list__item-icon icon">people</span>
                 <span class="router-title" data-main="客戶資料">客戶資料</span>
                 <span class="arrowBlock">
@@ -55,8 +57,10 @@
                 </li>
               </ul>
             </li>
+
+            <!-- 廠商資料 -->
             <li class="group supplier" :class="{ active: isActive.supplier }">
-              <div @click="isActive.supplier = !isActive.supplier">
+              <div class="side-menu" @click="toggleSideMenu('supplier')">
                 <span class="material-icons mdl-list__item-icon icon">business</span>
                 <span class="router-title" data-main="廠商資料">廠商資料</span>
                 <span class="arrowBlock">
@@ -78,8 +82,10 @@
                 </li>
               </ul>
             </li>
+
+            <!-- 維修/新購 -->
             <li class="group service" :class="{ active: isActive.service }">
-              <div @click="isActive.service = !isActive.service">
+              <div class="side-menu" @click="toggleSideMenu('service')">
                 <span class="material-icons mdl-list__item-icon icon">build</span>
                 <span class="router-title" data-main="維修/新購">維修/新購</span>
                 <span class="arrowBlock">
@@ -140,6 +146,14 @@ export default {
         document.querySelector('#menuStatus').checked = false
       }
       // console.log('changeTitle()')
+    },
+    toggleSideMenu (toggleMenu) {
+      this.isActive[toggleMenu] = !this.isActive[toggleMenu]
+      Object.keys(this.isActive).map(menu => {
+        if (this.isActive[toggleMenu] && menu !== toggleMenu) {
+          this.isActive[menu] = false
+        }
+      })
     }
   }
 }
@@ -416,7 +430,7 @@ $color: rgba(0, 188, 212, 1.000);
       display: block;
       overflow: hidden;
       font-size: 20px;
-      > div {
+      .side-menu {
         position: relative;
         display: inline-block;
         width: 100%;
@@ -524,7 +538,7 @@ $color: rgba(0, 188, 212, 1.000);
     width: $headerHeight;
     > .container {
       .group {
-        > div {
+        .side-menu {
           .icon {
             font-size: 36px;
             &:before {
@@ -629,7 +643,7 @@ $color: rgba(0, 188, 212, 1.000);
         width: $bandWidth;
         > .container {
           .group {
-            > div {
+            .side-menu {
               .icon {
                 &:before {
                   padding: 0 8px 0 0;
@@ -712,7 +726,7 @@ $color: rgba(0, 188, 212, 1.000);
         width: $headerHeight;
         > .container {
           .group {
-            > div {
+            .side-menu {
               .icon {
                 font-size: 36px;
                 &:before {
