@@ -4,21 +4,57 @@
 
     <v-text-field label="搜尋" v-model="keyword" class="search-input"></v-text-field>
 
+    <div class="action-block">
+      <div class="action selected">
+        <v-btn flat small @click.native="allChecked">全選</v-btn>
+        <v-btn flat small @click.native="clearChecked" :disabled="emptyChecked">取消選取項目</v-btn>
+        <v-btn flat small @click.native="deleteSelected" :disabled="emptyChecked">刪除選取項目</v-btn>
+      </div>
+    </div>
+
     <div class="show-list">
       <ul class="mdl-list">
-        <li class="mdl-list__item mdl-list__item--two-line" v-for="(supplier, supplierIdx) in filterSuppliers">
+        <li class="mdl-list__item mdl-list__item--two-line supplier-row" v-for="(supplier, supplierIdx) in filterSuppliers">
           <span class="mdl-list__item-primary-content">
-            <i class="material-icons mdl-list__item-icon">business</i>
-            <span>{{ supplier.name }}</span>
+            <v-checkbox class="material-icons mdl-list__item-icon" v-model="checkedSuppliers" :value="supplierIdx"></v-checkbox>
+            <span class="show-detail" @click="showCard(supplierIdx)">{{ supplier.name }}</span>
             <span class="mdl-list__item-sub-title">{{ supplier.tel }}</span>
           </span>
           <span class="mdl-list__item-secondary-content">
-            <!-- <span class="mdl-list__item-secondary-info">Actor</span> -->
-            <a class="mdl-list__item-secondary-action" @click="comfirmDelSupplier(supplierIdx)"><i class="material-icons">delete</i></a>
+            <a class="mdl-list__item-secondary-action" @click="editSupplier(supplierIdx)"><i class="row-action material-icons">edit</i></a>
+            <a class="mdl-list__item-secondary-action" @click="comfirmDelSupplier(supplierIdx)"><i class="row-action material-icons">delete</i></a>
           </span>
         </li>
       </ul>
     </div>
+
+    <v-dialog v-model="supplierCard" persistent max-width="290" v-if="suppliers[selectedSupplier]">
+      <v-card>
+        <v-card-title>
+          <span class="card-title">{{ suppliers[selectedSupplier].name }}</span>
+        </v-card-title>
+        <v-card-text>
+          <table class="card-table">
+            <tr class="card-row">
+              <td class="card-field">電話</td>
+              <td class="card-value">{{ suppliers[selectedSupplier].tel }}</td>
+            </tr>
+            <tr class="card-row">
+              <td class="card-field">地址</td>
+              <td class="card-value">{{ suppliers[selectedSupplier].address }}</td>
+            </tr>
+            <tr class="card-row">
+              <td class="card-field">備註</td>
+              <td class="card-value">{{ suppliers[selectedSupplier].note }}</td>
+            </tr>
+          </table>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn flat @click.native="supplierCard = false">關閉</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <v-dialog v-model="comfirmDelete" persistent max-width="500">
       <v-card>
@@ -84,7 +120,10 @@ export default {
         idx: '',
         name: '',
         tel: ''
-      }
+      },
+      selectedSupplier: '',
+      checkedSuppliers: [],
+      supplierCard: false
     }
   },
   firebase () {
@@ -97,13 +136,13 @@ export default {
       this.deleteSupplierInfo.idx = this.suppliers[supplierIdx]['.key']
       this.deleteSupplierInfo.name = this.suppliers[supplierIdx].name
       this.deleteSupplierInfo.tel = this.suppliers[supplierIdx].tel
-      this.$refs.comfirmDelete.open()
+      this.comfirmDelete = true
     },
     closeDelDialog () {
       this.deleteSupplierInfo.idx = ''
       this.deleteSupplierInfo.name = ''
       this.deleteSupplierInfo.tel = ''
-      this.$refs.comfirmDelete.close()
+      this.comfirmDelete = false
     },
     delSupplier (supplierIdx) {
       const db = this.global.db
@@ -115,14 +154,44 @@ export default {
           Object.keys(this.deleteSupplierInfo).map(objectKey => {
             this.deleteSupplierInfo[objectKey] = ''
           })
-          this.$refs.comfirmDelete.close()
+          this.comfirmDelete = false
+          this.supplierCard = false
         })
         .catch(error => {
           if (error) {
             console.log('delete failed')
           }
-          this.$refs.comfirmDelete.close()
+          this.comfirmDelete = false
+          this.supplierCard = false
         })
+    },
+    showCard (supplierIdx) {
+      this.supplierCard = true
+      this.selectedSupplier = supplierIdx
+    },
+    hideCard () {
+      this.selectedSupplier = ''
+      this.supplierCard = false
+    },
+    chooseOne (supplierIdx) {
+      this.checkedSuppliers.push(supplierIdx)
+    },
+    allChecked () {
+      this.checkedSuppliers = Object.keys(this.suppliers).map(supplierIdx => parseInt(supplierIdx))
+    },
+    clearChecked () {
+      this.checkedSuppliers = []
+    },
+    deleteSelected () {
+      if (this.checkedSuppliers.length > 0) {
+        this.checkedSuppliers.forEach(element => {
+          this.delSupplier(this.suppliers[element]['.key'])
+        })
+        this.checkedSuppliers = []
+      }
+    },
+    editSupplier (supplierIdx) {
+      this.global.router.push('/supplier/' + this.suppliers[supplierIdx]['.key'])
     }
   },
   computed: {
@@ -145,6 +214,9 @@ export default {
       } else {
         return this.suppliers
       }
+    },
+    emptyChecked () {
+      return this.checkedSuppliers.length === 0
     }
   }
 }
@@ -156,6 +228,24 @@ export default {
 
   $rowWidth: 360px;
 
+  .supplier {
+    @include size(100%);
+    padding: 16px 20px;
+    .search-input {
+      display: inline-block;
+      width: 300px;
+    }
+  }
+
+  .action-block {
+    @include align('h');
+    > .action {
+      width: $rowWidth;
+      @include align();
+      justify-content: flex-end;
+    }
+  }
+
   .show-list {
     width: 100%;
     @include align('h');
@@ -164,6 +254,23 @@ export default {
       width: 100%;
       max-width: $rowWidth
     }
+  }
+
+  .row-action {
+    color: rgba(0, 0, 0, 0.3);
+    @include transition(color .3s);
+    &:hover {
+      color: rgba(0, 188, 212, 1);
+      // color: lighten(rgba(0, 188, 212, 1), 5%);
+    }
+  }
+
+  .item-head {
+    cursor: pointer;
+  }
+
+  .show-detail {
+    cursor: pointer;
   }
 
   .show-card {
@@ -196,5 +303,33 @@ export default {
       }
     }
 
+  }
+
+  .card-title {
+    font-size: 32px;
+  }
+
+  .card-table {
+    width: 100%;
+    .card-row {
+      width: 100%;
+      > * {
+        padding: 4px 8px;
+      }
+      .card-field {
+        width: 30%;
+      }
+      .card-value {
+        width: 70%;
+      }
+    }
+  }
+
+  .supplier-row {
+    @include border-radius(4px);
+    @include transition(background-color .3s);
+    &:hover {
+      background-color: darken(rgba(235, 235, 235, 1.00), 10%);
+    }
   }
 </style>
