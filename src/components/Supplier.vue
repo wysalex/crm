@@ -2,7 +2,7 @@
 
   <section class="supplier">
 
-    <mdl-textfield floating-label="搜尋" v-model="keyword"></mdl-textfield>
+    <v-text-field label="搜尋" v-model="keyword" class="search-input"></v-text-field>
 
     <div class="show-list">
       <ul class="mdl-list">
@@ -20,23 +20,33 @@
       </ul>
     </div>
 
-    <mdl-dialog ref="comfirmDelete" title="確認刪除?">
-      <ul class="mdl-list">
-        <li class="mdl-list__item mdl-list__item--two-line">
-          <span class="mdl-list__item-primary-content">
-            <i class="material-icons mdl-list__item-icon">business</i>
-            <span>{{ deleteSupplierInfo.name }}</span>
-            <span class="mdl-list__item-sub-title">{{ deleteSupplierInfo.tel }}</span>
-          </span>
-        </li>
-      </ul>
-      <template slot="actions">
-        <mdl-button primary @click.native="delSupplier(deleteSupplierInfo.idx)">確認</mdl-button>
-        <mdl-button @click.native="closeDelDialog">取消</mdl-button>
-      </template>
-    </mdl-dialog>
+    <v-dialog v-model="comfirmDelete" persistent max-width="500">
+      <v-card>
+        <v-card-title>確認刪除?</v-card-title>
+        <v-card-text>
+          <ul class="mdl-list">
+            <li class="mdl-list__item mdl-list__item--two-line">
+              <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-icon">business</i>
+                <span>{{ deleteSupplierInfo.name }}</span>
+                <span class="mdl-list__item-sub-title">{{ deleteSupplierInfo.tel }}</span>
+              </span>
+            </li>
+          </ul>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn flat color="error" @click.native="delSupplier(deleteSupplierInfo.idx)">確認</v-btn>
+          <v-btn flat color="primary" @click.native="closeDelDialog">取消</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
-    <mdl-snackbar display-on="supplierCreated"></mdl-snackbar>
+    <v-snackbar
+      :timeout="parseInt(2000)"
+      color="success"
+      v-model="successSnackbar"
+    >建立成功</v-snackbar>
 
   </section>
 
@@ -58,10 +68,7 @@ export default {
     //   this.$forceUpdate()
     // })
     if (this.$store.state.hasNewSupplier) {
-      this.$root.$emit('supplierCreated', {
-        message: '建立成功',
-        timeout: 2000
-      })
+      this.successSnackbar = true
       this.$store.dispatch('toggleNewSupplier', {
         needShowTip: false
       })
@@ -70,7 +77,9 @@ export default {
   data () {
     return {
       // suppliers: {},
+      successSnackbar: false,
       keyword: '',
+      comfirmDelete: false,
       deleteSupplierInfo: {
         idx: '',
         name: '',

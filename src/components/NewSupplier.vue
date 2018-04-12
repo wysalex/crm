@@ -8,20 +8,21 @@
       </header>
       <div class="content">
         <div class="h-form">
-          <mdl-textfield floating-label="名稱" v-model="form.name"></mdl-textfield>
+          <v-text-field label="名稱" v-model="form.name"></v-text-field>
         </div>
         <div class="h-form">
-          <mdl-textfield floating-label="電話" v-model="form.tel"></mdl-textfield>
+          <v-text-field label="電話" v-model="form.tel"></v-text-field>
         </div>
         <div class="h-form">
-          <mdl-textfield floating-label="地址" v-model="form.address"></mdl-textfield>
+          <v-text-field label="地址" v-model="form.address"></v-text-field>
         </div>
         <div class="h-form">
-          <mdl-textfield floating-label="備註" v-model="form.note"></mdl-textfield>
+          <v-text-field label="備註" v-model="form.note"></v-text-field>
         </div>
       </div>
       <footer>
-        <mdl-button class="mdl-js-ripple-effect" @click.native="create">建立</mdl-button>
+        <v-btn v-if="formType === 'edit'" @click.native.once="goBack">返回</v-btn>
+        <v-btn color="primary" @click.native.once="formAction">{{ formType === 'new' ? '建立' : '儲存' }}</v-btn>
       </footer>
     </div>
   </div>
@@ -33,7 +34,21 @@ export default {
   name: 'newSupplier',
   props: [],
   mounted () {
+    if (this.$route.params.id) {
+      this.formType = 'edit'
+      this.supplierKey = this.$route.params.id
 
+      const db = this.global.db
+      db.ref('/supplier/' + this.supplierKey)
+        .once('value')
+        .then(snapshot => {
+          let supplier = snapshot.val()
+          this.form.name = supplier.name
+          this.form.tel = supplier.tel
+          this.form.address = supplier.address
+          this.form.note = supplier.note
+        })
+    }
   },
   data () {
     return {
@@ -41,6 +56,8 @@ export default {
         main: '廠商資料',
         sub: '新建'
       },
+      formType: 'new',
+      supplierKey: '',
       form: {
         name: '',
         tel: '',
@@ -50,6 +67,13 @@ export default {
     }
   },
   methods: {
+    formAction () {
+      if (this.formType === 'new') {
+        this.create()
+      } else if (this.formType === 'edit') {
+        this.update()
+      }
+    },
     create () {
       const db = this.global.db
       const router = this.global.router
@@ -72,6 +96,19 @@ export default {
             console.log('Synchronization failed')
           }
         })
+    },
+    update () {
+      const router = this.global.router
+      this.global.db
+        .ref('/supplier/' + this.supplierKey)
+        .update(this.form, (response) => {
+          if (response === null) {
+            router.push('/supplier')
+          }
+        })
+    },
+    goBack () {
+      window.history.length > 1 ? this.global.router.go(-1) : this.global.router.replace('/supplier')
     }
   },
   computed: {

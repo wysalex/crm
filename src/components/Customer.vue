@@ -2,7 +2,7 @@
 
   <section class="customer">
 
-    <mdl-textfield floating-label="搜尋" v-model="keyword"></mdl-textfield>
+    <v-text-field label="搜尋" v-model="keyword" class="search-input"></v-text-field>
 
     <div class="show-list">
       <ul class="mdl-list">
@@ -20,7 +20,11 @@
       </ul>
     </div>
 
-    <mdl-snackbar display-on="customerCreated"></mdl-snackbar>
+    <v-snackbar
+      :timeout="parseInt(2000)"
+      color="success"
+      v-model="successSnackbar"
+    >建立成功</v-snackbar>
 
   </section>
 
@@ -32,10 +36,7 @@ export default {
   props: [],
   mounted () {
     if (this.$store.state.hasNewCustomer) {
-      this.$root.$emit('customerCreated', {
-        message: '建立成功',
-        timeout: 2000
-      })
+      this.successSnackbar = true
       this.$store.dispatch('toggleNewCustomer', {
         needShowTip: false
       })
@@ -43,6 +44,7 @@ export default {
   },
   data () {
     return {
+      successSnackbar: false,
       keyword: '',
       deleteCustomerInfo: {
         idx: '',

@@ -34,12 +34,16 @@
           <v-text-field label="備註" v-model="form.note"></v-text-field>
         </div>
         <footer>
-          <mdl-button class="mdl-button--raised mdl-js-ripple-effect mdl-button--colored" @click.native.once="create">送出</mdl-button>
+          <v-btn color="primary" @click.native.once="create">送出</v-btn>
         </footer>
       </div>
     </div>
 
-    <mdl-snackbar display-on="createError"></mdl-snackbar>
+    <v-snackbar
+      :timeout="parseInt(2000)"
+      color="error"
+      v-model="failedSnackbar"
+    >建立失敗</v-snackbar>
 
   </section>
 </template>
@@ -56,6 +60,7 @@ export default {
   data () {
     return {
       loading: false,
+      failedSnackbar: false,
       citys: [
         {
           id: 0,
@@ -242,10 +247,7 @@ export default {
         })
         .catch(error => {
           if (error) {
-            this.$root.$emit('createError', {
-              message: '建立失敗',
-              timeout: 2000
-            })
+            this.failedSnackbar = true
             console.log('Synchronization failed')
           }
         })
