@@ -11,10 +11,13 @@ import VueFire from 'vuefire'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 Vue.config.productionTip = false
 
 Vue.use(VueFire)
 Vue.use(Vuetify)
+Vue.use(VueAxios, axios)
 
 // Initialize Firebase
 const firebaseConfig = {
