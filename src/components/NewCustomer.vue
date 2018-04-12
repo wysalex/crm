@@ -63,58 +63,52 @@ export default {
       failedSnackbar: false,
       citys: [
         {
-          id: 0,
-          title: '彰化縣',
-          name: 'changhuaCounty',
-          category: 'changhuaCounty',
-          districts: []
-        }, {
           id: 1,
-          title: '嘉義市',
-          name: 'chiayiCity',
-          category: 'chiayiCity',
-          districts: []
-        }, {
-          id: 2,
-          title: '嘉義縣',
-          name: 'chiayiCounty',
-          category: 'chiayiCounty',
-          districts: []
-        }, {
-          id: 3,
-          title: '新竹市',
-          name: 'hsinchuCity',
-          category: 'hsinchuCity',
-          districts: []
-        }, {
-          id: 4,
-          title: '新竹縣',
-          name: 'hsinchuCounty',
-          category: 'hsinchuCounty',
-          districts: []
-        }, {
-          id: 5,
-          title: '花蓮縣',
-          name: 'hualienCounty',
-          category: 'hualienCounty',
-          districts: []
-        }, {
-          id: 6,
-          title: '高雄市',
-          name: 'kaohsiungCity',
-          category: 'kaohsiungCity',
-          districts: []
-        }, {
-          id: 7,
           title: '基隆市',
           name: 'keelungCity',
           category: 'keelungCity',
           districts: []
         }, {
-          id: 8,
+          id: 2,
+          title: '新北市',
+          name: 'newTaipeiCity',
+          category: 'newTaipeiCity',
+          districts: []
+        }, {
+          id: 3,
+          title: '台北市',
+          name: 'taipeiCity',
+          category: 'taipeiCity',
+          districts: []
+        }, {
+          id: 4,
+          title: '桃園市',
+          name: 'taoyuanCity',
+          category: 'taoyuanCity',
+          districts: []
+        }, {
+          id: 5,
+          title: '新竹縣',
+          name: 'hsinchuCounty',
+          category: 'hsinchuCounty',
+          districts: []
+        }, {
+          id: 6,
+          title: '新竹市',
+          name: 'hsinchuCity',
+          category: 'hsinchuCity',
+          districts: []
+        }, {
+          id: 7,
           title: '苗栗縣',
           name: 'miaoliCounty',
           category: 'miaoliCounty',
+          districts: []
+        }, {
+          id: 8,
+          title: '台中市',
+          name: 'taichungCity',
+          category: 'taichungCity',
           districts: []
         }, {
           id: 9,
@@ -124,27 +118,27 @@ export default {
           districts: []
         }, {
           id: 10,
-          title: '新北市',
-          name: 'newTaipeiCity',
-          category: 'newTaipeiCity',
+          title: '彰化縣',
+          name: 'changhuaCounty',
+          category: 'changhuaCounty',
           districts: []
         }, {
           id: 11,
-          title: '澎湖縣',
-          name: 'penghuCounty',
-          category: 'penghuCounty',
+          title: '雲林縣',
+          name: 'yunlinCounty',
+          category: 'yunlinCounty',
           districts: []
         }, {
           id: 12,
-          title: '屏東縣',
-          name: 'pingtungCounty',
-          category: 'pingtungCounty',
+          title: '嘉義縣',
+          name: 'chiayiCounty',
+          category: 'chiayiCounty',
           districts: []
         }, {
           id: 13,
-          title: '台中市',
-          name: 'taichungCity',
-          category: 'taichungCity',
+          title: '嘉義市',
+          name: 'chiayiCity',
+          category: 'chiayiCity',
           districts: []
         }, {
           id: 14,
@@ -154,33 +148,39 @@ export default {
           districts: []
         }, {
           id: 15,
-          title: '台北市',
-          name: 'taipeiCity',
-          category: 'taipeiCity',
+          title: '高雄市',
+          name: 'kaohsiungCity',
+          category: 'kaohsiungCity',
           districts: []
         }, {
           id: 16,
-          title: '台東縣',
-          name: 'taitungCounty',
-          category: 'taitungCounty',
+          title: '屏東縣',
+          name: 'pingtungCounty',
+          category: 'pingtungCounty',
           districts: []
         }, {
           id: 17,
-          title: '桃園市',
-          name: 'taoyuanCity',
-          category: 'taoyuanCity',
-          districts: []
-        }, {
-          id: 18,
           title: '宜蘭縣',
           name: 'yilanCounty',
           category: 'yilanCounty',
           districts: []
         }, {
+          id: 18,
+          title: '花蓮縣',
+          name: 'hualienCounty',
+          category: 'hualienCounty',
+          districts: []
+        }, {
           id: 19,
-          title: '宜蘭市',
-          name: 'yunlinCounty',
-          category: 'yunlinCounty',
+          title: '台東縣',
+          name: 'taitungCounty',
+          category: 'taitungCounty',
+          districts: []
+        }, {
+          id: 20,
+          title: '澎湖縣',
+          name: 'penghuCounty',
+          category: 'penghuCounty',
           districts: []
         }
       ],
