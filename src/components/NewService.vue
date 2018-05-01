@@ -21,13 +21,6 @@
             min-width="290px"
             :return-value.sync="form.date"
           >
-            <!-- <v-text-field
-              slot="activator"
-              label="日期"
-              v-model="form.date"
-              prepend-icon="event"
-              readonly
-            ></v-text-field> -->
             <v-text-field
               slot="activator"
               label="日期"
@@ -116,7 +109,6 @@ export default {
         .once('value')
         .then(snapshot => {
           const service = snapshot.val()
-          // console.log(snapshot.val())
           this.form.date = service.date
           this.form.customer = service.customer
           this.form.brand = service.brand
@@ -161,7 +153,7 @@ export default {
       customers: [],
       suppliers: [],
       form: {
-        date: moment().format('YYYY/MM/DD'),
+        date: moment().format('YYYY-MM-DD'),
         customer: '',
         brand: '',
         product: '',
@@ -211,15 +203,33 @@ export default {
         service_contents: this.form.service_contents,
         service_type: this.form.service_type
       }
-      this.global.db.ref('/service')
-        .push()
+      let newServiceRef = this.global.db.ref('/service').push()
+      newServiceRef
         .set(form)
         .then(() => {
-          console.log('Synchronization succeeded')
-          this.$store.dispatch('toggleNewService', {
-            needShowTip: true
-          })
-          this.global.router.push('/service')
+          const customerRef = this.global.db.ref(`/customer/${form.customer}`)
+          const customerServiceRef = customerRef.child('service')
+          let customerService = {}
+          customerServiceRef
+            .once('value')
+            .then(snapshot => {
+              if (snapshot.val()) {
+                customerService = snapshot.val()
+              }
+              customerService[newServiceRef.key] = moment().format('X')
+              customerServiceRef
+                .set(customerService)
+                .then(() => {
+                  console.log('Synchronization succeeded')
+                  this.$store.dispatch('toggleNewService', {
+                    needShowTip: true
+                  })
+                  this.global.router.push('/service')
+                })
+                .catch(() => {
+                  console.log('Synchronization failed')
+                })
+            })
         })
         .catch(error => {
           if (error) {

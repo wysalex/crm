@@ -26,6 +26,10 @@
             <td>{{ props.item.service_contents }}</td>
             <td>{{ serviceType[props.item.service_type] }}</td>
             <td class="text-xs-right">{{ props.item.price }}</td>
+            <td>
+              <v-icon class="icon-btn" @click="editRow(props.item['.key'])">edit</v-icon>
+              <v-icon class="icon-btn" @click="deleteRow(props.item['.key'])">delete</v-icon>
+            </td>
           </template>
           <v-alert slot="no-results" :value="true" color="error" icon="warning">
             Your search for "{{ serviceFilter }}" found no results.
@@ -62,6 +66,22 @@
       </v-layout>
     </div>
 
+    <v-dialog v-model="comfirmDelete" persistent max-width="500">
+      <v-card>
+        <v-card-title>確認刪除?</v-card-title>
+        <v-card-text>
+          <ul>
+            <li v-for="info in deleteInfo">{{ info.value }}</li>
+          </ul>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn flat color="error" @click.native="deleteIt()">確認</v-btn>
+          <v-btn flat color="primary" @click.native="closeDelDialog">取消</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-snackbar
       :timeout="parseInt(2000)"
       color="success"
@@ -85,18 +105,51 @@ export default {
       services: {},
       aServices: [],
       serviceHeaders: [
-        { text: 'date', value: 'date' },
-        { text: 'name', value: 'customer' },
-        { text: 'service type', value: 'service_type' },
-        { text: 'service contents', value: 'service_contents' },
-        { text: 'brand', value: 'brand' },
-        { text: 'model', value: 'model' },
-        { text: 'price', value: 'price' }
+        { text: '日期', value: 'date' },
+        { text: '客戶', value: 'customer' },
+        { text: '廠牌', value: 'brand' },
+        { text: '型號', value: 'model' },
+        { text: '服務內容', value: 'service_contents' },
+        { text: '服務類型', value: 'service_type' },
+        { text: '金額', value: 'price' },
+        { text: '修改/刪除', value: 'action', width: '100px' }
       ],
       serviceFilter: '',
       serviceType: {
         new: '新購',
         retail: '維修'
+      },
+      comfirmDelete: false,
+      deleteKey: '',
+      deleteInfo: {
+        date: {
+          title: '日期',
+          value: ''
+        },
+        customer: {
+          title: '客戶',
+          value: ''
+        },
+        brand: {
+          title: '廠牌',
+          value: ''
+        },
+        model: {
+          title: '型號',
+          value: ''
+        },
+        service_contents: {
+          title: '服務內容',
+          value: ''
+        },
+        service_type: {
+          title: '服務類型',
+          value: ''
+        },
+        price: {
+          title: '金額',
+          value: ''
+        }
       }
     }
   },
@@ -124,20 +177,69 @@ export default {
   methods: {
     log (msg) {
       console.log(msg)
+    },
+    editRow (serviceKey) {
+      this.global.router.push('/service/' + serviceKey)
+    },
+    deleteRow (serviceKey) {
+      if (this.services[serviceKey]) {
+        this.deleteKey = serviceKey
+        const service = this.services[serviceKey]
+        this.deleteInfo.date.value = service.date
+        this.deleteInfo.customer.value = service.customer
+        this.deleteInfo.brand.value = service.brand
+        this.deleteInfo.model.value = service.model
+        this.deleteInfo.service_contents.value = service.service_contents
+        this.deleteInfo.service_type.value = this.serviceType[service.service_type]
+        this.deleteInfo.price.value = service.price
+        this.comfirmDelete = true
+      }
+    },
+    closeDelDialog () {
+      this.deleteKey = ''
+      this.comfirmDelete = false
+    },
+    deleteIt () {
+      const db = this.global.db
+      const serviceRef = db.ref('/service')
+
+      serviceRef.child(this.deleteKey).remove()
+        .then(snapshot => {
+          console.log('delete success')
+          this.closeDelDialog()
+        })
+        .catch(error => {
+          if (error) {
+            console.log('delete failed')
+          }
+          this.closeDelDialog()
+        })
     }
   },
   computed: {
     servicesArr () {
-      let temp = Object.keys(this.services)
-        .reduce((newArr, serviceIdx) => {
-          let tempService = this.services[serviceIdx]
-          tempService['.key'] = serviceIdx
-          tempService['customer'] = this.customers[tempService['customer']].name
-          tempService['brand'] = this.suppliers[tempService['brand']].name
-          newArr.push(tempService)
-          return newArr
-        }, [])
-      return temp
+      if (this.services) {
+        let temp = Object.keys(this.services)
+          .reduce((newArr, serviceIdx) => {
+            let tempService = this.services[serviceIdx]
+            tempService['.key'] = serviceIdx
+            if (this.customers[tempService['customer']]) {
+              tempService['customer'] = this.customers[tempService['customer']].name
+            } else {
+              tempService['customer'] = ''
+            }
+            if (this.suppliers[tempService['brand']]) {
+              tempService['brand'] = this.suppliers[tempService['brand']].name
+            } else {
+              tempService['brand'] = ''
+            }
+            newArr.push(tempService)
+            return newArr
+          }, [])
+        return temp
+      } else {
+        return []
+      }
     }
   }
 }
