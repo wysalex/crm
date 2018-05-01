@@ -17,24 +17,29 @@
           <v-text-field label="電話" v-model="form.tel"></v-text-field>
           <v-select
             label="居住地"
-            :loading="loading"
+            :loading="loading.city"
             :items="citys"
-            v-model="city"
+            v-model="form.city"
+            @change="changeCity"
             item-text="title"
+            item-value="name"
             autocomplete
           ></v-select>
           <v-select
             label="地區"
+            :loading="loading.district"
             :items="districts"
-            v-model="district"
+            v-model="form.zipCode"
             item-text="district_zh"
+            item-value="zip_code"
             autocomplete
           ></v-select>
           <v-text-field label="地址" v-model="form.address"></v-text-field>
           <v-text-field label="備註" v-model="form.note"></v-text-field>
         </div>
         <footer>
-          <v-btn color="primary" @click.native.once="create">送出</v-btn>
+          <v-btn v-if="formType === 'edit'" @click.native.once="goBack">返回</v-btn>
+          <v-btn color="primary" @click.native.once="formAction">{{ formType === 'new' ? '建立' : '儲存' }}</v-btn>
         </footer>
       </div>
     </div>
@@ -54,13 +59,46 @@ export default {
   name: 'newCustomer',
 
   mounted () {
+    if (this.$route.params.id) {
+      this.formType = 'edit'
+      this.customerKey = this.$route.params.id
 
+      const db = this.global.db
+      const setForm = (customer) => {
+        this.form.name = customer.name
+        this.form.tel = customer.tel
+        this.form.city = customer.city
+        this.form.zipCode = customer.zipCode
+        this.form.address = customer.address
+        this.form.note = customer.note
+      }
+      db.ref('/customer/' + this.customerKey)
+        .once('value')
+        .then(snapshot => {
+          let customer = snapshot.val()
+          this.loading.city = true
+          this.axios.get(`/static/location/${customer.city}.json`)
+            .then(response => {
+              this.loading.city = false
+              this.districts = JSON.parse(JSON.stringify(response.data))
+              setForm(customer)
+            })
+            .catch(error => {
+              this.loading.city = false
+              setForm(customer)
+              console.log(error)
+            })
+        })
+    }
   },
 
   data () {
     return {
-      loading: false,
       failedSnackbar: false,
+      loading: {
+        city: false,
+        district: false
+      },
       citys: [
         {
           id: 1,
@@ -184,48 +222,47 @@ export default {
           districts: []
         }
       ],
+      districts: [],
       func: {
         main: '客戶資料',
         sub: '新建'
       },
-      city: {},
-      district: {},
+      formType: 'new',
+      customerKey: '',
       form: {
         name: '',
         tel: '',
-        address: '',
         city: '',
         district: '',
+        zipCode: 0,
+        address: '',
         note: ''
       }
     }
   },
   computed: {
-    districts () {
-      this.district = {}
-      if (this.city.hasOwnProperty('id')) {
-        if (this.citys[this.city.id].districts.length > 0) {
-          return this.citys[this.city.id].districts
-        } else {
-          this.loading = true
-          this.axios.get(`/static/location/${this.city.category}.json`)
-            .then(response => {
-              this.loading = false
-              this.citys[this.city.id].districts = response.data
-              return this.citys[this.city.id].districts
-            })
-            .catch(error => {
-              this.loading = false
-              this.city = {}
-              console.log(error)
-            })
-        }
-      } else {
-        return []
-      }
-    }
   },
   methods: {
+    changeCity (newCity, oldCity) {
+      this.form.zipCode = 0
+      this.loading.district = true
+      this.axios.get(`/static/location/${newCity}.json`)
+        .then(response => {
+          this.loading.district = false
+          this.districts = JSON.parse(JSON.stringify(response.data))
+        })
+        .catch(error => {
+          this.loading.district = false
+          console.log(error)
+        })
+    },
+    formAction () {
+      if (this.formType === 'new') {
+        this.create()
+      } else if (this.formType === 'edit') {
+        this.update()
+      }
+    },
     create () {
       const db = this.global.db
       const newCustomer = db.ref('/customer').push()
@@ -251,8 +288,10 @@ export default {
             console.log('Synchronization failed')
           }
         })
+    },
+    goBack () {
+      window.history.length > 1 ? this.global.router.go(-1) : this.global.router.replace('/supplier')
     }
-
   }
 
 }
@@ -267,7 +306,6 @@ export default {
   display: inline-block;
   width: 100%;
   max-width: 600px;
-  // height: 400px;
 
   padding: 16px 20px;
 

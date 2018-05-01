@@ -4,7 +4,7 @@
     <!-- vuetify -->
     <v-app id="vuetifyApp">
 
-      <input type="checkbox" class="interface-status" id="menuStatus" name="menu-status" checked="checked">
+      <input type="checkbox" class="interface-status" id="menuStatus" name="menu-status">
       <label for="menuStatus" id="mCover"></label>
 
       <header id="header">
@@ -892,5 +892,12 @@ $color: rgba(0, 188, 212, 1.000);
   // &:hover {
   //   background-color: rgba(0, 0, 0, 0.1);
   // }
+}
+
+.icon-btn {
+  cursor: pointer;
+  &:hover {
+    color: $color !important;
+  }
 }
 </style>
