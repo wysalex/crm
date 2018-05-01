@@ -21,8 +21,8 @@
             <span class="mdl-list__item-sub-title">{{ supplier.tel }}</span>
           </span>
           <span class="mdl-list__item-secondary-content">
-            <a class="mdl-list__item-secondary-action" @click="editSupplier(supplierIdx)"><i class="row-action material-icons">edit</i></a>
-            <a class="mdl-list__item-secondary-action" @click="comfirmDelSupplier(supplierIdx)"><i class="row-action material-icons">delete</i></a>
+            <v-icon class="row-action" @click="editSupplier(supplierIdx)">edit</v-icon>
+            <v-icon class="row-action" @click="comfirmDelSupplier(supplierIdx)">delete</v-icon>
           </span>
         </li>
       </ul>
@@ -259,6 +259,7 @@ export default {
   .row-action {
     color: rgba(0, 0, 0, 0.3);
     @include transition(color .3s);
+    cursor: pointer;
     &:hover {
       color: rgba(0, 188, 212, 1);
       // color: lighten(rgba(0, 188, 212, 1), 5%);
