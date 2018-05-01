@@ -194,6 +194,7 @@ html {
     -moz-osx-font-smoothing: grayscale;
 
     // @include font-smoothing(antialiased);
+    touch-action: manipulation;
   }
 }
 
