@@ -9,12 +9,14 @@
         </header>
         <div class="content">
           <v-text-field
-            label="名稱"
+            label="客戶姓名"
             v-model="form.name"
-            :rules="[() => form.name.length > 0 || 'This field is required']"
+            :rules="[() => form.name.length > 0 || '請輸入客戶姓名']"
             required>
           </v-text-field>
-          <v-text-field label="電話" v-model="form.tel"></v-text-field>
+          <v-text-field label="市話" v-model="form.tel"></v-text-field>
+          <v-text-field label="行動電話" v-model="form.phone"></v-text-field>
+          <v-text-field label="其他聯絡方式" v-model="form.otherContact"></v-text-field>
           <v-select
             label="居住地"
             :loading="loading.city"
@@ -67,6 +69,8 @@ export default {
       const setForm = (customer) => {
         this.form.name = customer.name
         this.form.tel = customer.tel
+        this.form.phone = customer.phone
+        this.form.otherContact = customer.otherContact
         this.form.city = customer.city
         this.form.zipCode = customer.zipCode
         this.form.address = customer.address
@@ -232,6 +236,8 @@ export default {
       form: {
         name: '',
         tel: '',
+        phone: '',
+        otherContact: '',
         city: '',
         district: '',
         zipCode: 0,
@@ -269,9 +275,11 @@ export default {
       const form = {
         name: this.form.name,
         tel: this.form.tel,
+        phone: this.form.phone,
+        otherContact: this.form.otherContact,
         address: this.form.address,
-        city: this.city.name,
-        zipCode: this.district.zip_code,
+        city: this.form.city,
+        zipCode: this.form.zipCode,
         note: this.form.note
       }
       newCustomer.set(form)
