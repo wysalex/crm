@@ -8,12 +8,14 @@
       </header>
       <div class="content">
         <v-text-field
-          label="名稱"
+          label="廠商名稱"
           v-model="form.name"
-          :rules="[() => form.name.length > 0 || 'This field is required']"
+          :rules="[() => form.name.length > 0 || '請輸入廠商名稱']"
           required>
         </v-text-field>
-        <v-text-field label="電話" v-model="form.tel"></v-text-field>
+        <v-text-field label="市話" v-model="form.tel"></v-text-field>
+        <v-text-field label="傳真" v-model="form.fax"></v-text-field>
+        <v-text-field label="其他聯絡方式" v-model="form.otherContact"></v-text-field>
         <v-select
           label="縣市"
           :loading="loading.city"
@@ -58,6 +60,8 @@ export default {
       const setForm = (supplier) => {
         this.form.name = supplier.name
         this.form.tel = supplier.tel
+        this.form.fax = supplier.fax
+        this.form.otherContact = supplier.otherContact
         this.form.city = supplier.city
         this.form.zipCode = supplier.zipCode
         this.form.address = supplier.address
@@ -222,6 +226,8 @@ export default {
       form: {
         name: '',
         tel: '',
+        fax: '',
+        otherContact: '',
         city: '',
         zipCode: 0,
         address: '',
@@ -257,6 +263,8 @@ export default {
       const form = {
         name: this.form.name,
         tel: this.form.tel,
+        fax: this.form.fax,
+        otherContact: this.form.otherContact,
         address: this.form.address,
         city: this.form.city,
         zipCode: this.form.zipCode,
@@ -286,6 +294,8 @@ export default {
       const form = {
         name: this.form.name,
         tel: this.form.tel,
+        fax: this.form.fax,
+        otherContact: this.form.otherContact,
         address: this.form.address,
         city: this.form.city,
         zipCode: this.form.zipCode,
