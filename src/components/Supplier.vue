@@ -2,7 +2,16 @@
 
   <section class="supplier">
 
-    <v-text-field label="搜尋" v-model="keyword" class="search-input"></v-text-field>
+    <v-container fluid grid-list-md>
+      <v-layout row wrap>
+        <v-flex xs12 sm3 offset-sm1 md2 offset-md3>
+          <v-select label="搜尋類型" :items="searchTypes" item-value="val" v-model="searchType"></v-select>
+        </v-flex>
+        <v-flex xs12 sm7 md4>
+          <v-text-field label="搜尋" single-line v-model="keyword"></v-text-field>
+        </v-flex>
+      </v-layout>
+    </v-container>
 
     <div class="action-block">
       <div class="action selected">
@@ -113,6 +122,11 @@ export default {
   data () {
     return {
       // suppliers: {},
+      searchTypes: [
+        { text: '名稱', val: 'name' },
+        { text: '電話', val: 'tel' }
+      ],
+      searchType: 'name',
       successSnackbar: false,
       keyword: '',
       comfirmDelete: false,
@@ -200,8 +214,27 @@ export default {
       if (keyword !== '') {
         return Object.keys(this.suppliers)
           .reduce((r, suppliersIdx) => {
-            if (this.suppliers[suppliersIdx].name.toLowerCase().indexOf(keyword) > -1) {
-              r[suppliersIdx] = this.suppliers[suppliersIdx]
+            switch (this.searchType) {
+              case 'name':
+                if (this.suppliers[suppliersIdx].name.toLowerCase().indexOf(keyword) > -1) {
+                  r[suppliersIdx] = this.suppliers[suppliersIdx]
+                }
+                break
+              case 'tel':
+                if (
+                  this.suppliers[suppliersIdx].tel.toLowerCase().indexOf(keyword) > -1 ||
+                  (
+                    this.suppliers[suppliersIdx].fax &&
+                    this.suppliers[suppliersIdx].fax.toLowerCase().indexOf(keyword) > -1
+                  ) ||
+                  (
+                    this.suppliers[suppliersIdx].otherContact &&
+                    this.suppliers[suppliersIdx].otherContact.toLowerCase().indexOf(keyword) > -1
+                  )
+                ) {
+                  r[suppliersIdx] = this.suppliers[suppliersIdx]
+                }
+                break
             }
             return r
           }, {})
@@ -231,10 +264,6 @@ export default {
   .supplier {
     @include size(100%);
     padding: 16px 20px;
-    .search-input {
-      display: inline-block;
-      width: 300px;
-    }
   }
 
   .action-block {

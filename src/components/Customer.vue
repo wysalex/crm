@@ -2,7 +2,16 @@
 
   <section class="customer">
 
-    <v-text-field label="搜尋" v-model="keyword" class="search-input"></v-text-field>
+    <v-container fluid grid-list-md>
+      <v-layout row wrap>
+        <v-flex xs12 sm3 offset-sm1 md2 offset-md3>
+          <v-select label="搜尋類型" :items="searchTypes" item-value="val" v-model="searchType"></v-select>
+        </v-flex>
+        <v-flex xs12 sm7 md4>
+          <v-text-field label="搜尋" single-line v-model="keyword"></v-text-field>
+        </v-flex>
+      </v-layout>
+    </v-container>
 
     <div class="action-block">
       <div class="action selected">
@@ -134,6 +143,11 @@ export default {
   },
   data () {
     return {
+      searchTypes: [
+        { text: '姓名', val: 'name' },
+        { text: '電話', val: 'tel' }
+      ],
+      searchType: 'name',
       successSnackbar: false,
       keyword: '',
       checkedCustomers: [],
@@ -302,8 +316,27 @@ export default {
       if (this.keyword.trim() !== '') {
         return Object.keys(this.customers)
           .reduce((r, customersIdx) => {
-            if (this.customers[customersIdx].name.toLowerCase().indexOf(keyword) > -1) {
-              r[customersIdx] = this.customers[customersIdx]
+            switch (this.searchType) {
+              case 'name':
+                if (this.customers[customersIdx].name.toLowerCase().indexOf(keyword) > -1) {
+                  r[customersIdx] = this.customers[customersIdx]
+                }
+                break
+              case 'tel':
+                if (
+                  this.customers[customersIdx].tel.toLowerCase().indexOf(keyword) > -1 ||
+                  (
+                    this.customers[customersIdx].phone &&
+                    this.customers[customersIdx].phone.toLowerCase().indexOf(keyword) > -1
+                  ) ||
+                  (
+                    this.customers[customersIdx].otherContact &&
+                    this.customers[customersIdx].otherContact.toLowerCase().indexOf(keyword) > -1
+                  )
+                ) {
+                  r[customersIdx] = this.customers[customersIdx]
+                }
+                break
             }
             return r
           }, {})
@@ -325,10 +358,6 @@ export default {
   .customer {
     @include size(100%);
     padding: 16px 20px;
-    .search-input {
-      display: inline-block;
-      width: 300px;
-    }
   }
 
   .show-list {
