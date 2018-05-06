@@ -34,6 +34,10 @@ export default new Router({
       name: 'NewCustomer',
       component: NewCustomer
     }, {
+      path: '/customer/:id',
+      name: 'EditCustomer',
+      component: NewCustomer
+    }, {
       path: '/supplier',
       name: 'Supplier',
       component: Supplier
