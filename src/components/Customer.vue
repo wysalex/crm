@@ -76,7 +76,7 @@
               <!-- <td>{{ props.item.product }}</td> -->
               <td>{{ props.item.service_contents }}</td>
               <td>{{ props.item.service_type }}</td>
-              <td class="text-xs-right">{{ props.item.price }}</td>
+              <td class="text-xs-right">{{ props.item.totalPrice }}</td>
               <td>
                 <v-icon class="icon-btn" @click="editService(props.item.key)">edit</v-icon>
                 <v-icon class="icon-btn" @click="deleteService(props.item.key)">delete</v-icon>
@@ -173,7 +173,7 @@ export default {
           value: 'service_type'
         }, {
           text: '金額',
-          value: 'price'
+          value: 'totalPrice'
         }, {
           text: '修改/刪除',
           value: 'action',
@@ -234,7 +234,7 @@ export default {
                     brand: this.suppliers[service.brand].name,
                     date: service.date,
                     model: service.model,
-                    price: service.price,
+                    totalPrice: service.totalPrice,
                     product: service.product,
                     service_contents: service.service_contents,
                     service_type: this.serviceType[service.service_type]

@@ -66,8 +66,42 @@
             autocomplete
           ></v-select>
           <v-text-field label="型號" v-model="form.model"></v-text-field>
-          <v-text-field label="問題描述" v-model="form.service_contents" multi-line></v-text-field>
-          <v-text-field label="金額" v-model="form.price"></v-text-field>
+          <v-text-field
+            v-show="form.service_type === 'retail'"
+            label="問題描述"
+            v-model="form.service_contents"
+            multi-line
+          ></v-text-field>
+          <div v-show="form.service_type === 'retail'" class="parts">
+            <!-- https://github.com/vuejs/eslint-plugin-vue/blob/master/docs/rules/require-v-for-key.md -->
+            <div
+              v-for="(part, partIdx) in parts"
+              :key="partIdx"
+              class="part"
+            >
+              <v-btn v-if="parts.length > 1" @click.native="removePart(partIdx)" icon small color="error" class="remove">
+                <v-icon>remove</v-icon>
+              </v-btn>
+              <v-text-field label="零件料號" v-model="parts[partIdx].number"></v-text-field>
+              <v-text-field label="名稱" v-model="parts[partIdx].name"></v-text-field>
+              <v-text-field label="說明" v-model="parts[partIdx].comments"></v-text-field>
+              <v-text-field label="金額" type="number" v-model="parts[partIdx].price"></v-text-field>
+            </div>
+            <v-btn block color="success" @click.native="newPart"><v-icon>add</v-icon>新增零件項目</v-btn>
+          </div>
+          <v-text-field
+            v-show="form.service_type !== 'retail'"
+            label="單價"
+            type="number"
+            v-model="form.unitPrice"
+          ></v-text-field>
+          <v-text-field
+            v-show="form.service_type !== 'retail'"
+            label="數量"
+            type="number"
+            v-model="form.quantity"
+          ></v-text-field>
+          <v-text-field label="合計" type="number" :value="form.service_type === 'retail' ? form.totalPrice : form.unitPrice * form.quantity"></v-text-field>
         </div>
         <footer>
           <v-btn v-if="formType === 'edit'" @click.native.once="goBack">返回</v-btn>
@@ -114,7 +148,8 @@ export default {
           this.form.brand = service.brand
           this.form.product = service.product
           this.form.model = service.model
-          this.form.price = service.price
+          this.form.unitPrice = service.unitPrice
+          this.form.quantity = service.quantity
           this.form.service_contents = service.service_contents
           this.form.service_type = service.service_type
         })
@@ -152,16 +187,39 @@ export default {
       ],
       customers: [],
       suppliers: [],
+      parts: [
+        {
+          number: '',
+          name: '',
+          comments: '',
+          price: ''
+        }
+      ],
       form: {
         date: moment().format('YYYY-MM-DD'),
         customer: '',
         brand: '',
         product: '',
         model: '',
-        price: 0,
+        unitPrice: '',
+        quantity: 1,
+        totalPrice: '',
         service_contents: '',
         service_type: ''
       }
+    }
+  },
+  watch: {
+    parts: {
+      handler (newVal, oldVal) {
+        this.form.totalPrice = newVal.reduce((total, part) => {
+          if (part.price && part.price > 0) {
+            total += parseInt(part.price)
+          }
+          return total
+        }, 0)
+      },
+      deep: true
     }
   },
   computed: {
@@ -185,6 +243,17 @@ export default {
     }
   },
   methods: {
+    newPart () {
+      this.parts.push({
+        number: '',
+        name: '',
+        comments: '',
+        price: ''
+      })
+    },
+    removePart (partIdx) {
+      this.parts.splice(partIdx, 1)
+    },
     formAction () {
       if (this.formType === 'new') {
         this.create()
@@ -193,15 +262,36 @@ export default {
       }
     },
     create () {
-      const form = {
+      let form = {
         date: this.form.date,
         customer: this.form.customer,
         brand: this.form.brand,
         product: this.form.product,
         model: this.form.model,
-        price: this.form.price,
+        parts: [],
+        unitPrice: '',
+        quantity: 0,
+        totalPrice: 0,
         service_contents: this.form.service_contents,
         service_type: this.form.service_type
+      }
+      if (this.form.service_type === 'retail') {
+        form.parts = this.parts.filter(part => {
+          if (
+            part.number === '' ||
+            part.name === '' ||
+            part.comments === ''
+          ) {
+            return false
+          } else {
+            form.totalPrice += parseInt(part.price)
+            return true
+          }
+        })
+      } else {
+        form.unitPrice = this.form.unitPrice
+        form.quantity = this.form.quantity
+        form.totalPrice = form.unitPrice * form.quantity
       }
       let newServiceRef = this.global.db.ref('/service').push()
       newServiceRef
@@ -320,6 +410,25 @@ export default {
         font-weight: bold;
       }
       // background-color: rgba(255, 0, 0, 0.07);
+    }
+  }
+}
+
+.parts {
+  margin-bottom: 26px;
+  .part {
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    padding: 12px;
+    @include border-radius(8px);
+    &:nth-child(n + 2) {
+      margin-top: 12px;
+    }
+    > .remove {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 1;
     }
   }
 }

@@ -25,7 +25,7 @@
             <td>{{ props.item.model }}</td>
             <td>{{ props.item.service_contents }}</td>
             <td>{{ serviceType[props.item.service_type] }}</td>
-            <td class="text-xs-right">{{ props.item.price }}</td>
+            <td class="text-xs-right">{{ props.item.totalPrice }}</td>
             <td>
               <v-icon class="icon-btn" @click="editRow(props.item['.key'])">edit</v-icon>
               <v-icon class="icon-btn" @click="deleteRow(props.item['.key'])">delete</v-icon>
