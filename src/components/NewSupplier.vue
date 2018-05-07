@@ -19,7 +19,7 @@
         <v-select
           label="縣市"
           :loading="loading.city"
-          :items="citys"
+          :items="Object.keys(citys).map(city => this.citys[city])"
           v-model="form.city"
           @change="changeCity"
           item-text="title"
@@ -56,33 +56,24 @@ export default {
       this.formType = 'edit'
       this.supplierKey = this.$route.params.id
 
-      const db = this.global.db
-      const setForm = (supplier) => {
-        this.form.name = supplier.name
-        this.form.tel = supplier.tel
-        this.form.fax = supplier.fax
-        this.form.otherContact = supplier.otherContact
-        this.form.city = supplier.city
-        this.form.zipCode = supplier.zipCode
-        this.form.address = supplier.address
-        this.form.note = supplier.note
-      }
-      db.ref('/supplier/' + this.supplierKey)
+      this.global.db.ref('/supplier/' + this.supplierKey)
         .once('value')
-        .then(snapshot => {
+        .then(async snapshot => {
           let supplier = snapshot.val()
           this.loading.city = true
-          this.axios.get(`/static/location/${supplier.city}.json`)
-            .then(response => {
-              this.loading.city = false
-              this.districts = JSON.parse(JSON.stringify(response.data))
-              setForm(supplier)
-            })
-            .catch(error => {
-              this.loading.city = false
-              setForm(supplier)
-              console.log(error)
-            })
+
+          const districts = await this.getDistricts(supplier.city)
+          this.districts = districts
+          this.loading.city = false
+
+          this.form.name = supplier.name
+          this.form.tel = supplier.tel
+          this.form.fax = supplier.fax
+          this.form.otherContact = supplier.otherContact
+          this.form.city = supplier.city
+          this.form.zipCode = supplier.zipCode
+          this.form.address = supplier.address
+          this.form.note = supplier.note
         })
     }
   },
@@ -93,129 +84,6 @@ export default {
         city: false,
         district: false
       },
-      citys: [
-        {
-          id: 1,
-          title: '基隆市',
-          name: 'keelungCity',
-          category: 'keelungCity',
-          districts: []
-        }, {
-          id: 2,
-          title: '新北市',
-          name: 'newTaipeiCity',
-          category: 'newTaipeiCity',
-          districts: []
-        }, {
-          id: 3,
-          title: '台北市',
-          name: 'taipeiCity',
-          category: 'taipeiCity',
-          districts: []
-        }, {
-          id: 4,
-          title: '桃園市',
-          name: 'taoyuanCity',
-          category: 'taoyuanCity',
-          districts: []
-        }, {
-          id: 5,
-          title: '新竹縣',
-          name: 'hsinchuCounty',
-          category: 'hsinchuCounty',
-          districts: []
-        }, {
-          id: 6,
-          title: '新竹市',
-          name: 'hsinchuCity',
-          category: 'hsinchuCity',
-          districts: []
-        }, {
-          id: 7,
-          title: '苗栗縣',
-          name: 'miaoliCounty',
-          category: 'miaoliCounty',
-          districts: []
-        }, {
-          id: 8,
-          title: '台中市',
-          name: 'taichungCity',
-          category: 'taichungCity',
-          districts: []
-        }, {
-          id: 9,
-          title: '南投縣',
-          name: 'nantouCounty',
-          category: 'nantouCounty',
-          districts: []
-        }, {
-          id: 10,
-          title: '彰化縣',
-          name: 'changhuaCounty',
-          category: 'changhuaCounty',
-          districts: []
-        }, {
-          id: 11,
-          title: '雲林縣',
-          name: 'yunlinCounty',
-          category: 'yunlinCounty',
-          districts: []
-        }, {
-          id: 12,
-          title: '嘉義縣',
-          name: 'chiayiCounty',
-          category: 'chiayiCounty',
-          districts: []
-        }, {
-          id: 13,
-          title: '嘉義市',
-          name: 'chiayiCity',
-          category: 'chiayiCity',
-          districts: []
-        }, {
-          id: 14,
-          title: '台南市',
-          name: 'tainanCity',
-          category: 'tainanCity',
-          districts: []
-        }, {
-          id: 15,
-          title: '高雄市',
-          name: 'kaohsiungCity',
-          category: 'kaohsiungCity',
-          districts: []
-        }, {
-          id: 16,
-          title: '屏東縣',
-          name: 'pingtungCounty',
-          category: 'pingtungCounty',
-          districts: []
-        }, {
-          id: 17,
-          title: '宜蘭縣',
-          name: 'yilanCounty',
-          category: 'yilanCounty',
-          districts: []
-        }, {
-          id: 18,
-          title: '花蓮縣',
-          name: 'hualienCounty',
-          category: 'hualienCounty',
-          districts: []
-        }, {
-          id: 19,
-          title: '台東縣',
-          name: 'taitungCounty',
-          category: 'taitungCounty',
-          districts: []
-        }, {
-          id: 20,
-          title: '澎湖縣',
-          name: 'penghuCounty',
-          category: 'penghuCounty',
-          districts: []
-        }
-      ],
       districts: [],
       func: {
         main: '廠商資料',
@@ -236,18 +104,14 @@ export default {
     }
   },
   methods: {
-    changeCity (newCity, oldCity) {
+    changeCity: async function (newCity) {
       this.form.zipCode = 0
       this.loading.district = true
-      this.axios.get(`/static/location/${newCity}.json`)
-        .then(response => {
-          this.loading.district = false
-          this.districts = JSON.parse(JSON.stringify(response.data))
-        })
-        .catch(error => {
-          this.loading.district = false
-          console.log(error)
-        })
+
+      const districts = await this.getDistricts(newCity)
+      this.districts = districts
+
+      this.loading.district = false
     },
     formAction () {
       if (this.formType === 'new') {

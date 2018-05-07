@@ -53,7 +53,7 @@
             </div>
             <div>
               <span>地址: </span>
-              <span>{{ customers[showCustomerIdx].address }}</span>
+              <span>{{ customers[showCustomerIdx].fullAddress }}</span>
             </div>
             <div>
               <span>備註: </span>
@@ -199,6 +199,22 @@ export default {
     }
   },
   methods: {
+    getAddress: async function (customer) {
+      let address = ''
+      if (this.citys[customer.city]) {
+        address += this.citys[customer.city].title
+      }
+      let districts = await this.getDistricts(customer.city)
+      districts.forEach(districtInfo => {
+        if (districtInfo.zip_code === customer.zipCode) {
+          address += districtInfo.district_zh
+        }
+      })
+      if (customer.address) {
+        address += customer.address
+      }
+      return address
+    },
     getCustomer: async function (customerIdx) {
       this.showCustomerIdx = customerIdx
       this.showCustomerKey = this.customers[customerIdx]['.key']
@@ -230,6 +246,8 @@ export default {
           }, [])
         customerService = await customerServiceP
       }
+      let address = await this.getAddress(this.customers[customerIdx])
+      this.customers[customerIdx].fullAddress = address
       this.customerService = customerService
       this.customerServices[this.showCustomerKey] = customerService
       this.customerCard = true
