@@ -34,15 +34,15 @@
           <ul>
 
             <!-- 客戶資料 -->
-            <li class="group customer" :class="{ active: isActive.customer }">
-              <div class="side-menu" @click="toggleSideMenu('customer')">
+            <li class="group customer" id="menu-customer" :class="{ active: isActive.customer }">
+              <div class="side-menu" @click="toggleSideMenu('customer', $event)" slot="activator">
                 <span class="material-icons mdl-list__item-icon icon">people</span>
                 <span class="router-title" data-main="客戶資料">客戶資料</span>
                 <span class="arrowBlock">
                   <span class="arrow"></span>
                 </span>
               </div>
-              <ul>
+              <ul style="height:0">
                 <li class="sub">
                   <router-link to="/customer" @click.native="changeTitle" class="router" data-main="客戶資料" data-sub="查詢">
                     <i class="material-icons">search</i>
@@ -59,15 +59,15 @@
             </li>
 
             <!-- 廠商資料 -->
-            <li class="group supplier" :class="{ active: isActive.supplier }">
-              <div class="side-menu" @click="toggleSideMenu('supplier')">
+            <li class="group supplier" id="menu-supplier" :class="{ active: isActive.supplier }">
+              <div class="side-menu" @click="toggleSideMenu('supplier', $event)" slot="activator">
                 <span class="material-icons mdl-list__item-icon icon">business</span>
                 <span class="router-title" data-main="廠商資料">廠商資料</span>
                 <span class="arrowBlock">
                   <span class="arrow"></span>
                 </span>
               </div>
-              <ul>
+              <ul style="height:0">
                 <li class="sub">
                   <router-link to="/supplier" @click.native="changeTitle" class="router" data-main="廠商資料" data-sub="查詢">
                     <i class="material-icons">search</i>
@@ -84,15 +84,15 @@
             </li>
 
             <!-- 維修/新購 -->
-            <li class="group service" :class="{ active: isActive.service }">
-              <div class="side-menu" @click="toggleSideMenu('service')">
+            <li class="group service" id="menu-service" :class="{ active: isActive.service }">
+              <div class="side-menu" @click="toggleSideMenu('service', $event)" slot="activator">
                 <span class="material-icons mdl-list__item-icon icon">build</span>
                 <span class="router-title" data-main="維修/新購">維修/新購</span>
                 <span class="arrowBlock">
                   <span class="arrow"></span>
                 </span>
               </div>
-              <ul>
+              <ul style="height:0">
                 <li class="sub">
                   <router-link to="/service" @click.native="changeTitle" class="router" data-main="維修/新購" data-sub="查詢">
                     <i class="material-icons">search</i>
@@ -147,13 +147,27 @@ export default {
       }
       // console.log('changeTitle()')
     },
-    toggleSideMenu (toggleMenu) {
+    toggleSideMenu (toggleMenu, $event = null) {
       this.isActive[toggleMenu] = !this.isActive[toggleMenu]
       Object.keys(this.isActive).map(menu => {
-        if (this.isActive[toggleMenu] && menu !== toggleMenu) {
+        if (this.isActive[menu] && this.isActive[toggleMenu] && menu !== toggleMenu) {
+          let $subMenu = document.querySelector(`#menu-${menu} > ul`)
+          if ($subMenu) {
+            $subMenu.style.height = '0'
+          }
           this.isActive[menu] = false
         }
       })
+      const $child = $event.target.closest('li').querySelector('ul')
+      if ($child && this.isActive[toggleMenu] === false) {
+        $child.style.height = '0'
+      } else if ($child) {
+        $child.style.height = `${40 * $child.childElementCount + (4 * 2)}px`
+      }
+    },
+    signOut () {
+      this.global.router.push('/')
+      this.global.firebase.auth().signOut()
     }
   }
 }
@@ -525,7 +539,6 @@ $color: rgba(0, 188, 212, 1.000);
         > ul {
           margin: 8px 0;
           padding: 4px 0;
-          height: calc(70px + 2px + (4px * 2));
           @include opacity(1);
         }
       }
