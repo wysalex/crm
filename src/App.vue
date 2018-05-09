@@ -107,6 +107,26 @@
                 </li>
               </ul>
             </li>
+
+            <!-- 設定 -->
+            <li class="group settings" id="menu-settings" :class="{ active: isActive.settings }">
+              <div class="side-menu" @click="toggleSideMenu('settings', $event)" slot="activator">
+                <span class="material-icons mdl-list__item-icon icon">settings</span>
+                <span class="router-title" data-main="設定">設定</span>
+                <span class="arrowBlock">
+                  <span class="arrow"></span>
+                </span>
+              </div>
+              <ul style="height:0">
+                <li class="sub">
+                  <a @click="signOut()" class="router">
+                    <i class="material-icons mdl-list__item-icon icon">power_settings_new</i>
+                    <span class="router-title">登出</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
           </ul>
         </div>
       </div>
