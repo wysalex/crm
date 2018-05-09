@@ -1,6 +1,7 @@
 <template lang="html">
 
   <v-app>
+    <vue-progress-bar></vue-progress-bar>
     <v-content>
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
@@ -19,7 +20,12 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="signIn" id="signInBtn">Login</v-btn>
+                <v-btn
+                  color="primary"
+                  :loading="loading"
+                  :disabled="loading"
+                  @click="signIn"
+                >登入</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -39,20 +45,25 @@ export default {
   data () {
     return {
       loading: false,
-      account: '',
-      password: ''
+      account: 'wysalexwang@gmail.com',
+      password: 'PassWord'
     }
   },
   methods: {
     signIn () {
       if (!this.loading) {
-        const $signInBtn = document.querySelector('#signInBtn')
-        $signInBtn.disabled = true
+        this.$Progress.start()
+        this.$Progress.increase(30)
         this.loading = true
         this.global.firebase
           .auth()
           .signInWithEmailAndPassword(this.account, this.password)
+          .then(() => {
+            this.$Progress.finish()
+            console.log('sign in success')
+          })
           .catch(error => {
+            this.$Progress.fail()
             const errorCode = error.code
             const errorMessage = error.message
             console.log(errorCode)
@@ -62,7 +73,6 @@ export default {
             } else {
               alert(errorMessage)
             }
-            $signInBtn.disabled = false
             this.loading = false
           })
       }

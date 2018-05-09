@@ -13,11 +13,15 @@ import 'vuetify/dist/vuetify.min.css'
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueProgressBar from 'vue-progressbar'
 Vue.config.productionTip = false
 
 Vue.use(VueFire)
 Vue.use(Vuetify)
 Vue.use(VueAxios, axios)
+Vue.use(VueProgressBar, {
+  thickness: '4px'
+})
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -29,14 +33,6 @@ const firebaseConfig = {
   messagingSenderId: '61829099555'
 }
 const app = firebase.initializeApp(firebaseConfig)
-const email = 'wysalexwang@gmail.com'
-const password = 'PassWord'
-firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-  var errorCode = error.code
-  var errorMessage = error.message
-  console.log(errorCode)
-  console.log(errorMessage)
-})
 
 const db = firebase.database()
 
@@ -198,9 +194,8 @@ Vue.mixin({
 })
 /* eslint-disable no-new */
 
-firebase.auth().onAuthStateChanged(function (user) {
+firebase.auth().onAuthStateChanged(user => {
   if (user) {
-    console.log('User is signed in.')
     new Vue({
       el: '#app',
       mode: 'history',
@@ -210,7 +205,6 @@ firebase.auth().onAuthStateChanged(function (user) {
       components: { App }
     })
   } else {
-    console.log('No user is signed in.')
     new Vue({
       el: '#app',
       mode: 'history',
