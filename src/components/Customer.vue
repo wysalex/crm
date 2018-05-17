@@ -23,15 +23,24 @@
 
     <div class="show-list">
       <ul class="mdl-list">
-        <li class="mdl-list__item mdl-list__item--two-line customer-row" v-for="(customer, customerIdx) in filterCustomers">
+        <li
+          class="mdl-list__item mdl-list__item--two-line customer-row show-detail"
+          @click="getCustomer(customerIdx)"
+          v-for="(customer, customerIdx) in filterCustomers"
+        >
           <span class="mdl-list__item-primary-content">
-            <v-checkbox class="material-icons mdl-list__item-icon" v-model="checkedCustomers" :value="customerIdx"></v-checkbox>
-            <span class="show-detail" @click="getCustomer(customerIdx)">{{ customer.name }}</span>
-            <span class="mdl-list__item-sub-title">{{ customer.tel }}</span>
+            <v-checkbox
+              @click.self.stop=""
+              class="material-icons mdl-list__item-icon"
+              v-model="checkedCustomers"
+              :value="customer['.key']"
+            ></v-checkbox>
+            <span>{{ customer.name }}</span>
+            <span class="mdl-list__item-sub-title">{{ customer.telphone1 }}</span>
           </span>
           <span class="mdl-list__item-secondary-content">
-            <v-icon class="row-action" @click="editCustomer(customerIdx)">edit</v-icon>
-            <v-icon class="row-action" @click="comfirmDelCustomer(customerIdx)">delete</v-icon>
+            <v-icon class="row-action" @click.self.stop="editCustomer(customerIdx)">edit</v-icon>
+            <v-icon class="row-action" @click.self.stop="comfirmDelCustomer(customerIdx)">delete</v-icon>
           </span>
         </li>
       </ul>
@@ -48,8 +57,20 @@
           <!-- customer information -->
           <div class="card-info">
             <div>
-              <span>電話: </span>
-              <span>{{ customers[showCustomerIdx].tel }}</span>
+              <span>市話 1: </span>
+              <span>{{ customers[showCustomerIdx].telphone1 }}</span>
+            </div>
+            <div>
+              <span>市話 2: </span>
+              <span>{{ customers[showCustomerIdx].telphone2 }}</span>
+            </div>
+            <div v-if="customers[showCustomerIdx].phone">
+              <span>行動電話: </span>
+              <span>{{ customers[showCustomerIdx].phone }}</span>
+            </div>
+            <div v-if="customers[showCustomerIdx].otherContact">
+              <span>其他聯絡方式: </span>
+              <span>{{ customers[showCustomerIdx].otherContact }}</span>
             </div>
             <div>
               <span>地址: </span>
@@ -87,7 +108,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat @click.native="customerCard = false">關閉</v-btn>
+          <v-btn @click.native="customerCard = false">關閉</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -101,15 +122,15 @@
               <span class="mdl-list__item-primary-content">
                 <v-icon>people</v-icon>
                 <span>{{ deleteCustomerInfo.name }}</span>
-                <span class="mdl-list__item-sub-title">{{ deleteCustomerInfo.tel }}</span>
+                <span class="mdl-list__item-sub-title">{{ deleteCustomerInfo.telphone1 }}</span>
               </span>
             </li>
           </ul>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat color="error" @click.native="delCustomer(deleteCustomerInfo.idx)">確認</v-btn>
-          <v-btn flat color="primary" @click.native="closeDelDialog">取消</v-btn>
+          <v-btn color="error" @click.native="delCustomer(deleteCustomerInfo.idx)">確認</v-btn>
+          <v-btn color="info" @click.native="closeDelDialog">取消</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -189,13 +210,13 @@ export default {
       deleteCustomerInfo: {
         idx: '',
         name: '',
-        tel: ''
+        telphone1: ''
       }
     }
   },
   firebase () {
     return {
-      customers: this.global.db.ref('/customer')
+      customers: this.global.db.ref('/customer').orderByChild('id')
     }
   },
   methods: {
@@ -204,12 +225,14 @@ export default {
       if (this.citys[customer.city]) {
         address += this.citys[customer.city].title
       }
-      let districts = await this.getDistricts(customer.city)
-      districts.forEach(districtInfo => {
-        if (districtInfo.zip_code === customer.zipCode) {
-          address += districtInfo.district_zh
-        }
-      })
+      if (customer.district) {
+        let districts = await this.getDistricts(customer.city)
+        districts.forEach(districtInfo => {
+          if (districtInfo.zip_code.toString() === customer.district.toString()) {
+            address += districtInfo.district_zh
+          }
+        })
+      }
       if (customer.address) {
         address += customer.address
       }
@@ -281,15 +304,16 @@ export default {
         })
     },
     allChecked () {
-      this.checkedCustomers = Object.keys(this.customers).map(customerIdx => parseInt(customerIdx))
+      this.checkedCustomers = Object.keys(this.customers)
+        .map(customerIdx => this.customers[customerIdx]['.key'])
     },
     clearChecked () {
       this.checkedCustomers = []
     },
     deleteSelected () {
       if (this.checkedCustomers.length > 0) {
-        this.checkedCustomers.forEach(customerIdx => {
-          this.delCustomer(this.customers[customerIdx]['.key'])
+        this.checkedCustomers.forEach(customerKey => {
+          this.delCustomer(customerKey)
         })
         this.checkedCustomers = []
       }
@@ -297,7 +321,7 @@ export default {
     comfirmDelCustomer (customerIdx) {
       this.deleteCustomerInfo.idx = this.customers[customerIdx]['.key']
       this.deleteCustomerInfo.name = this.customers[customerIdx].name
-      this.deleteCustomerInfo.tel = this.customers[customerIdx].tel
+      this.deleteCustomerInfo.telphone1 = this.customers[customerIdx].telphone1
       this.comfirmDelete = true
     },
     editCustomer (customerIdx) {
@@ -330,19 +354,26 @@ export default {
   },
   computed: {
     filterCustomers () {
-      var keyword = this.keyword.trim().toLowerCase()
+      const keyword = this.keyword.trim().toLowerCase()
       if (this.keyword.trim() !== '') {
         return Object.keys(this.customers)
-          .reduce((r, customersIdx) => {
+          .reduce((result, customersIdx) => {
             switch (this.searchType) {
               case 'name':
                 if (this.customers[customersIdx].name.toLowerCase().indexOf(keyword) > -1) {
-                  r[customersIdx] = this.customers[customersIdx]
+                  result.push(this.customers[customersIdx])
                 }
                 break
               case 'tel':
                 if (
-                  this.customers[customersIdx].tel.toLowerCase().indexOf(keyword) > -1 ||
+                  (
+                    this.customers[customersIdx].telphone1 &&
+                    this.customers[customersIdx].telphone1.toLowerCase().indexOf(keyword) > -1
+                  ) ||
+                  (
+                    this.customers[customersIdx].telphone2 &&
+                    this.customers[customersIdx].telphone2.toLowerCase().indexOf(keyword) > -1
+                  ) ||
                   (
                     this.customers[customersIdx].phone &&
                     this.customers[customersIdx].phone.toLowerCase().indexOf(keyword) > -1
@@ -352,14 +383,14 @@ export default {
                     this.customers[customersIdx].otherContact.toLowerCase().indexOf(keyword) > -1
                   )
                 ) {
-                  r[customersIdx] = this.customers[customersIdx]
+                  result.push(this.customers[customersIdx])
                 }
                 break
             }
-            return r
-          }, {})
+            return result
+          }, []).reverse()
       } else {
-        return this.customers
+        return this.customers.reverse()
       }
     },
     emptyChecked () {
