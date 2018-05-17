@@ -1,49 +1,95 @@
 <template lang="html">
 
-  <div id="newSupplierCard">
+  <v-form id="newSupplierCard" v-model="validForm" ref="form" lazy-validation>
     <div class="container">
       <header>
         <div class="title">{{ func.main }}</div>
         <div class="more"></div>
       </header>
-      <div class="content">
-        <v-text-field
-          label="廠商名稱"
-          v-model="form.name"
-          :rules="[() => form.name.length > 0 || '請輸入廠商名稱']"
-          required>
-        </v-text-field>
-        <v-text-field label="市話" v-model="form.tel"></v-text-field>
-        <v-text-field label="傳真" v-model="form.fax"></v-text-field>
-        <v-text-field label="其他聯絡方式" v-model="form.otherContact"></v-text-field>
-        <v-select
-          label="縣市"
-          :loading="loading.city"
-          :items="Object.keys(citys).map(city => this.citys[city])"
-          v-model="form.city"
-          @change="changeCity"
-          item-text="title"
-          item-value="name"
-          autocomplete
-        ></v-select>
-        <v-select
-          label="地區"
-          :loading="loading.district"
-          :items="districts"
-          v-model="form.zipCode"
-          item-text="district_zh"
-          item-value="zip_code"
-          autocomplete
-        ></v-select>
-        <v-text-field label="地址" v-model="form.address"></v-text-field>
-        <v-text-field label="備註" v-model="form.note"></v-text-field>
-      </div>
+      <v-container grid-list-md text-xs-center class="content">
+        <v-layout row wrap>
+          <v-flex xs12 sm7>
+            <v-text-field
+              label="廠商名稱"
+              v-model="form.name"
+              :rules="[() => form.name.length > 0 || '請輸入廠商名稱']"
+              required>
+            </v-text-field>
+          </v-flex>
+          <v-flex xs12 sm5>
+            <v-text-field
+              label="簡碼"
+              v-model="form.shortKey">
+            </v-text-field>
+          </v-flex>
+          <v-flex xs12 sm6>
+            <v-text-field label="市話 1" v-model="form.telphone1"></v-text-field>
+          </v-flex>
+          <v-flex xs12 sm6>
+            <v-text-field label="市話 2" v-model="form.telphone2"></v-text-field>
+          </v-flex>
+          <v-flex xs12 sm6>
+            <v-text-field label="傳真" v-model="form.fax"></v-text-field>
+          </v-flex>
+          <v-flex xs12 sm6>
+            <v-text-field label="其他聯絡方式" v-model="form.otherContact"></v-text-field>
+          </v-flex>
+          <v-flex xs12 sm6>
+            <v-text-field label="負責人" v-model="form.principal"></v-text-field>
+          </v-flex>
+          <v-flex xs12 sm6>
+            <v-text-field label="聯絡人" v-model="form.contacts"></v-text-field>
+          </v-flex>
+          <v-flex xs12 sm3>
+            <v-text-field label="郵遞區號" v-model="form.zipCode"></v-text-field>
+          </v-flex>
+          <v-flex xs12 sm4>
+            <v-select
+              label="縣市"
+              :loading="loading.city"
+              :items="Object.keys(citys).map(city => this.citys[city])"
+              v-model="selected.city"
+              @change="changeCity"
+              item-text="title"
+              autocomplete
+            ></v-select>
+          </v-flex>
+          <v-flex xs12 sm5>
+            <v-select
+              label="地區"
+              :loading="loading.district"
+              :items="districts"
+              v-model="selected.district"
+              @change="changeDistrict"
+              item-text="district_zh"
+              autocomplete
+            ></v-select>
+          </v-flex>
+          <v-flex xs12>
+            <v-select
+              label="路段"
+              :loading="loading.road"
+              :items="roads"
+              v-model="selected.road"
+              @change="changeRoad"
+              item-text="roadScope"
+              autocomplete
+            ></v-select>
+          </v-flex>
+          <v-flex xs12>
+            <v-text-field label="地址" v-model="form.address"></v-text-field>
+          </v-flex>
+          <v-flex xs12>
+            <v-text-field label="備註" v-model="form.note"></v-text-field>
+          </v-flex>
+        </v-layout>
+      </v-container>
       <footer>
         <v-btn v-if="formType === 'edit'" @click.native.once="goBack">返回</v-btn>
-        <v-btn color="primary" @click.native.once="formAction">{{ formType === 'new' ? '建立' : '儲存' }}</v-btn>
+        <v-btn type="submit" color="primary" @click="submitForm" :disabled="!validForm">{{ formType === 'new' ? '建立' : '儲存' }}</v-btn>
       </footer>
     </div>
-  </div>
+  </v-form>
 
 </template>
 
@@ -62,18 +108,48 @@ export default {
           let supplier = snapshot.val()
           this.loading.city = true
 
+          Object.keys(this.citys).forEach(city => {
+            if (city === supplier.city) {
+              this.selected.city = this.citys[city]
+            }
+          })
+
           const districts = await this.getDistricts(supplier.city)
+          const roads = await this.getRoads(supplier.district)
           this.districts = districts
+          this.roads = roads
           this.loading.city = false
 
-          this.form.name = supplier.name
-          this.form.tel = supplier.tel
-          this.form.fax = supplier.fax
-          this.form.otherContact = supplier.otherContact
-          this.form.city = supplier.city
-          this.form.zipCode = supplier.zipCode
-          this.form.address = supplier.address
-          this.form.note = supplier.note
+          if (supplier.district) {
+            districts.forEach(district => {
+              if (district.zip_code.toString() === supplier.district.toString()) {
+                this.selected.district = district
+              }
+            })
+          }
+
+          if (supplier.roadScopeId) {
+            roads.forEach(road => {
+              if (road.id.toString() === supplier.roadScopeId.toString()) {
+                this.selected.road = road
+              }
+            })
+          }
+
+          this.form.name = 'name' in supplier ? supplier.name : ''
+          this.form.shortKey = 'shortKey' in supplier ? supplier.shortKey : ''
+          this.form.telphone1 = 'telphone1' in supplier ? supplier.telphone1 : ''
+          this.form.telphone2 = 'telphone2' in supplier ? supplier.telphone2 : ''
+          this.form.fax = 'fax' in supplier ? supplier.fax : ''
+          this.form.otherContact = 'otherContact' in supplier ? supplier.otherContact : ''
+          this.form.principal = 'principal' in supplier ? supplier.principal : ''
+          this.form.contacts = 'contacts' in supplier ? supplier.contacts : ''
+          this.form.zipCode = 'zipCode' in supplier ? supplier.zipCode : ''
+          this.form.city = 'city' in supplier ? supplier.city : ''
+          this.form.district = 'district' in supplier ? supplier.district : ''
+          this.form.roadScopeId = 'roadScopeId' in supplier ? supplier.roadScopeId : ''
+          this.form.address = 'address' in supplier ? supplier.address : ''
+          this.form.note = 'note' in supplier ? supplier.note : ''
         })
     }
   },
@@ -82,42 +158,76 @@ export default {
       failedSnackbar: false,
       loading: {
         city: false,
-        district: false
+        district: false,
+        road: false
       },
+      validForm: true,
       districts: [],
+      roads: [],
       func: {
         main: '廠商資料',
         sub: '新建'
       },
       formType: 'new',
       supplierKey: '',
+      selected: {
+        city: {},
+        district: {},
+        road: {}
+      },
       form: {
         name: '',
-        tel: '',
+        shortKey: '',
+        telphone1: '',
+        telphone2: '',
         fax: '',
         otherContact: '',
+        principal: '',
+        contacts: '',
+        zipCode: '',
         city: '',
-        zipCode: 0,
+        district: '',
+        roadScopeId: '',
         address: '',
         note: ''
       }
     }
   },
   methods: {
-    changeCity: async function (newCity) {
-      this.form.zipCode = 0
+    async changeCity (newCity) {
+      this.districts = []
+      this.roads = []
+      this.form.zipCode = ''
+      this.form.address = ''
+      this.form.city = newCity.name
+
       this.loading.district = true
-
-      const districts = await this.getDistricts(newCity)
+      const districts = await this.getDistricts(newCity.name)
       this.districts = districts
-
       this.loading.district = false
     },
-    formAction () {
-      if (this.formType === 'new') {
-        this.create()
-      } else if (this.formType === 'edit') {
-        this.update()
+    async changeDistrict (newDistrict) {
+      this.roads = []
+      this.form.zipCode = ''
+      this.form.address = ''
+      this.form.district = newDistrict.zip_code
+
+      const roads = await this.getRoads(newDistrict.zip_code)
+      this.roads = roads
+    },
+    changeRoad (newRoad) {
+      this.form.roadScopeId = newRoad.id
+      this.form.zipCode = newRoad.zipCode
+      this.form.address = newRoad.road
+    },
+    submitForm (event) {
+      event.preventDefault()
+      if (this.$refs.form.validate()) {
+        if (this.formType === 'new') {
+          this.create()
+        } else {
+          this.update()
+        }
       }
     },
     create () {
@@ -126,12 +236,18 @@ export default {
 
       const form = {
         name: this.form.name,
-        tel: this.form.tel,
+        shortKey: this.form.shortKey,
+        telphone1: this.form.telphone1,
+        telphone2: this.form.telphone2,
         fax: this.form.fax,
         otherContact: this.form.otherContact,
-        address: this.form.address,
-        city: this.form.city,
+        principal: this.form.principal,
+        contacts: this.form.contacts,
         zipCode: this.form.zipCode,
+        city: this.form.city,
+        district: this.form.district,
+        roadScopeId: this.form.roadScopeId,
+        address: this.form.address,
         note: this.form.note
       }
       let newSupplier = db.ref('/supplier').push()
@@ -157,12 +273,18 @@ export default {
       const router = this.global.router
       const form = {
         name: this.form.name,
-        tel: this.form.tel,
+        shortKey: this.form.shortKey,
+        telphone1: this.form.telphone1,
+        telphone2: this.form.telphone2,
         fax: this.form.fax,
         otherContact: this.form.otherContact,
-        address: this.form.address,
-        city: this.form.city,
+        principal: this.form.principal,
+        contacts: this.form.contacts,
         zipCode: this.form.zipCode,
+        city: this.form.city,
+        district: this.form.district,
+        roadScopeId: this.form.roadScopeId,
+        address: this.form.address,
         note: this.form.note
       }
       this.global.db

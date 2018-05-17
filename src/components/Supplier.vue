@@ -23,44 +23,54 @@
 
     <div class="show-list">
       <ul class="mdl-list">
-        <li class="mdl-list__item mdl-list__item--two-line supplier-row" v-for="(supplier, supplierIdx) in filterSuppliers">
+        <li
+          class="mdl-list__item mdl-list__item--two-line supplier-row show-detail"
+          v-for="(supplier, supplierIdx) in filterSuppliers"
+          @click="getSupplier(supplierIdx)"
+        >
           <span class="mdl-list__item-primary-content">
-            <v-checkbox class="material-icons mdl-list__item-icon" v-model="checkedSuppliers" :value="supplierIdx"></v-checkbox>
-            <span class="show-detail" @click="showCard(supplierIdx)">{{ supplier.name }}</span>
-            <span class="mdl-list__item-sub-title">{{ supplier.tel }}</span>
+            <v-checkbox
+              @click.self.stop=""
+              class="material-icons mdl-list__item-icon"
+              v-model="checkedSuppliers"
+              :value="supplier['.key']"
+            ></v-checkbox>
+            <span>{{ supplier.name }}</span>
+            <span class="mdl-list__item-sub-title">{{ supplier.telphone1 }}</span>
           </span>
           <span class="mdl-list__item-secondary-content">
-            <v-icon class="row-action" @click="editSupplier(supplierIdx)">edit</v-icon>
-            <v-icon class="row-action" @click="comfirmDelSupplier(supplierIdx)">delete</v-icon>
+            <v-icon class="row-action" @click.stop.self="editSupplier(supplierIdx)">edit</v-icon>
+            <v-icon class="row-action" @click.stop.self="comfirmDelSupplier(supplierIdx)">delete</v-icon>
           </span>
         </li>
       </ul>
     </div>
 
-    <v-dialog v-model="supplierCard" persistent max-width="290" v-if="suppliers[selectedSupplier]">
+    <!-- show supplier card -->
+    <v-dialog v-model="supplierCard" persistent max-width="520" v-if="suppliers[showSupplierIdx]">
       <v-card>
         <v-card-title>
-          <span class="card-title">{{ suppliers[selectedSupplier].name }}</span>
+          <span class="card-title">{{ suppliers[showSupplierIdx].name }}</span>
         </v-card-title>
         <v-card-text>
           <table class="card-table">
             <tr class="card-row">
               <td class="card-field">電話</td>
-              <td class="card-value">{{ suppliers[selectedSupplier].tel }}</td>
+              <td class="card-value">{{ suppliers[showSupplierIdx].telphone1 }}</td>
             </tr>
             <tr class="card-row">
               <td class="card-field">地址</td>
-              <td class="card-value">{{ suppliers[selectedSupplier].address }}</td>
+              <td class="card-value">{{ suppliers[showSupplierIdx].fullAddress }}</td>
             </tr>
             <tr class="card-row">
               <td class="card-field">備註</td>
-              <td class="card-value">{{ suppliers[selectedSupplier].note }}</td>
+              <td class="card-value">{{ suppliers[showSupplierIdx].note }}</td>
             </tr>
           </table>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat @click.native="supplierCard = false">關閉</v-btn>
+          <v-btn @click.native="supplierCard = false">關閉</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -74,15 +84,15 @@
               <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-icon">business</i>
                 <span>{{ deleteSupplierInfo.name }}</span>
-                <span class="mdl-list__item-sub-title">{{ deleteSupplierInfo.tel }}</span>
+                <span class="mdl-list__item-sub-title">{{ deleteSupplierInfo.telphone1 }}</span>
               </span>
             </li>
           </ul>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat color="error" @click.native="delSupplier(deleteSupplierInfo.idx)">確認</v-btn>
-          <v-btn flat color="primary" @click.native="closeDelDialog">取消</v-btn>
+          <v-btn color="error" @click.native="delSupplier(deleteSupplierInfo.idx)">確認</v-btn>
+          <v-btn color="info" @click.native="closeDelDialog">取消</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -133,9 +143,10 @@ export default {
       deleteSupplierInfo: {
         idx: '',
         name: '',
-        tel: ''
+        telphone1: ''
       },
-      selectedSupplier: '',
+      showSupplierIdx: '',
+      showSupplierKey: '',
       checkedSuppliers: [],
       supplierCard: false
     }
@@ -146,16 +157,41 @@ export default {
     }
   },
   methods: {
+    async getAddress (supplier) {
+      let address = ''
+      if (this.citys[supplier.city]) {
+        address += this.citys[supplier.city].title
+      }
+      if (supplier.district) {
+        let districts = await this.getDistricts(supplier.city)
+        districts.forEach(districtInfo => {
+          if (districtInfo.zip_code.toString() === supplier.district.toString()) {
+            address += districtInfo.district_zh
+          }
+        })
+      }
+      if (supplier.address) {
+        address += supplier.address
+      }
+      return address
+    },
+    async getSupplier (supplierIdx) {
+      this.showSupplierIdx = supplierIdx
+      this.showSupplierKey = this.suppliers[supplierIdx]['.key']
+      let address = await this.getAddress(this.suppliers[supplierIdx])
+      this.suppliers[supplierIdx].fullAddress = address
+      this.supplierCard = true
+    },
     comfirmDelSupplier (supplierIdx) {
       this.deleteSupplierInfo.idx = this.suppliers[supplierIdx]['.key']
       this.deleteSupplierInfo.name = this.suppliers[supplierIdx].name
-      this.deleteSupplierInfo.tel = this.suppliers[supplierIdx].tel
+      this.deleteSupplierInfo.telphone1 = this.suppliers[supplierIdx].telphone1
       this.comfirmDelete = true
     },
     closeDelDialog () {
       this.deleteSupplierInfo.idx = ''
       this.deleteSupplierInfo.name = ''
-      this.deleteSupplierInfo.tel = ''
+      this.deleteSupplierInfo.telphone1 = ''
       this.comfirmDelete = false
     },
     delSupplier (supplierIdx) {
@@ -179,27 +215,20 @@ export default {
           this.supplierCard = false
         })
     },
-    showCard (supplierIdx) {
-      this.supplierCard = true
-      this.selectedSupplier = supplierIdx
-    },
     hideCard () {
-      this.selectedSupplier = ''
+      this.showSupplierIdx = ''
       this.supplierCard = false
     },
-    chooseOne (supplierIdx) {
-      this.checkedSuppliers.push(supplierIdx)
-    },
     allChecked () {
-      this.checkedSuppliers = Object.keys(this.suppliers).map(supplierIdx => parseInt(supplierIdx))
+      this.checkedSuppliers = Object.keys(this.suppliers).map(supplierIdx => this.suppliers[supplierIdx]['.key'])
     },
     clearChecked () {
       this.checkedSuppliers = []
     },
     deleteSelected () {
       if (this.checkedSuppliers.length > 0) {
-        this.checkedSuppliers.forEach(element => {
-          this.delSupplier(this.suppliers[element]['.key'])
+        this.checkedSuppliers.forEach(supplierKey => {
+          this.delSupplier(supplierKey)
         })
         this.checkedSuppliers = []
       }
@@ -213,16 +242,23 @@ export default {
       var keyword = this.keyword.trim().toLowerCase()
       if (keyword !== '') {
         return Object.keys(this.suppliers)
-          .reduce((r, suppliersIdx) => {
+          .reduce((result, suppliersIdx) => {
             switch (this.searchType) {
               case 'name':
                 if (this.suppliers[suppliersIdx].name.toLowerCase().indexOf(keyword) > -1) {
-                  r[suppliersIdx] = this.suppliers[suppliersIdx]
+                  result.push(this.suppliers[suppliersIdx])
                 }
                 break
               case 'tel':
                 if (
-                  this.suppliers[suppliersIdx].tel.toLowerCase().indexOf(keyword) > -1 ||
+                  (
+                    this.suppliers[suppliersIdx].telphone1 &&
+                    this.suppliers[suppliersIdx].telphone1.toLowerCase().indexOf(keyword) > -1
+                  ) ||
+                  (
+                    this.suppliers[suppliersIdx].telphone2 &&
+                    this.suppliers[suppliersIdx].telphone2.toLowerCase().indexOf(keyword) > -1
+                  ) ||
                   (
                     this.suppliers[suppliersIdx].fax &&
                     this.suppliers[suppliersIdx].fax.toLowerCase().indexOf(keyword) > -1
@@ -232,20 +268,14 @@ export default {
                     this.suppliers[suppliersIdx].otherContact.toLowerCase().indexOf(keyword) > -1
                   )
                 ) {
-                  r[suppliersIdx] = this.suppliers[suppliersIdx]
+                  result.push(this.suppliers[suppliersIdx])
                 }
                 break
             }
-            return r
-          }, {})
-          // .filter(suppliersIdx => {
-          //   return this.suppliers[suppliersIdx].name.toLowerCase().indexOf(keyword) > -1
-          // })
-          // .map(suppliersIdx => {
-          //   return this.suppliers[suppliersIdx]
-          // })
+            return result
+          }, []).reverse()
       } else {
-        return this.suppliers
+        return this.suppliers.reverse()
       }
     },
     emptyChecked () {
