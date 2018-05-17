@@ -1,0 +1,217 @@
+[
+    {
+        "id": 1,
+        "productName": "電視機",
+        "shortCode": "2gr"
+    },
+    {
+        "id": 2,
+        "productName": "液晶電視",
+        "shortCode": "ur2g"
+    },
+    {
+        "id": 3,
+        "productName": "電漿電視",
+        "shortCode": "2r2g"
+    },
+    {
+        "id": 4,
+        "productName": "冷氣機",
+        "shortCode": "xfr"
+    },
+    {
+        "id": 5,
+        "productName": "洗衣機",
+        "shortCode": "vur"
+    },
+    {
+        "id": 6,
+        "productName": "電冰箱",
+        "shortCode": "21v"
+    },
+    {
+        "id": 7,
+        "productName": "乾衣機",
+        "shortCode": "fur"
+    },
+    {
+        "id": 8,
+        "productName": "電子鍋",
+        "shortCode": "2ye"
+    },
+    {
+        "id": 9,
+        "productName": "電鍋",
+        "shortCode": "2e"
+    },
+    {
+        "id": 10,
+        "productName": "電磁爐",
+        "shortCode": "2hx"
+    },
+    {
+        "id": 11,
+        "productName": "電烤箱",
+        "shortCode": "2dv"
+    },
+    {
+        "id": 12,
+        "productName": "熱水瓶",
+        "shortCode": "bgq"
+    },
+    {
+        "id": 13,
+        "productName": "吸塵器",
+        "shortCode": "vtf"
+    },
+    {
+        "id": 14,
+        "productName": "吹風機",
+        "shortCode": "tzr"
+    },
+    {
+        "id": 15,
+        "productName": "電風扇",
+        "shortCode": "2zg"
+    },
+    {
+        "id": 16,
+        "productName": "除濕機",
+        "shortCode": "tgr"
+    },
+    {
+        "id": 17,
+        "productName": "清淨機",
+        "shortCode": "frr"
+    },
+    {
+        "id": 18,
+        "productName": "烘碗機",
+        "shortCode": "cjr"
+    },
+    {
+        "id": 19,
+        "productName": "微波爐",
+        "shortCode": "jqx"
+    },
+    {
+        "id": 20,
+        "productName": "果汁機",
+        "shortCode": "e5r"
+    },
+    {
+        "id": 21,
+        "productName": "濾水器",
+        "shortCode": "xgf"
+    },
+    {
+        "id": 22,
+        "productName": "電暖器",
+        "shortCode": "2sf"
+    },
+    {
+        "id": 23,
+        "productName": "飲水機",
+        "shortCode": "ugr"
+    },
+    {
+        "id": 24,
+        "productName": "吊扇",
+        "shortCode": "2g"
+    },
+    {
+        "id": 25,
+        "productName": "脫水機",
+        "shortCode": "wgr"
+    },
+    {
+        "id": 26,
+        "productName": "數位盒",
+        "shortCode": "gjc"
+    },
+    {
+        "id": 27,
+        "productName": "排水氣",
+        "shortCode": "qgf"
+    },
+    {
+        "id": 28,
+        "productName": "擴大機",
+        "shortCode": "d2r"
+    },
+    {
+        "id": 29,
+        "productName": "通風機",
+        "shortCode": "wzr"
+    },
+    {
+        "id": 30,
+        "productName": "傳真機",
+        "shortCode": "t5r"
+    },
+    {
+        "id": 31,
+        "productName": "攝影機",
+        "shortCode": "gur"
+    },
+    {
+        "id": 32,
+        "productName": "刮鬍刀",
+        "shortCode": "ec2"
+    },
+    {
+        "id": 33,
+        "productName": "電熨斗",
+        "shortCode": "2m2"
+    },
+    {
+        "id": 34,
+        "productName": "視訊盒",
+        "shortCode": "gvc"
+    },
+    {
+        "id": 35,
+        "productName": "音響",
+        "shortCode": "uv"
+    },
+    {
+        "id": 36,
+        "productName": "放影機",
+        "shortCode": "zur"
+    },
+    {
+        "id": 37,
+        "productName": "碟影機",
+        "shortCode": "2ur"
+    },
+    {
+        "id": 38,
+        "productName": "光碟機",
+        "shortCode": "e2r"
+    },
+    {
+        "id": 39,
+        "productName": "錄音機",
+        "shortCode": "xur"
+    },
+    {
+        "id": 40,
+        "productName": "隨身聽",
+        "shortCode": "nrw"
+    },
+    {
+        "id": 41,
+        "productName": "定時器",
+        "shortCode": "2gf"
+    },
+    {
+        "id": 42,
+        "productName": "血壓計",
+        "shortCode": "vur"
+    },
+    {
+        "id": 43,
+        "productName": "按摩椅",
+        "shortCode": "0au"
+    }
+]

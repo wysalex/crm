@@ -133,6 +133,8 @@
 
     </v-app>
 
+    <vue-progress-bar></vue-progress-bar>
+
   </div>
 </template>
 
@@ -182,7 +184,7 @@ export default {
       if ($child && this.isActive[toggleMenu] === false) {
         $child.style.height = '0'
       } else if ($child) {
-        $child.style.height = `${40 * $child.childElementCount + (4 * 2)}px`
+        $child.style.height = `${40 * $child.childElementCount + 4}px`
       }
     },
     signOut () {
@@ -496,11 +498,10 @@ $color: rgba(0, 188, 212, 1.000);
         }
 
         &:hover, &:focus, &:active {
-          background-color: darken($color, 3%);
+          background-color: darken($color, 5%);
         }
       }
       > ul {
-        height: 0;
         overflow: hidden;
         margin: 0;
         padding: 0;
@@ -536,7 +537,7 @@ $color: rgba(0, 188, 212, 1.000);
             }
 
             &:hover {
-              background-color: darken($color, 3%)
+              background-color: darken($color, 5%)
             }
           }
         }
@@ -544,8 +545,6 @@ $color: rgba(0, 188, 212, 1.000);
       &:nth-child(n + 2) {
         padding-top: 5px;
       }
-
-
 
       &.active {
         .arrow {
