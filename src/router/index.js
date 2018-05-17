@@ -9,6 +9,7 @@ const Supplier = resolve => require(['@/components/Supplier'], resolve)
 const NewSupplier = resolve => require(['@/components/NewSupplier'], resolve)
 const Service = resolve => require(['@/components/Service'], resolve)
 const NewService = resolve => require(['@/components/NewService'], resolve)
+const SettingsAccount = resolve => require(['@/components/SettingsAccount'], resolve)
 
 import PageNotFound from '@/components/PageNotFound'
 
@@ -61,6 +62,10 @@ export default new Router({
       path: '/service/:id',
       name: 'EditService',
       component: NewService
+    }, {
+      path: '/settings/account',
+      name: 'SettingsAccount',
+      component: SettingsAccount
     }, {
       path: '*',
       component: PageNotFound

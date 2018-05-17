@@ -1,7 +1,7 @@
 <template lang="html">
 
   <div class="block">
-    <div>Oops! Page Not Found!</div>
+    <div>{{ msg }}</div>
   </div>
 
 </template>
@@ -11,7 +11,7 @@ export default {
   name: 'PageNotFound',
   data () {
     return {
-      msg: 'Oops! Page Not Found'
+      msg: 'Oops! Page Not Found!'
     }
   }
 }

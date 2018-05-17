@@ -119,8 +119,15 @@
               </div>
               <ul style="height:0">
                 <li class="sub">
+                  <router-link to="/settings/account" @click.native="changeTitle" class="router" data-main="設定" data-sub="帳戶設定">
+                    <!-- <i class="material-icons">account</i> -->
+                    <i class="material-icons">account_circle</i>
+                    <span class="router-title">帳戶設定</span>
+                  </router-link>
+                </li>
+                <li class="sub">
                   <a @click="signOut()" class="router">
-                    <i class="material-icons mdl-list__item-icon icon">power_settings_new</i>
+                    <i class="material-icons">power_settings_new</i>
                     <span class="router-title">登出</span>
                   </a>
                 </li>
