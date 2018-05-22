@@ -14,7 +14,7 @@
                 label="客戶姓名"
                 v-model="form.name"
                 :rules="[() => form.name.length > 0 || '請輸入客戶姓名']"
-                @change="transShortKey"
+                @change="transShortCode"
                 required
               >
               </v-text-field>
@@ -52,10 +52,10 @@
             <v-flex xs12 sm6>
               <v-text-field label="聯絡人" v-model="form.contacts"></v-text-field>
             </v-flex>
-            <v-flex xs12 sm3>
+            <!-- <v-flex xs12 sm3>
               <v-text-field label="郵遞區號" v-model="form.zipCode"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm4>
+            </v-flex> -->
+            <!-- <v-flex xs12 sm4>
               <v-select
                 label="縣市"
                 :loading="loading.city"
@@ -65,8 +65,8 @@
                 item-text="title"
                 autocomplete
               ></v-select>
-            </v-flex>
-            <v-flex xs12 sm5>
+            </v-flex> -->
+            <!-- <v-flex xs12 sm5>
               <v-select
                 label="地區"
                 :loading="loading.district"
@@ -76,8 +76,8 @@
                 item-text="district_zh"
                 autocomplete
               ></v-select>
-            </v-flex>
-            <v-flex xs12>
+            </v-flex> -->
+            <!-- <v-flex xs12>
               <v-select
                 label="路段"
                 :loading="loading.road"
@@ -87,9 +87,20 @@
                 item-text="roadScope"
                 autocomplete
               ></v-select>
-            </v-flex>
-            <v-flex xs12>
+            </v-flex> -->
+            <!-- <v-flex xs12>
               <v-text-field label="地址" v-model="form.address"></v-text-field>
+            </v-flex> -->
+            <v-flex xs12 sm3>
+              <v-text-field label="郵遞區號" v-model="form.zipCode"></v-text-field>
+            </v-flex>
+            <v-flex xs12 sm9>
+              <v-text-field
+                label="地址"
+                v-model="form.address"
+                :append-icon="'more_horiz'"
+                :append-icon-cb="showLocationSelector"
+              ></v-text-field>
             </v-flex>
             <v-flex xs12>
               <v-text-field label="備註" v-model="form.note"></v-text-field>
@@ -102,6 +113,96 @@
         </footer>
       </div>
     </v-form>
+
+    <v-dialog v-model="locationSelector" persistent max-width="600">
+      <v-card>
+        <v-card-title>地址快速選取</v-card-title>
+        <v-card-text>
+          <v-container grid-list-md text-xs-center class="content">
+            <v-layout row wrap>
+              <v-flex xs12 sm6>
+                <v-select
+                  label="縣市"
+                  :loading="loading.city"
+                  :items="Object.keys(citys).map(city => this.citys[city])"
+                  v-model="selected.city"
+                  @change="changeCity"
+                  item-text="title"
+                ></v-select>
+              </v-flex>
+              <v-flex xs12 sm6>
+                <v-select
+                  label="地區"
+                  :loading="loading.district"
+                  :items="districts"
+                  v-model="selected.district"
+                  @change="changeDistrict"
+                  item-text="district_zh"
+                ></v-select>
+              </v-flex>
+              <v-flex xs12>
+                <v-select
+                  label="路段"
+                  :loading="loading.road"
+                  :items="roads"
+                  v-model="selected.road"
+                  @change="changeRoad"
+                  item-text="roadScope"
+                ></v-select>
+              </v-flex>
+              <v-flex xs12>
+                <v-text-field label="地址" v-model="roadName"></v-text-field>
+              </v-flex>
+              <v-flex xs12>
+                <v-btn-toggle class="shortKey" @click.native="pickUpWord">
+                  <v-btn flat>1</v-btn>
+                  <v-btn flat>2</v-btn>
+                  <v-btn flat>3</v-btn>
+                  <v-btn flat>4</v-btn>
+                  <v-btn flat>5</v-btn>
+                  <v-btn flat>6</v-btn>
+                  <v-btn flat>7</v-btn>
+                  <v-btn flat>8</v-btn>
+                  <v-btn flat>9</v-btn>
+                  <v-btn flat>0</v-btn>
+                </v-btn-toggle>
+                <v-btn-toggle class="shortKey" @click.native="pickUpWord">
+                  <v-btn flat>一</v-btn>
+                  <v-btn flat>二</v-btn>
+                  <v-btn flat>三</v-btn>
+                  <v-btn flat>四</v-btn>
+                  <v-btn flat>五</v-btn>
+                  <v-btn flat>六</v-btn>
+                  <v-btn flat>七</v-btn>
+                  <v-btn flat>八</v-btn>
+                  <v-btn flat>九</v-btn>
+                  <v-btn flat>十</v-btn>
+                </v-btn-toggle>
+                <v-btn-toggle class="shortKey" @click.native="pickUpWord">
+                  <v-btn flat>路</v-btn>
+                  <v-btn flat>街</v-btn>
+                  <v-btn flat>段</v-btn>
+                  <v-btn flat>巷</v-btn>
+                  <v-btn flat>弄</v-btn>
+                  <v-btn flat>號</v-btn>
+                  <v-btn flat>之</v-btn>
+                  <v-btn flat>樓</v-btn>
+                  <v-btn flat>室</v-btn>
+                  <v-btn flat  @click.stop="backspaceWord">
+                    <v-icon>backspace</v-icon>
+                  </v-btn>
+                </v-btn-toggle>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="info" @click.native="getAddress">取回地址</v-btn>
+          <v-btn color="info" @click.native="locationSelector = false">取消</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <v-snackbar
       :timeout="parseInt(2000)"
@@ -127,29 +228,63 @@ export default {
         .then(async snapshot => {
           let customer = snapshot.val()
           this.loading.city = true
+          let zipCodeG
+          // let countryG
+          let cityG
+          // let districtG
+          // let roadG
+
+          if (customer.address) {
+            // google maps geocode api key AIzaSyCpvo3sj0arE6Ya8jycSkfU782cEetUd5U
+            await this.axios.get(`https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCpvo3sj0arE6Ya8jycSkfU782cEetUd5U&address=${customer.address}`)
+              .then(response => {
+                console.log(response)
+                if (response.data.results[0].address_components) {
+                  zipCodeG = response.data.results[0].address_components.pop()
+                  // countryG = response.data.results[0].address_components.pop()
+                  cityG = response.data.results[0].address_components.pop()
+                  // districtG = response.data.results[0].address_components.pop()
+                  // roadG = response.data.results[0].address_components
+
+                  customer.district = zipCodeG.long_name
+                  cityG.long_name = cityG.long_name.replace('台', '臺')
+                }
+              })
+          }
 
           Object.keys(this.citys).forEach(city => {
-            if (city === customer.city) {
+            if (customer.city && city === customer.city) {
               this.selected.city = this.citys[city]
+              this.cityName = this.citys[city].title
+            } else if (cityG && cityG.long_name === this.citys[city].title) {
+              console.log(this.citys[city])
+              this.selected.city = this.citys[city]
+              this.cityName = this.citys[city].title
+              customer.city = city
             }
           })
 
-          const districts = await this.getDistricts(customer.city)
-          const roads = await this.getRoads(customer.district)
-          this.districts = districts
-          this.roads = roads
+          if (customer.city) {
+            const districts = await this.getDistricts(customer.city)
+            this.districts = districts
+          }
+          if (customer.district) {
+            const roads = await this.getRoads(customer.district)
+            this.roads = roads
+          }
           this.loading.city = false
 
           if (customer.district) {
-            districts.forEach(district => {
+            this.districts.forEach(district => {
               if (district.zip_code.toString() === customer.district.toString()) {
                 this.selected.district = district
+                this.districtName = district.district_zh
               }
             })
           }
 
           if (customer.roadScopeId) {
-            roads.forEach(road => {
+            this.roads.forEach(road => {
               if (road.id.toString() === customer.roadScopeId.toString()) {
                 this.selected.road = road
               }
@@ -172,6 +307,12 @@ export default {
           this.form.roadScopeId = 'roadScopeId' in customer ? customer.roadScopeId : ''
           this.form.address = 'address' in customer ? customer.address : ''
           this.form.note = 'note' in customer ? customer.note : ''
+
+          if (this.form.address) {
+            this.roadName = this.form.address
+              .substring(this.cityName.length)
+              .substring(this.districtName.length)
+          }
         })
     }
   },
@@ -185,6 +326,7 @@ export default {
         road: false
       },
       validForm: true,
+      locationSelector: false,
       districts: [],
       roads: [],
       func: {
@@ -198,6 +340,9 @@ export default {
         district: {},
         road: {}
       },
+      cityName: '',
+      districtName: '',
+      roadName: '',
       form: {
         name: '',
         shortCode: '',
@@ -218,23 +363,50 @@ export default {
       }
     }
   },
+  watch: {
+    // on route change
+    $route (to, from) {
+      if (to.fullPath === '/customer/new') {
+        // reset data
+        Object.assign(this.$data, this.$options.data())
+        this.$refs.form.reset()
+        // this.$forceUpdate()
+      }
+    }
+  },
   computed: {
   },
   methods: {
-    async transShortKey (newName) {
+    showLocationSelector () {
+      this.locationSelector = true
+    },
+    pickUpWord ($event) {
+      this.roadName += $event.target.innerText
+    },
+    backspaceWord () {
+      if (this.roadName.length > 0) {
+        this.roadName = this.roadName.substring(0, this.roadName.length - 1)
+      }
+    },
+    getAddress () {
+      this.form.address = `${this.cityName}${this.districtName}${this.roadName}`
+      this.locationSelector = false
+    },
+    async transShortCode (newName) {
       let fullCode = ''
       for (let i = 0; i < newName.length; i++) {
         const char = newName[i]
         const shortCode = await this.getShortCode(char)
         fullCode += shortCode
       }
-      this.form.shortCode = fullCode
+      this.form.shortCode = fullCode.toLowerCase()
     },
     async changeCity (newCity) {
       this.districts = []
       this.roads = []
       this.form.zipCode = ''
-      this.form.address = ''
+      this.roadName = ''
+      this.cityName = newCity.title
       this.form.city = newCity.name
 
       this.loading.district = true
@@ -245,7 +417,8 @@ export default {
     async changeDistrict (newDistrict) {
       this.roads = []
       this.form.zipCode = ''
-      this.form.address = ''
+      this.roadName = ''
+      this.districtName = newDistrict.district_zh
       this.form.district = newDistrict.zip_code
 
       const roads = await this.getRoads(newDistrict.zip_code)
@@ -254,7 +427,7 @@ export default {
     changeRoad (newRoad) {
       this.form.roadScopeId = newRoad.id
       this.form.zipCode = newRoad.zipCode
-      this.form.address = newRoad.road
+      this.roadName = newRoad.road
     },
     submitForm (event) {
       event.preventDefault()
@@ -339,7 +512,7 @@ export default {
   position: relative;
   display: inline-block;
   width: 100%;
-  max-width: 600px;
+  max-width: 700px;
 
   padding: 16px 20px;
 
@@ -394,6 +567,18 @@ export default {
         font-weight: bold;
       }
       // background-color: rgba(255, 0, 0, 0.07);
+    }
+  }
+}
+
+.shortKey {
+  display: inline-block;
+  > button.btn {
+    @include size(48px);
+    font-size: 24px;
+    color: black;
+    &:hover {
+      opacity: 1;
     }
   }
 }
