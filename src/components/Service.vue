@@ -13,18 +13,25 @@
     <div v-if="showList">
       <v-card>
         <v-card-title>
-          Service
+          <span>服務</span>
           <v-spacer></v-spacer>
-          <v-text-field append-icon="search" label="Search" single-line hide-details v-model="serviceFilter"></v-text-field>
+          <v-text-field append-icon="search" label="搜尋" single-line hide-details v-model="serviceFilter"></v-text-field>
         </v-card-title>
-        <v-data-table :headers="serviceHeaders" :items="servicesArr" :search="serviceFilter" hide-actions class="elevation-1">
+        <v-data-table
+          :headers="serviceHeaders"
+          v-bind:pagination.sync="pagination"
+          :items="servicesArr"
+          :search="serviceFilter"
+          hide-actions
+          class="elevation-1"
+        >
           <template slot="items" slot-scope="props">
             <td>{{ props.item.date }}</td>
             <td>{{ props.item.customer }}</td>
             <td>{{ props.item.brand }}</td>
             <td>{{ props.item.model }}</td>
             <td>{{ props.item.service_contents }}</td>
-            <td>{{ serviceType[props.item.service_type] }}</td>
+            <td>{{ props.item.service_type }}</td>
             <td class="text-xs-right">{{ props.item.totalPrice }}</td>
             <td>
               <v-icon class="icon-btn" @click="editRow(props.item['.key'])">edit</v-icon>
@@ -32,7 +39,7 @@
             </td>
           </template>
           <v-alert slot="no-results" :value="true" color="error" icon="warning">
-            Your search for "{{ serviceFilter }}" found no results.
+            查無含有 "{{ serviceFilter }}" 的資料
           </v-alert>
         </v-data-table>
       </v-card>
@@ -111,8 +118,15 @@ export default {
         { text: '型號', value: 'model' },
         { text: '服務內容', value: 'service_contents' },
         { text: '服務類型', value: 'service_type' },
-        { text: '金額', value: 'price' },
-        { text: '修改/刪除', value: 'action', width: '100px' }
+        { text: '金額', value: 'totalPrice' },
+        { text: '修改/刪除', value: 'action', width: '100px', sortable: false }
+      ],
+      pagination: { sortBy: 'date', descending: true, rowsPerPage: -1 },
+      partHeader: [
+        { text: '零件名稱', value: 'name' },
+        { text: '料號', value: 'number' },
+        { text: '說明', value: 'comments' },
+        { text: '金額', value: 'price' }
       ],
       serviceFilter: '',
       serviceType: {
@@ -232,6 +246,11 @@ export default {
               tempService['brand'] = this.suppliers[tempService['brand']].name
             } else {
               tempService['brand'] = ''
+            }
+            if (this.serviceType[tempService['service_type']]) {
+              tempService['service_type'] = this.serviceType[tempService['service_type']]
+            } else {
+              tempService['service_type'] = ''
             }
             newArr.push(tempService)
             return newArr
