@@ -13,13 +13,14 @@
               label="廠商名稱"
               v-model="form.name"
               :rules="[() => form.name.length > 0 || '請輸入廠商名稱']"
+              @change="transShortCode"
               required>
             </v-text-field>
           </v-flex>
           <v-flex xs12 sm5>
             <v-text-field
               label="簡碼"
-              v-model="form.shortKey">
+              v-model="form.shortCode">
             </v-text-field>
           </v-flex>
           <v-flex xs12 sm6>
@@ -114,14 +115,18 @@ export default {
             }
           })
 
-          const districts = await this.getDistricts(supplier.city)
-          const roads = await this.getRoads(supplier.district)
-          this.districts = districts
-          this.roads = roads
+          if (supplier.city) {
+            const districts = await this.getDistricts(supplier.city)
+            this.districts = districts
+          }
+          if (supplier.district) {
+            const roads = await this.getRoads(supplier.district)
+            this.roads = roads
+          }
           this.loading.city = false
 
           if (supplier.district) {
-            districts.forEach(district => {
+            this.districts.forEach(district => {
               if (district.zip_code.toString() === supplier.district.toString()) {
                 this.selected.district = district
               }
@@ -129,7 +134,7 @@ export default {
           }
 
           if (supplier.roadScopeId) {
-            roads.forEach(road => {
+            this.roads.forEach(road => {
               if (road.id.toString() === supplier.roadScopeId.toString()) {
                 this.selected.road = road
               }
@@ -137,7 +142,7 @@ export default {
           }
 
           this.form.name = 'name' in supplier ? supplier.name : ''
-          this.form.shortKey = 'shortKey' in supplier ? supplier.shortKey : ''
+          this.form.shortCode = 'shortCode' in supplier ? supplier.shortCode : ''
           this.form.telphone1 = 'telphone1' in supplier ? supplier.telphone1 : ''
           this.form.telphone2 = 'telphone2' in supplier ? supplier.telphone2 : ''
           this.form.fax = 'fax' in supplier ? supplier.fax : ''
@@ -177,7 +182,7 @@ export default {
       },
       form: {
         name: '',
-        shortKey: '',
+        shortCode: '',
         telphone1: '',
         telphone2: '',
         fax: '',
@@ -194,6 +199,15 @@ export default {
     }
   },
   methods: {
+    async transShortCode (newName) {
+      let fullCode = ''
+      for (let i = 0; i < newName.length; i++) {
+        const char = newName[i]
+        const shortCode = await this.getShortCode(char)
+        fullCode += shortCode
+      }
+      this.form.shortCode = fullCode
+    },
     async changeCity (newCity) {
       this.districts = []
       this.roads = []
@@ -236,7 +250,7 @@ export default {
 
       const form = {
         name: this.form.name,
-        shortKey: this.form.shortKey,
+        shortCode: this.form.shortCode,
         telphone1: this.form.telphone1,
         telphone2: this.form.telphone2,
         fax: this.form.fax,
@@ -273,7 +287,7 @@ export default {
       const router = this.global.router
       const form = {
         name: this.form.name,
-        shortKey: this.form.shortKey,
+        shortCode: this.form.shortCode,
         telphone1: this.form.telphone1,
         telphone2: this.form.telphone2,
         fax: this.form.fax,
