@@ -25,8 +25,8 @@
       <ul class="mdl-list">
         <li
           class="mdl-list__item mdl-list__item--two-line supplier-row show-detail"
-          v-for="(supplier, supplierIdx) in filterSuppliers"
-          @click="getSupplier(supplierIdx)"
+          v-for="supplier in filterSuppliers"
+          @click="getSupplier(supplier.idx)"
         >
           <span class="mdl-list__item-primary-content">
             <v-checkbox
@@ -39,8 +39,8 @@
             <span class="mdl-list__item-sub-title">{{ supplier.telphone1 }}</span>
           </span>
           <span class="mdl-list__item-secondary-content">
-            <v-icon class="row-action" @click.stop.self="editSupplier(supplierIdx)">edit</v-icon>
-            <v-icon class="row-action" @click.stop.self="comfirmDelSupplier(supplierIdx)">delete</v-icon>
+            <v-icon class="row-action" @click.stop.self="editSupplier(supplier.idx)">edit</v-icon>
+            <v-icon class="row-action" @click.stop.self="comfirmDelSupplier(supplier.idx)">delete</v-icon>
           </span>
         </li>
       </ul>
@@ -242,40 +242,49 @@ export default {
       var keyword = this.keyword.trim().toLowerCase()
       if (keyword !== '') {
         return Object.keys(this.suppliers)
-          .reduce((result, suppliersIdx) => {
+          .reduce((result, supplierIdx) => {
+            let temp = []
             switch (this.searchType) {
               case 'name':
-                if (this.suppliers[suppliersIdx].name.toLowerCase().indexOf(keyword) > -1) {
-                  result.push(this.suppliers[suppliersIdx])
+                if (this.suppliers[supplierIdx].name.toLowerCase().indexOf(keyword) > -1) {
+                  temp = this.suppliers[supplierIdx]
+                  temp['idx'] = supplierIdx
+                  result.push(temp)
                 }
                 break
               case 'tel':
                 if (
                   (
-                    this.suppliers[suppliersIdx].telphone1 &&
-                    this.suppliers[suppliersIdx].telphone1.toLowerCase().indexOf(keyword) > -1
+                    this.suppliers[supplierIdx].telphone1 &&
+                    this.suppliers[supplierIdx].telphone1.toLowerCase().indexOf(keyword) > -1
                   ) ||
                   (
-                    this.suppliers[suppliersIdx].telphone2 &&
-                    this.suppliers[suppliersIdx].telphone2.toLowerCase().indexOf(keyword) > -1
+                    this.suppliers[supplierIdx].telphone2 &&
+                    this.suppliers[supplierIdx].telphone2.toLowerCase().indexOf(keyword) > -1
                   ) ||
                   (
-                    this.suppliers[suppliersIdx].fax &&
-                    this.suppliers[suppliersIdx].fax.toLowerCase().indexOf(keyword) > -1
+                    this.suppliers[supplierIdx].fax &&
+                    this.suppliers[supplierIdx].fax.toLowerCase().indexOf(keyword) > -1
                   ) ||
                   (
-                    this.suppliers[suppliersIdx].otherContact &&
-                    this.suppliers[suppliersIdx].otherContact.toLowerCase().indexOf(keyword) > -1
+                    this.suppliers[supplierIdx].otherContact &&
+                    this.suppliers[supplierIdx].otherContact.toLowerCase().indexOf(keyword) > -1
                   )
                 ) {
-                  result.push(this.suppliers[suppliersIdx])
+                  temp = this.suppliers[supplierIdx]
+                  temp['idx'] = supplierIdx
+                  result.push(temp)
                 }
                 break
             }
             return result
           }, []).reverse()
       } else {
-        return this.suppliers.reverse()
+        return this.suppliers.map((supplier, supplierIdx) => {
+          let temp = supplier
+          temp['idx'] = supplierIdx
+          return temp
+        }).reverse()
       }
     },
     emptyChecked () {

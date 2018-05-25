@@ -25,8 +25,8 @@
       <ul class="mdl-list">
         <li
           class="mdl-list__item mdl-list__item--two-line customer-row show-detail"
-          @click="getCustomer(customerIdx)"
-          v-for="(customer, customerIdx) in filterCustomers"
+          v-for="customer in filterCustomers"
+          @click="getCustomer(customer['idx'])"
         >
           <span class="mdl-list__item-primary-content">
             <v-checkbox
@@ -39,8 +39,8 @@
             <span class="mdl-list__item-sub-title">{{ customer.telphone1 }}</span>
           </span>
           <span class="mdl-list__item-secondary-content">
-            <v-icon class="row-action" @click.self.stop="editCustomer(customerIdx)">edit</v-icon>
-            <v-icon class="row-action" @click.self.stop="comfirmDelCustomer(customerIdx)">delete</v-icon>
+            <v-icon class="row-action" @click.self.stop="editCustomer(customer['idx'])">edit</v-icon>
+            <v-icon class="row-action" @click.self.stop="comfirmDelCustomer(customer['idx'])">delete</v-icon>
           </span>
         </li>
       </ul>
@@ -238,7 +238,7 @@ export default {
       }
       return address
     },
-    getCustomer: async function (customerIdx) {
+    async getCustomer (customerIdx) {
       this.showCustomerIdx = customerIdx
       this.showCustomerKey = this.customers[customerIdx]['.key']
       let customerService = []
@@ -361,7 +361,9 @@ export default {
             switch (this.searchType) {
               case 'name':
                 if (this.customers[customersIdx].name.toLowerCase().indexOf(keyword) > -1) {
-                  result.push(this.customers[customersIdx])
+                  temp = this.customers[customersIdx]
+                  temp['idx'] = customersIdx
+                  result.push(temp)
                 }
                 break
               case 'tel':
@@ -383,14 +385,20 @@ export default {
                     this.customers[customersIdx].otherContact.toLowerCase().indexOf(keyword) > -1
                   )
                 ) {
-                  result.push(this.customers[customersIdx])
+                  temp = this.customers[customersIdx]
+                  temp['idx'] = customersIdx
+                  result.push(temp)
                 }
                 break
             }
             return result
           }, []).reverse()
       } else {
-        return this.customers.reverse()
+        return this.customers.map((customer, customerIdx) => {
+          let temp = customer
+          temp['idx'] = customerIdx
+          return temp
+        }).reverse()
       }
     },
     emptyChecked () {
