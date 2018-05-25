@@ -48,7 +48,7 @@
             <v-select
               label="縣市"
               :loading="loading.city"
-              :items="Object.keys(citys).map(city => this.citys[city])"
+              :items="Object.keys(cities).map(city => this.cities[city])"
               v-model="selected.city"
               @change="changeCity"
               item-text="title"
@@ -109,9 +109,9 @@ export default {
           let supplier = snapshot.val()
           this.loading.city = true
 
-          Object.keys(this.citys).forEach(city => {
+          Object.keys(this.cities).forEach(city => {
             if (city === supplier.city) {
-              this.selected.city = this.citys[city]
+              this.selected.city = this.cities[city]
             }
           })
 

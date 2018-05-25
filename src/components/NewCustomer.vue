@@ -124,7 +124,7 @@
                 <v-select
                   label="縣市"
                   :loading="loading.city"
-                  :items="Object.keys(citys).map(city => this.citys[city])"
+                  :items="Object.keys(cities).map(city => this.cities[city])"
                   v-model="selected.city"
                   @change="changeCity"
                   item-text="title"
@@ -238,7 +238,6 @@ export default {
             // google maps geocode api key AIzaSyCpvo3sj0arE6Ya8jycSkfU782cEetUd5U
             await this.axios.get(`https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCpvo3sj0arE6Ya8jycSkfU782cEetUd5U&address=${customer.address}`)
               .then(response => {
-                console.log(response)
                 if (response.data.results[0].address_components) {
                   zipCodeG = response.data.results[0].address_components.pop()
                   // countryG = response.data.results[0].address_components.pop()
@@ -252,14 +251,13 @@ export default {
               })
           }
 
-          Object.keys(this.citys).forEach(city => {
+          Object.keys(this.cities).forEach(city => {
             if (customer.city && city === customer.city) {
-              this.selected.city = this.citys[city]
-              this.cityName = this.citys[city].title
-            } else if (cityG && cityG.long_name === this.citys[city].title) {
-              console.log(this.citys[city])
-              this.selected.city = this.citys[city]
-              this.cityName = this.citys[city].title
+              this.selected.city = this.cities[city]
+              this.cityName = this.cities[city].title
+            } else if (cityG && cityG.long_name === this.cities[city].title) {
+              this.selected.city = this.cities[city]
+              this.cityName = this.cities[city].title
               customer.city = city
             }
           })

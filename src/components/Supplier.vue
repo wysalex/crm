@@ -160,8 +160,8 @@ export default {
   methods: {
     async getAddress (supplier) {
       let address = ''
-      if (this.citys[supplier.city]) {
-        address += this.citys[supplier.city].title
+      if (this.cities[supplier.city]) {
+        address += this.cities[supplier.city].title
       }
       if (supplier.district) {
         let districts = await this.getDistricts(supplier.city)
