@@ -55,6 +55,12 @@
                     <span class="router-title">新建</span>
                   </router-link>
                 </li>
+                <li class="sub">
+                  <router-link to="/customer/export" @click.native="changeTitle" class="router" data-main="客戶資料" data-sub="匯入 / 匯出">
+                    <i class="material-icons">import_export</i>
+                    <span class="router-title">匯入 / 匯出</span>
+                  </router-link>
+                </li>
               </ul>
             </li>
 
@@ -148,14 +154,10 @@
 <script>
 export default {
   name: 'app',
-  mounted () {
-    // const app = this.global.app
-    // const auth = app.auth()
-    // console.log(auth.currentUser)
-  },
   data () {
     return {
       isActive: {
+        settings: false,
         customer: false,
         supplier: false,
         service: false
