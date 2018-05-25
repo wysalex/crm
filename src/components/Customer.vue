@@ -165,6 +165,7 @@ export default {
   data () {
     return {
       searchTypes: [
+        { text: '簡碼', val: 'shortCode' },
         { text: '姓名', val: 'name' },
         { text: '電話', val: 'tel' }
       ],
@@ -358,7 +359,18 @@ export default {
       if (this.keyword.trim() !== '') {
         return Object.keys(this.customers)
           .reduce((result, customersIdx) => {
+            let temp = []
             switch (this.searchType) {
+              case 'shortCode':
+                if (
+                  this.customers[customersIdx].shortCode &&
+                  this.customers[customersIdx].shortCode.toLowerCase().indexOf(keyword) > -1
+                ) {
+                  temp = this.customers[customersIdx]
+                  temp['idx'] = customersIdx
+                  result.push(temp)
+                }
+                break
               case 'name':
                 if (this.customers[customersIdx].name.toLowerCase().indexOf(keyword) > -1) {
                   temp = this.customers[customersIdx]

@@ -133,6 +133,7 @@ export default {
     return {
       // suppliers: {},
       searchTypes: [
+        { text: '簡碼', val: 'shortCode' },
         { text: '名稱', val: 'name' },
         { text: '電話', val: 'tel' }
       ],
@@ -245,6 +246,16 @@ export default {
           .reduce((result, supplierIdx) => {
             let temp = []
             switch (this.searchType) {
+              case 'shortCode':
+                if (
+                  this.suppliers[supplierIdx].shortCode &&
+                  this.suppliers[supplierIdx].shortCode.toLowerCase().indexOf(keyword) > -1
+                ) {
+                  temp = this.suppliers[supplierIdx]
+                  temp['idx'] = supplierIdx
+                  result.push(temp)
+                }
+                break
               case 'name':
                 if (this.suppliers[supplierIdx].name.toLowerCase().indexOf(keyword) > -1) {
                   temp = this.suppliers[supplierIdx]
