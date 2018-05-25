@@ -24,12 +24,26 @@ Vue.use(VueProgressBar, {
   thickness: '4px'
 })
 
+const asyncForEach = async function (array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array)
+  }
+}
+
 // Initail indexedDB
 let needUpdateDB = false
 idb.open('crmDB', 1, async upgradeDB => {
   needUpdateDB = true
   console.log('need upgrade database')
   let objectStore
+  objectStore = upgradeDB.createObjectStore('location', { keyPath: 'id', autoIncrement: true })
+  objectStore.createIndex('city', 'city', { unique: false })
+  objectStore.createIndex('zip_code', 'zip_code', { unique: false })
+  objectStore.createIndex('city_zh', 'city_zh', { unique: false })
+  objectStore.createIndex('district_zh', 'district_zh', { unique: false })
+  objectStore.createIndex('city_en', 'city_en', { unique: false })
+  objectStore.createIndex('district_en', 'district_en', { unique: false })
+
   objectStore = upgradeDB.createObjectStore('road', { keyPath: 'id' })
   objectStore.createIndex('zipCode', 'zipCode', { unique: false })
   objectStore.createIndex('city', 'city', { unique: false })
@@ -47,7 +61,75 @@ idb.open('crmDB', 1, async upgradeDB => {
   if (needUpdateDB) {
     let tx
     let store
-    let succeeded = 0
+
+    // insert location
+    let cityData = []
+    const startGetCity = async () => {
+      await asyncForEach([
+        'changhuaCounty',
+        'chiayiCity',
+        'chiayiCounty',
+        'diaoyutai',
+        'hsinchuCity',
+        'hsinchuCounty',
+        'hualienCounty',
+        'kaohsiungCity',
+        'keelungCity',
+        'kinmenCounty',
+        'lienchiangCounty',
+        'miaoliCounty',
+        'nanhaiIslands',
+        'nantouCounty',
+        'newTaipeiCity',
+        'penghuCounty',
+        'pingtungCounty',
+        'taichungCity',
+        'tainanCity',
+        'taipeiCity',
+        'taitungCounty',
+        'taoyuanCity',
+        'yilanCounty',
+        'yunlinCounty'
+      ], async cityName => {
+        await axios.get(`/static/location/${cityName}.json`)
+          .then(response => {
+            let tempCities = response.data.map(cityInfo => {
+              cityInfo.city = cityName
+              return cityInfo
+            })
+            cityData = cityData.concat(tempCities)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      })
+      tx = dbh.transaction('location', 'readwrite')
+      store = tx.objectStore('location')
+      let citySucceeded = 0
+      const insertLocation = () => new Promise((resolve, reject) => {
+        const doNextRecordCity = () => {
+          if (citySucceeded < cityData.length) {
+            store.put(cityData[citySucceeded])
+              .then(() => {
+                doNextRecordCity()
+              })
+              .catch(error => {
+                console.log(error)
+                resolve(false)
+              })
+            ++citySucceeded
+          } else {
+            resolve(true)
+          }
+        }
+        doNextRecordCity()
+      })
+      await insertLocation()
+    }
+    await startGetCity()
+    console.log('insert city end')
+
+    // insert road scope
     let zipCodeData = []
     await axios.get('/static/zipCode.json')
       .then(response => {
@@ -56,12 +138,34 @@ idb.open('crmDB', 1, async upgradeDB => {
       .catch(error => {
         console.log(error)
       })
-    tx = dbh.transaction('road', 'readwrite')
-    store = tx.objectStore('road')
-    zipCodeData.forEach(zipInfo => {
-      store.put(zipInfo)
+    const insertRoad = () => new Promise((resolve, reject) => {
+      const startGetRoad = () => {
+        tx = dbh.transaction('road', 'readwrite')
+        store = tx.objectStore('road')
+        let zipCodeSucceeded = 0
+        const doNextRecordZipCode = () => {
+          if (zipCodeSucceeded < zipCodeData.length) {
+            store.put(zipCodeData[zipCodeSucceeded])
+              .then(() => {
+                doNextRecordZipCode()
+              })
+              .catch(error => {
+                console.log(error)
+                resolve(false)
+              })
+            ++zipCodeSucceeded
+          } else {
+            resolve(true)
+          }
+        }
+        doNextRecordZipCode()
+      }
+      startGetRoad()
     })
+    await insertRoad()
+    console.log('insert road end')
 
+    // insert product list
     let productData = []
     await axios.get('/static/products.json')
       .then(response => {
@@ -75,7 +179,9 @@ idb.open('crmDB', 1, async upgradeDB => {
     productData.forEach(productInfo => {
       store.put(productInfo)
     })
+    console.log('insert product end')
 
+    // insert hant map
     let hantShortCode = []
     await axios.get('/static/hantShortCode.json')
       .then(response => {
@@ -86,17 +192,29 @@ idb.open('crmDB', 1, async upgradeDB => {
       })
     tx = dbh.transaction('hantShortCode', 'readwrite')
     store = tx.objectStore('hantShortCode')
-    succeeded = 0
-    const doNextRecord = () => {
-      if (succeeded < hantShortCode.length) {
-        store.put(hantShortCode[succeeded]).then(() => {
-          doNextRecord()
-        })
-        ++succeeded
+    let hantMapSucceeded = 0
+    const insertHantMap = () => new Promise((resolve, reject) => {
+      const doNextRecord = () => {
+        if (hantMapSucceeded < hantShortCode.length) {
+          store.put(hantShortCode[hantMapSucceeded])
+            .then(() => {
+              doNextRecord()
+            })
+            .catch(error => {
+              console.log(error)
+              resolve(false)
+            })
+          ++hantMapSucceeded
+        } else {
+          resolve(true)
+        }
       }
-    }
-    doNextRecord()
+      doNextRecord()
+    })
+    await insertHantMap()
+    console.log('insert hant end')
 
+    console.log('indexed db initial complete')
     return tx.complete
   }
 })
@@ -257,20 +375,51 @@ Vue.mixin({
     }
   },
   methods: {
-    getDistricts: async function (city) {
-      let districts = []
-      if (this.citys[city] && this.citys[city].districts.length > 0) {
-        return this.citys[city].districts
+    waitFor (promise) {
+      return promise
+        .then((data) => [null, data])
+        .catch(err => {
+          return [err, undefined]
+        })
+    },
+    sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    },
+    async getDistricts (city) {
+      const queryDB = function () {
+        return new Promise((resolve, reject) => {
+          let districts = []
+          const dbPromis = idb.open('crmDB')
+          dbPromis.then(db => {
+            db.transaction('location')
+              .objectStore('location')
+              .index('city')
+              .openCursor(IDBKeyRange.only(city))
+              .then(function cursorIterate (cursor) {
+                if (!cursor) {
+                  resolve(districts)
+                  return
+                }
+                if (cursor.value) {
+                  districts.push({
+                    zip_code: cursor.value.zip_code,
+                    city_zh: cursor.value.city_zh,
+                    district_zh: cursor.value.district_zh,
+                    city_en: cursor.value.city_en,
+                    district_en: cursor.value.district_en
+                  })
+                }
+                return cursor.continue().then(cursorIterate)
+              })
+          })
+        })
       }
-      await this.axios.get(`/static/location/${city}.json`)
-        .then(response => {
-          districts = JSON.parse(JSON.stringify(response.data))
-          this.citys[city].districts = JSON.parse(JSON.stringify(response.data))
-        })
-        .catch(error => {
-          console.log(error)
-        })
-      return districts
+      if (city) {
+        const districts = await queryDB()
+        return districts
+      } else {
+        return []
+      }
     },
     /**
      * TODO
@@ -360,8 +509,12 @@ Vue.mixin({
           })
         })
       }
-      const shortCode = await queryDB()
-      return shortCode
+      if (hant) {
+        const shortCode = await queryDB()
+        return shortCode
+      } else {
+        return ''
+      }
     },
     async getRoads (zipCode) {
       const queryDB = function () {
@@ -394,11 +547,15 @@ Vue.mixin({
           })
         })
       }
-      const roads = await queryDB()
-      roads.sort((a, b) => {
-        return a.roadScope.localeCompare(b.roadScope, 'zh-Hant-TW')
-      })
-      return roads
+      if (zipCode.toString().length === 3) {
+        const roads = await queryDB()
+        roads.sort((a, b) => {
+          return a.roadScope.localeCompare(b.roadScope, 'zh-Hant-TW')
+        })
+        return roads
+      } else {
+        return []
+      }
     },
     /**
      * 全行轉半型
@@ -407,14 +564,16 @@ Vue.mixin({
      */
     full2half (val) {
       let result = ''
-      for (let i = 0; i <= val.length; i++) {
-        if (val.charCodeAt(i) === 12288) {
-          result += ' '
-        } else {
-          if (val.charCodeAt(i) > 65280 && val.charCodeAt(i) < 65375) {
-            result += String.fromCharCode(val.charCodeAt(i) - 65248)
+      if (val.length > 0) {
+        for (let i = 0; i <= val.length; i++) {
+          if (val.charCodeAt(i) === 12288) {
+            result += ' '
           } else {
-            result += String.fromCharCode(val.charCodeAt(i))
+            if (val.charCodeAt(i) > 65280 && val.charCodeAt(i) < 65375) {
+              result += String.fromCharCode(val.charCodeAt(i) - 65248)
+            } else {
+              result += String.fromCharCode(val.charCodeAt(i))
+            }
           }
         }
       }
